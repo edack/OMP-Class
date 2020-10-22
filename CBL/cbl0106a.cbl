@@ -4,19 +4,14 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT PRINT-FILE ASSIGN TO PRTLINE.
            SELECT ACCT-FILE  ASSIGN TO ACCTREC.
+           SELECT PRINT-FILE ASSIGN TO UT-S-PRTLINE.
       *==========================================================*
        DATA DIVISION.
       *----------------------------------------------------------*
        FILE SECTION.
       *----------------------------------------------------------*
-       FD  PRINT-FILE RECORDING MODE F.
-       01  PRINT-RECORD.
-      *    05 CC                     PIC X(01).
-           05 PRINT-LINE             PIC X(132).
-      *
-       FD  ACCT-FILE RECORDING MODE F.
+       FD  ACCT-FILE.
        01  ACCT-RECORD.
            05  ACCT-NO            PIC X(8).
            05  ACCT-LIMIT         PIC S9(7)V99 COMP-3.
@@ -29,6 +24,11 @@
                10  USA-STATE      PIC X(15).
            05  RESERVED           PIC X(7).
            05  COMMENTS           PIC X(50).
+      *----------------------------------------------------------*
+       FD  PRINT-FILE RECORDING MODE F.
+       01  PRINT-RECORD.
+      *    05 CC                     PIC X(01).
+           05 PRINT-LINE             PIC X(132).
       *----------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *----------------------------------------------------------*

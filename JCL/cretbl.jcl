@@ -1,9 +1,11 @@
 //CREATE1   JOB 1                                                       JOB03105
 //SQLEXEC   EXEC DB2JCL                                                 00000202
 //SQL.SYSIN DD *,SYMBOLS=CNVTSYS                                        00000302
---** SQL FOLLOWS ****************************************               00000402
---DROP TABLESPACE DB2.&SYSUID.S;
---COMMIT;                                                               00050000
+--** SQL FOLLOWS ****************************************
+  DROP TABLE &SYSUID.T;
+  COMMIT;                                                               00000402
+  DROP TABLESPACE DB2.&SYSUID.S;
+  COMMIT;                                                               00050000
   CREATE TABLESPACE &SYSUID.S  IN DB2                                   00000500
     USING STOGROUP DB2DISK PRIQTY 20 SECQTY 20 ERASE NO                 00000600
     LOCKSIZE PAGE LOCKMAX SYSTEM                                        00000700
