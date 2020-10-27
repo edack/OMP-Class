@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.0.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: "Check Versions"
+          command: |
+            node -v 
+            npm -v
+      - run:
+          name: "Install zowe"
+          command: |
+            sudo npm i -g @zowe/cli@latest --@zowe:registry=https://registry.npmjs.org --no-package-lock --force --ignore-scripts
+      - run:
+          name: "Install Packages"
+          command: |
+            npm i .
+      - run:
+          name: "Compile Scripts"
+          command: |
+            npm run compile:scripts
+      - run:
+          name: "Create Zowe Profiles"
+          command: |
+            sudo zowe -V
+            sudo zowe profiles create zosmf zcobol --host $zcobolhost --port $zcobolport --user $zcoboluser --pass $zcobolpass --ru false
+      - run:
+          name: "Build and Test"
+          command: |
+            sudo npm run submit:job
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
