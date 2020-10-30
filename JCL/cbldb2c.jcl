@@ -1,0 +1,28 @@
+//CBLDB2C JOB 1,NOTIFY=&SYSUID
+// SET COBPGM='CBL0106C'
+//COMPILE  EXEC DB2CBL,MBR=&COBPGM
+//COBOL.SYSLIB DD DISP=SHR,
+//        DSN=&SYSUID..COPYLIB
+//BIND.SYSTSIN  DD *,SYMBOLS=CNVTSYS
+ DSN SYSTEM(DBCG)
+ BIND PLAN(&SYSUID) PKLIST(&SYSUID..*) MEMBER(CBL0106C) -
+      ACT(REP) ISO(CS) ENCODING(EBCDIC)
+ END
+/*
+//********************************************************************
+//*        RUN                                                       *
+//********************************************************************
+//RUN     EXEC PGM=IKJEFT01
+//STEPLIB  DD DSN=DSNC10.SDSNLOAD,DISP=SHR
+//REPORT   DD SYSOUT=*
+//RUN.SYSTSIN  DD *,SYMBOLS=CNVTSYS
+ DSN SYSTEM(DBCG)
+ RUN PROGRAM(CBL0106C) PLAN(&SYSUID) LIB('&SYSUID..LOAD')
+ END
+/*
+//SYSIN    DD DUMMY
+//SYSUDUMP DD DUMMY
+//CEEDUMP  DD DUMMY
+//PRTLINE  DD SYSOUT=*
+//SYSTSPRT DD SYSOUT=*
+//SYSPRINT DD SYSOUT=*
