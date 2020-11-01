@@ -8,7 +8,7 @@
         "allocate": "node ./scripts/lib/allocate",
         "delete": "node ./scripts/lib/delete",
         "generate": "node ./scripts/lib/generate",
-        "clg": "zowe jobs submit ds 'z80843.jcl(topacct)' -d .",        
+        "clg": "zowe jobs submit ds 'z80843.jcl(topacct)' -d .",
         "upload:cobol": "zowe zos-files upload file-to-data-set \"./build/source.cbl\" \"Z80843.SOURCE(HELOWRLD)\" --zosmf-p OpenCOBOL",
         "build": "npm run generate && npm run upload:cobol && npm run compile:cobol && npm run run:cobol",
         "compile:cobol": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
