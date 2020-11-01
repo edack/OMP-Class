@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run compile:scripts",
     "generate": "node ./scripts/lib/append && node ./scripts/lib/generate",
-    "upload": "zowe zos-files upload file-to-data-set \"./build/source.cbl\" \"Z80843.SOURCE(CBLSRC)\" --zosmf-p OpenCOBOL",
+    "upload": "zowe zos-files upload file-to-data-set \"./build/source.cbl\" \"Z80843.CBL(CBLSRC)\" --zosmf-p OpenCOBOL",
     "build": "npm run generate && npm run upload && npm run compile:cobol && npm run run:job",
     "compile:cobol": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
     "run:job": "sudo zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
