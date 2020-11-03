@@ -50,9 +50,9 @@
             "RUNJOBTM JOB ('RUNJOBTM'),'RUNJCL',MSGCLASS=X,",
             "             CLASS=A,NOTIFY=&SYSUID"
         ],
-        "source_library": "Z80843.SOURCE",
+        "source_library": "Z80843.CBL",
         "copy_library": "Z80843.COPYLIB",
         "object_library": "Z80843.OBJ",
-        "load_library": "Z80843.LOADLIB"
+        "load_library": "Z80843.LOAD"
     }
 }
