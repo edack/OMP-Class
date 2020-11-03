@@ -19,7 +19,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@zowe/cli": "^6.23.0"
+        "@zowe/cli": "^6.23.0",
+        "fs": "0.0.1-security"
     },
     "peerDependencies": {
         "@zowe/cli": "^6.0.0",
