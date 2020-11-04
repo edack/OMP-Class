@@ -22,7 +22,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zowe/cli": "^6.24.2"
+    "@zowe/cli": "^6.24.2",
+    "@zowe/imperative": "file:../../ZoweSDK/imperative.tgz",
+    "@zowe/provisioning-for-zowe-sdk": "file:../../ZoweSDK/provisioning-for-zowe-sdk.tgz",
+    "@zowe/zos-console-for-zowe-sdk": "file:../../ZoweSDK/zos-console-for-zowe-sdk.tgz",
+    "@zowe/zos-files-for-zowe-sdk": "file:../../ZoweSDK/zos-files-for-zowe-sdk.tgz",
+    "@zowe/zos-jobs-for-zowe-sdk": "file:../../ZoweSDK/zos-jobs-for-zowe-sdk.tgz",
+    "@zowe/zos-tso-for-zowe-sdk": "file:../../ZoweSDK/zos-tso-for-zowe-sdk.tgz",
+    "@zowe/zos-uss-for-zowe-sdk": "file:../../ZoweSDK/zos-uss-for-zowe-sdk.tgz",
+    "@zowe/zos-workflows-for-zowe-sdk": "file:../../ZoweSDK/zos-workflows-for-zowe-sdk.tgz",
+    "@zowe/zosmf-for-zowe-sdk": "file:../../ZoweSDK/zosmf-for-zowe-sdk.tgz"
   },
   "peerDependencies": {
     "@zowe/cli": "^6.0.0",
