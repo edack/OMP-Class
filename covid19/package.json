@@ -13,6 +13,7 @@
     "compile:scripts": "tsc --pretty",
     "start": "npm run upload && npm run build",
     "parse": "node ./scripts/lib/parse",
+    "parseus": "node ./scripts/lib/parseus",
     "allocate:input": "zowe files cre ps \"Z80843.NCOV19.GLOBAL\" --rl 189 --bs 27972 --zosmf-p OpenCOBOL",
     "upload:data": "zowe files ul ftds \"./build/countries.txt\" \"Z80843.NCOV19.GLOBAL\" --zosmf-p OpenCOBOL",
     "submit:job": "zowe jobs submit ds \"Z80843.JCL(CBL0013J)\" --directory \"./output\" --zosmf-p OpenCOBOL",
