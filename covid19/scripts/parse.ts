@@ -13,10 +13,9 @@ https.get('https://api.covid19api.com/summary', (res: any) => {
 
   res.on('end', () => {
     const getCovidData = JSON.parse(data);
-    // console.log(getCovidData);
     var countries = getCovidData.Countries;
     var fields = Object.keys(countries[0]);
-    console.log(countries);
+//    console.log(fields);
     var replacer = function(key: any, value: any) { return value === null ? '' : value };
     var csv = countries.map(function(row: { [x: string]: any; }){
       return fields.map(function(fieldName){

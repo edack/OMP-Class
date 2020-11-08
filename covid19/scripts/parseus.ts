@@ -13,14 +13,11 @@ https.get('https://api.covidtracking.com/v1/us/daily.json', (res: any) => {
 
   res.on('end', () => {
     const getCovidData = JSON.parse(data);
-    var row = getCovidData.row;
-//    console.log(getCovidData);
-    var fields = Object.keys(getCovidData);
+    var date = getCovidData;
+    var fields = Object.keys(date[0]);
 //    console.log(fields)
-
-    console.log(getCovidData.row)
     var replacer = function(key: any, value: any) { return value === null ? '' : value };
-    var csv = getCovidData.map(function(row: { [x: string]: any; }){
+    var csv = date.map(function(row: { [x: string]: any; }){
        return fields.map(function(fieldName){
          return JSON.stringify(row[fieldName], replacer)
       }).join(',')
