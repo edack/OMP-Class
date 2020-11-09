@@ -11,7 +11,7 @@ if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/compiler.jcl", rendered_compiler);
 console.log("Generated custom JCL to ./build/compiler.jcl");
 
-/* Render Source Program Part 1*/
+/* Render Source Program Part */
 const source = fs.readFileSync("./src/source/helowrld.txt").toString();
 const rendered_source = mustache.render(source, config);
 

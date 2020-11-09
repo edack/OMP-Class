@@ -4,7 +4,7 @@ import * as mustache from "mustache";
 import * as fs from "fs";
 
 /* Render Compiler.JCL */
-const compiler = fs.readFileSync("./src/templates/compiler_template.txt").toString();
+const compiler = fs.readFileSync("./src/templates/cobcl_template.txt").toString();
 const rendered_compiler = mustache.render(compiler, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");

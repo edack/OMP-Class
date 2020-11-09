@@ -1,11 +1,11 @@
 //CBLCLG01 JOB 1, NOTIFY=&SYSUID,
 // MSGCLASS=H,MSGLEVEL=(1,1),TIME=(,4),REGION=144M,COND=(16,LT)
 //*
-// SET COBPGM='CBLGRPH'
-// SET COBSRC='CBL'
-// SET COBOBJS='COBOBJS.OBJ'
-// SET COBCOPY='COPYLIB'
-// SET COBLOAD='LOAD'
+// SET COBPGM='{{process.program_name}}'
+// SET COBSRC='{{compiler.source_library}}'
+// SET COBOBJS='{{compiler.object_library}}'
+// SET COBCOPY='{{compiler.copy_library}}'
+// SET COBLOAD='{{compiler.load_library}}'
 //**** Compile JCL ******
 //STP0000 EXEC PROC=ELAXFCOC,
 // CICS=,
