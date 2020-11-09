@@ -3,6 +3,5 @@ node_modules/
 src/lib/
 output/
 build/
-config/default_bkup.json
 scripts/lib/
 output/
