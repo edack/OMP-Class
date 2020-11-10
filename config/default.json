@@ -1,6 +1,6 @@
 {
     "process": {
-        "program_name": "CBLGRPH",
+        "program_name": "COVID19B",
         "input_file_name": "USA-HIST-FLE",
         "output_file_name": "PRINT-FILE",
         "input_dd_name": "USAHIST",

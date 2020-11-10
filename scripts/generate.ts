@@ -15,15 +15,11 @@ console.log("Generated custom JCL to ./build/compiler.jcl");
 /* Render Source Program Part 1*/
 const source = fs.readFileSync("./build/source.cbl").toString();
 const rendered_source = mustache.render(source, config);
-
-if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/source.cbl", rendered_source);
 
-/* const source2 = fs.readFileSync("./build/source.cbl").toString();
+const source2 = fs.readFileSync("./build/source.cbl").toString();
 const rendered_cobol = mustache.render(source2, config);
-
-if (!fs.existsSync("./build")) fs.mkdirSync("./build");
-fs.writeFileSync("./build/source.cbl", rendered_cobol); */
+fs.writeFileSync("./build/source.cbl", rendered_cobol);
 
 console.log("Generated COBOL program to ./build/source.cbl");
 
