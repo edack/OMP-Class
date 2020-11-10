@@ -27,32 +27,29 @@
         "file_control": {
             "fc_input": [
                 "SELECT {{process.input_file_name}} ASSIGN TO {{process.input_dd_name}}",
-                "  ORGANIZATION IS {{process.organization_type}}",
-                "  ACCESS MODE IS {{process.organization_type}}",
-                "  FILE STATUS IS WS-IN-STAT."
+                "    ORGANIZATION IS {{process.organization_type}}",
+                "    ACCESS MODE IS {{process.organization_type}}",
+                "    FILE STATUS IS WS-IN-STAT."
             ],
             "fc_output": [
                 "SELECT {{process.output_file_name}} ASSIGN TO {{process.output_dd_name}}",
-                "  ORGANIZATION IS {{process.organization_type}}",
-                "  ACCESS MODE IS {{process.organization_type}}",
-                "  FILE STATUS IS WS-OUT-STAT."
+                "    ORGANIZATION IS {{process.organization_type}}",
+                "    ACCESS MODE IS {{process.organization_type}}",
+                "    FILE STATUS IS WS-OUT-STAT."
             ]
         },
         "file_section": {
             "fd_input": [
-                "FD {{process.input_file_name}}",
-                "        RECORD CONTAINS 189 CHARACTERS",
-                "        LABEL RECORDS ARE OMITTED",
-                "        DATA RECORD IS INPUT-REC.",
+                "FD  {{process.input_file_name}}",
+                "    RECORDING MODE F.",
                 "COPY INREC001."
             ],
             "fd_output": [
-                "FD {{process.output_file_name}}",
-                "           RECORD CONTAINS 133 CHARACTERS",
-                "           LABEL RECORDS ARE OMITTED",
-                "           DATA RECORD IS OUTPUT-REC.",
-                "01 OUTPUT-REC        PIC X(133)."
-            ]
+                "FD  {{process.output_file_name}}",
+                "    RECORDING MODE F.",
+                "01  PRINT-RECORD.",
+                "    05 PRINT-LINE                   PIC X(132)."
+]
         }
     }
 }

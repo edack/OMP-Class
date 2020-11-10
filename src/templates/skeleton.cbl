@@ -7,21 +7,19 @@
        CONFIGURATION SECTION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
+      *----------------------------------------------------------*
+           {{#initialization.file_control.fc_input}}
+           {{.}}
+           {{/initialization.file_control.fc_input}}
 
-            {{#initialization.file_control.fc_input}}
-            {{.}}
-            {{/initialization.file_control.fc_input}}
-
-            {{#initialization.file_control.fc_output}}
-            {{.}}
-            {{/initialization.file_control.fc_output}}
-
+           {{#initialization.file_control.fc_output}}
+           {{.}}
+           {{/initialization.file_control.fc_output}}
       *==========================================================*
        DATA DIVISION.
       *----------------------------------------------------------*
        FILE SECTION.
       *----------------------------------------------------------*
-
        {{#initialization.file_section.fd_input}}
        {{.}}
        {{/initialization.file_section.fd_input}}
@@ -29,16 +27,6 @@
        {{#initialization.file_section.fd_output}}
        {{.}}
        {{/initialization.file_section.fd_output}}
-
-
-       FD  PRINT-FILE RECORDING MODE F.
-       01  PRINT-RECORD.
-      *    05 CC                           PIC X(01).
-           05 PRINT-LINE                   PIC X(132).
-      *
-       FD  INPUT-FILE RECORDING MODE F.
-       01  INPUT-RECORD.
-           05 FILLER                       PIC X(132).
       *----------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *----------------------------------------------------------*
@@ -101,8 +89,8 @@
       *----------------------------------------------------------*
        1000-OPEN-FILES.
       *----------------------------------------------------------*
-           OPEN    INPUT  INPUT-FILE
-                   OUTPUT PRINT-FILE.
+           OPEN    INPUT  {{process.input_file_name}}
+                   OUTPUT {{process.output_file_name}}.
       *----------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
       *----------------------------------------------------------*
@@ -112,12 +100,12 @@
       *----------------------------------------------------------*
        3000-CLOSE-FILES.
       *----------------------------------------------------------*
-           CLOSE INPUT-FILE
-                 PRINT-FILE.
+           CLOSE {{process.input_file_name}}
+                 {{process.output_file_name}}.
       *----------------------------------------------------------*
        8000-READ-ACCT-FILE.
       *----------------------------------------------------------*
-           READ INPUT-FILE
+           READ {{process.input_file_name}}
                AT END MOVE 'Y' TO END-OF-FILE-SW.
       *----------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
