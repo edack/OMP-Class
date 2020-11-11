@@ -55,6 +55,8 @@
       *----------------------------------------------------------*
            05  END-OF-FILE-SW              PIC X VALUE 'N'.
                88  END-OF-FILE                   VALUE 'Y'.
+           05  WS-IN-STAT                  PIC 99 VALUE 0.
+           05  WS-OUT-STAT                 PIC 99 VALUE 0.
            05  WS-CURRENT-DATE-DATA.
                10  WS-CURRENT-DATE.
                    15  WS-CURRENT-YY       PIC 9(04).
