@@ -1,9 +1,9 @@
 {
     "process": {
-        "program_name": "COVID19B",
+        "program_name": "COVID19A",
         "input_file_name": "USA-HIST-FLE",
         "output_file_name": "PRINT-FILE",
-        "input_dd_name": "USAHIST",
+        "input_dd_name": "GLBFILE",
         "output_dd_name": "PRTLINE",
         "organization_type": "SEQUENTIAL",
         "hlq1": "Z80843",
