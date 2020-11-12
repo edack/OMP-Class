@@ -17,7 +17,7 @@
                RECORDING MODE F.
        01  PRINT-RECORD.
       *    05  CC                     PIC X(01).
-           05  PRINT-LINE             PIC X(80).
+           05  PRINT-LINE             PIC X(130).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
