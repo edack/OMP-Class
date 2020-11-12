@@ -1,13 +1,13 @@
 {
     "process": {
-        "program_name": "CBL0106A",
-        "input_file_name": "ACCT-FILE",
+        "program_name": "COVID19B",
+        "input_file_name": "USAHIST",
         "output_file_name": "PRINT-FILE",
-        "input_dd_name": "ACCTFILE",
+        "input_dd_name": "USAHIST",
         "output_dd_name": "PRTLINE",
         "organization_type": "SEQUENTIAL",
         "hlq1": "Z80843",
-        "hlq2": "DATA" 
+        "hlq2": "NCOV19" 
     },
     "compiler": {
         "job_card":[
