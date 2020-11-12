@@ -4,7 +4,7 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT ACCT-FILE  ASSIGN TO ACCTREC.
+           SELECT ACCT-FILE  ASSIGN TO ACCTFILE.
            SELECT PRINT-FILE ASSIGN TO UT-S-PRTLINE.
       *==========================================================*
        DATA DIVISION.
@@ -12,18 +12,7 @@
        FILE SECTION.
       *----------------------------------------------------------*
        FD  ACCT-FILE.
-       01  ACCT-RECORD.
-           05  ACCT-NO            PIC X(8).
-           05  ACCT-LIMIT         PIC S9(7)V99 COMP-3.
-           05  ACCT-BALANCE       PIC S9(7)V99 COMP-3.
-           05  LAST-NAME          PIC X(20).
-           05  FIRST-NAME         PIC X(15).
-           05  CLIENT-ADDR.
-               10  STREET-ADDR    PIC X(25).
-               10  CITY-COUNTY    PIC X(20).
-               10  USA-STATE      PIC X(15).
-           05  RESERVED           PIC X(7).
-           05  COMMENTS           PIC X(50).
+       COPY ACCTREC.
       *----------------------------------------------------------*
        FD  PRINT-FILE RECORDING MODE F.
        01  PRINT-RECORD.
@@ -157,32 +146,10 @@
                10  FILLER         PIC X(06) VALUE SPACES.
                10  FILLER         PIC X(13) VALUE '-------------'.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
-       01 PRINTER-CONTROL-FIELDS.
-           05  LINE-SPACEING         PIC 9(02) VALUE 1.
-           05  LINE-COUNT            PIC 9(03) VALUE 999.
-           05  LINES-ON-PAGE         PIC 9(02) VALUE 60.
-           05  PAGE-COUNT            PIC 9(02) VALUE 1.
-           05  TOP-OF-PAGE           PIC X(02) VALUE '1'.
-           05  SINGLE-SPACE          PIC X(01) VALUE ' '.
-           05  DOUBLE-SPACE          PIC X(01) VALUE '0'.
-           05  TRIPLE-SPACE          PIC X(01) VALUE '-'.
-           05  OVERPRINT             PIC X(01) VALUE '+'.
-      *----------------------------------------------------------*
-       01  WS-CURRENT-DATE-DATA.
-           05  WS-CURRENT-DATE.
-               10  WS-CURRENT-YEAR         PIC 9(04).
-               10  WS-CURRENT-MONTH        PIC 9(02).
-               10  WS-CURRENT-DAY          PIC 9(02).
-           05  WS-CURRENT-TIME.
-               10  WS-CURRENT-HOURS        PIC 9(02).
-               10  WS-CURRENT-MINUTE       PIC 9(02).
-               10  WS-CURRENT-SECOND       PIC 9(02).
-               10  WS-CURRENT-MILLISECONDS PIC 9(02).
-      *----------------------------------------------------------*
+      *
+       COPY PRINTCTL.
+      *
        01  WS-SWITCHES-SUBSCRIPTS.
-           05  END-OF-FILE-SW              PIC X VALUE 'N'.
-               88  END-OF-FILE                   VALUE 'Y'.
            05  OVERLIMIT-COUNT             PIC 999 VALUE 0.
            05  INDEX-1                     PIC 999 VALUE 1.
            05  NO-OVERLIMIT-STATUS         PIC X(32) VALUE

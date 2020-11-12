@@ -11,29 +11,7 @@
        FILE SECTION.
        FD  USA-HIST-FILE
                RECORDING MODE IS F.
-       01  UHR-RECORD                PIC X(130).
-      *
-      *01  UHR-RECORD.
-      *    05  UHR-DATE.
-      *        10  UHR-YEAR            PIC X(04).
-      *        10  UHR-MONTH           PIC X(02).
-      *        10  UHR-DAY             PIC X(02).
-      *    05  UHR-STATE               PIC X(02).
-      *    05  UHR-CASE-POSITIVE       PIC 9(07).
-      *    05  UHR-CASE-NEGATIVE       PIC 9(07).
-      *    05  UHR-CASE-PENDING        PIC 9(07).
-      *    05  UHR-CASE-NEW            PIC 9(07).
-      *    05  UHR-HOSPITAL-CURR       PIC 9(07).
-      *    05  UHR-HOSPITAL-TOT        PIC 9(07).
-      *    05  UHR-ICU-CURR            PIC 9(07).
-      *    05  UHR-ICU-TOT             PIC 9(07).
-      *    05  UHR-VENT-CURR           PIC 9(07).
-      *    05  UHR-VENT-TOT            PIC 9(07).
-      *    05  UHR-RECOVERED           PIC 9(07).
-      *    05  UHR-DEATH               PIC 9(06).
-      *    05  UHR-DEATH-NEW           PIC 9(06).
-      *    05  UHR-D-PERCENT           PIC 99V99.
-      *    05  UHR-C-PERCENT           PIC 99V99.
+       01  UHR-RECORD                  PIC X(225).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE F.
@@ -47,7 +25,7 @@
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE        PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
-           05  UHR-PRINT-RECORD.
+           05      UHR-PRINT-RECORD.
                10  UHR-TIMESTAMP.
                    15  PR-MONTH        PIC X(02).
                    15  FILLER          PIC X(01)  VALUE '/'.
@@ -112,30 +90,9 @@
                10  FILLER    PIC X(20) VALUE 'ST BE LESS THAN 11% '.
                10  FILLER    PIC X(20) VALUE ' ***                '.
                10  FILLER    PIC X(13) VALUE '             '.
+       COPY UHRECORD.
       *---------------------------------------------------------------*
-       01  WS-HOLD-FIELDS.
-      *---------------------------------------------------------------*
-           05  WS-UHR-RECORD.
-               10  WS-UHR-DATE.
-                   15  WS-UHR-YEAR       PIC X(04).
-                   15  WS-UHR-MONTH      PIC X(02).
-                   15  WS-UHR-DAY        PIC X(02).
-               10  WS-UHR-STATE          PIC X(02).
-               10  WS-UHR-CASE-POSITIVE  PIC 9(07).
-               10  WS-UHR-CASE-NEGATIVE  PIC 9(07).
-               10  WS-UHR-CASE-PENDING   PIC 9(07).
-               10  WS-UHR-CASE-NEW       PIC 9(07).
-               10  WS-UHR-HOSPITAL-CURR  PIC 9(07).
-               10  WS-UHR-HOSPITAL-TOT   PIC 9(07).
-               10  WS-UHR-ICU-CURR       PIC 9(07).
-               10  WS-UHR-ICU-TOT        PIC 9(07).
-               10  WS-UHR-VENT-CURR      PIC 9(07).
-               10  WS-UHR-VENT-TOT       PIC 9(07).
-               10  WS-UHR-RECOVERED      PIC 9(07).
-               10  WS-UHR-DEATH          PIC 9(07).
-               10  WS-UHR-DEATH-NEW      PIC 9(07).
-               10  WS-UHR-D-PERCENT      PIC X(06).
-               10  WS-UHR-C-PERCENT      PIC X(06).
+       01  INDEX-COUNTER-FIELDS.
       *---------------------------------------------------------------*
            05  WS-PERCENT              PIC 99V9999999999.
            05  WS-C-GRAPH-PNT          PIC 999V999999.
@@ -145,6 +102,9 @@
            05  WS-PNT1                 PIC 99.
            05  WS-PNT2                 PIC 99.
            05  WS-PREV-STATE           PIC X(02).
+      *---------------------------------------------------------------*
+       01  PRINTER-CONTROL-FIELDS.
+      *---------------------------------------------------------------*
            05  TODAYS-DATE.
                10  TD-YEAR             PIC 99.
                10  TD-MONTH            PIC 99.
@@ -153,9 +113,6 @@
                88  END-OF-FILE                    VALUE 'Y'.
            05  VALID-RECORD-SW         PIC X(01)  VALUE 'Y'.
                88  VALID-RECORD                   VALUE 'Y'.
-      *---------------------------------------------------------------*
-       01  PRINTER-CONTROL-FIELDS.
-      *---------------------------------------------------------------*
            05  LINE-SPACEING           PIC 9(02)  VALUE 1.
            05  LINE-COUNT              PIC 9(03)  VALUE 999.
            05  LINES-ON-PAGE           PIC 9(03)  VALUE 60.
@@ -172,9 +129,9 @@
       *---------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-USA-HIST-FILE.
-           IF  WS-UHR-STATE NOT = WS-PREV-STATE
+           IF  UHR-STATE NOT = WS-PREV-STATE
                MOVE 999                TO  LINE-COUNT
-               MOVE  WS-UHR-STATE      TO  WS-PREV-STATE.
+               MOVE  UHR-STATE      TO  WS-PREV-STATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 3000-CLOSE-FILES.
@@ -191,20 +148,20 @@
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           IF  WS-UHR-STATE NOT = WS-PREV-STATE
+           IF  UHR-STATE NOT = WS-PREV-STATE
                MOVE 999                TO  LINE-COUNT
-               MOVE  WS-UHR-STATE      TO  WS-PREV-STATE.
-           MOVE WS-UHR-DAY             TO PR-DAY.
-           MOVE WS-UHR-MONTH           TO PR-MONTH.
-           MOVE WS-UHR-YEAR            TO PR-YEAR.
+               MOVE  UHR-STATE      TO  WS-PREV-STATE.
+           MOVE UHR-DAY             TO PR-DAY.
+           MOVE UHR-MONTH           TO PR-MONTH.
+           MOVE UHR-YEAR            TO PR-YEAR.
            MOVE ALL SPACES             TO UHR-GRAPH.
-           IF  WS-UHR-CASE-POSITIVE > ZERO
-               COMPUTE WS-PERCENT = (WS-UHR-DEATH / 331000000)
+           IF  UHR-CASE-POSITIVE > ZERO
+               COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
                MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
-      *         DIVIDE WS-UHR-DEATH     BY WS-UHR-CASE-POSITIVE
+      *         DIVIDE UHR-DEATH     BY UHR-CASE-POSITIVE
       *            GIVING WS-PERCENT
       *         MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
-               DIVIDE WS-UHR-CASE-NEW  BY WS-UHR-CASE-POSITIVE
+               DIVIDE UHR-POSITIVE-INCREASE  BY UHR-CASE-POSITIVE
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
            ELSE
@@ -213,9 +170,9 @@
            COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 1) + 6.
            IF  WS-D-GRAPH-PNT GREATER THAN 110 OR
                WS-C-GRAPH-PNT GREATER THAN 11
-               MOVE WS-UHR-DAY         TO EL-DAY
-               MOVE WS-UHR-MONTH       TO EL-MONTH
-               MOVE WS-UHR-YEAR        TO EL-YEAR
+               MOVE UHR-DAY         TO EL-DAY
+               MOVE UHR-MONTH       TO EL-MONTH
+               MOVE UHR-YEAR        TO EL-YEAR
                IF  WS-D-GRAPH-PNT GREATER THAN 110
                    MOVE WS-D-GRAPH-PNT TO EL-GRAPH-POINT
                    MOVE 'DEATH'        TO EL-CAUSE
@@ -223,23 +180,24 @@
                    MOVE WS-C-GRAPH-PNT TO EL-GRAPH-POINT
                    MOVE 'CASES'        TO EL-CAUSE
                END-IF
-      *         MOVE '   ERROR  '       TO EL-PERCENT
-               MOVE ERROR-LINE-1       TO NEXT-REPORT-LINE
+      *         MOVE '   ERROR  '      TO EL-PERCENT
+               MOVE ERROR-LINE-1      TO NEXT-REPORT-LINE
            ELSE
-               MOVE '+'                TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
+               MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
                COMPUTE WS-GRAPH-DATA = (WS-C-GRAPH-PNT * 10) + 6
-               MOVE '*'                TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
-               MOVE 3                  TO WS-PNT1
+               MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
+               MOVE 3                TO WS-PNT1
                PERFORM  2100-FORMAT-PERCENT
                    VARYING WS-PNT2 FROM 1 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
-               MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE.
+                   MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE.
+
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
        2100-FORMAT-PERCENT.
       *---------------------------------------------------------------*
-           MOVE WS-D-GRAPH-PNT            TO WS-GRAPH-PNT-X.
+           MOVE WS-C-GRAPH-PNT            TO WS-GRAPH-PNT-X.
            MOVE WS-GRAPH-PNT-X(WS-PNT2:1) TO UHR-GRAPH-DATA(WS-PNT1).
            ADD  1                         TO WS-PNT1.
            MOVE ' '                       TO UHR-GRAPH-DATA(WS-PNT1).
@@ -256,23 +214,31 @@
                       MOVE 'N' TO VALID-RECORD-SW.
            IF VALID-RECORD
                UNSTRING UHR-RECORD DELIMITED BY ','
-               INTO  WS-UHR-DATE
-                     WS-UHR-STATE
-                     WS-UHR-CASE-POSITIVE
-                     WS-UHR-CASE-NEGATIVE
-                     WS-UHR-CASE-PENDING
-                     WS-UHR-CASE-NEW
-                     WS-UHR-HOSPITAL-CURR
-                     WS-UHR-HOSPITAL-TOT
-                     WS-UHR-ICU-CURR
-                     WS-UHR-ICU-TOT
-                     WS-UHR-VENT-CURR
-                     WS-UHR-VENT-TOT
-                     WS-UHR-RECOVERED
-                     WS-UHR-DEATH
-                     WS-UHR-DEATH-NEW
-                     WS-UHR-D-PERCENT
-                     WS-UHR-C-PERCENT
+               INTO UHR-DATE
+                    UHR-STATE
+                    UHR-CASE-POSITIVE
+                    UHR-CASE-NEGATIVE
+                    UHR-CASE-PENDING
+                    UHR-HOSPITAL-CURR
+                    UHR-HOSPITAL-TOT
+                    UHR-ICU-CURR
+                    UHR-ICU-TOT
+                    UHR-VENT-CURR
+                    UHR-VENT-TOT
+                    UHR-RECOVERED
+                    UHR-DATE-CHECKED
+                    UHR-DEATH
+                    UHR-HOSPTALIZED
+                    UHR-TOT-TESTS
+                    UHR-LAST-MODIFIED
+                    UHR-TOTAL
+                    UHR-POS-NEG
+                    UHR-DEATH-INCREASE
+                    UHR-HOSPITAL-INCREASE
+                    UHR-NEGATIVE-INCREASE
+                    UHR-POSITIVE-INCREASE
+                    UHR-TOT-TEST-INCREASE
+                    UHR-HASH
            ELSE
                MOVE 'Y' TO END-OF-FILE-SW.
       *---------------------------------------------------------------*
@@ -287,10 +253,10 @@
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
            MOVE PAGE-COUNT             TO HL1-PAGE-NUM.
-           IF  WS-UHR-STATE  = '56'
+           IF  UHR-STATE  = '56'
                MOVE 'ALL'              TO HL1-REPORTING-STATE
            ELSE
-               MOVE WS-UHR-STATE       TO HL1-REPORTING-STATE.
+               MOVE UHR-STATE       TO HL1-REPORTING-STATE.
            MOVE HEADING-LINE-1         TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
            MOVE 1                      TO LINE-SPACEING.

@@ -3,7 +3,7 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT COUNTRY-FILE ASSIGN TO CNTRYREC.
+           SELECT COUNTRY-FILE ASSIGN TO GLBFILE.
            SELECT PRINT-FILE   ASSIGN TO PRTLINE.
       *===============================================================*
        DATA DIVISION.
@@ -87,10 +87,10 @@
       *---------------------------------------------------------------*
            05  DETAIL-LINE.
                10 DL-COUNTRY          PIC X(20).
-               10 FILLER              PIC X(02) VALUE SPACE.
-               10 DL-CASE-NEW         PIC ZZZZ,ZZ9.
-               10 FILLER              PIC X(02) VALUE SPACE.
-               10 DL-CASE-TOTAL       PIC Z,ZZZ,ZZ9.
+               10 FILLER              PIC X(01) VALUE SPACE.
+               10 DL-CASE-NEW         PIC Z,ZZZ,ZZ9.
+               10 FILLER              PIC X(01) VALUE SPACE.
+               10 DL-CASE-TOTAL       PIC ZZ,ZZZ,ZZ9.
                10 FILLER              PIC X(03) VALUE SPACE.
                10 DL-DEATH-NEW        PIC ZZZZ,ZZ9.
                10 FILLER              PIC X(03) VALUE SPACE.
@@ -112,13 +112,12 @@
                10  WS-COUNTRY         PIC X(44).
                10  WS-CODE            PIC X(02).
                10  WS-SLUG            PIC X(44).
-               10  WS-CASE-NEW        PIC 9(07).
-               10  WS-CASE-TOT        PIC 9(07).
+               10  WS-CASE-NEW        PIC 9(08).
+               10  WS-CASE-TOT        PIC 9(08).
                10  WS-DEATH-NEW       PIC 9(07).
                10  WS-DEATH-TOT       PIC 9(07).
                10  WS-RECVD-NEW       PIC 9(07).
                10  WS-RECVD-TOT       PIC 9(07).
-               10  WS-RECVD-TOT-2     PIC 9(07).
                10  WS-TIMESTAMP.
                    15  WS-AOD-YEAR    PIC X(04).
                    15  FILLER         PIC X(01).
@@ -243,8 +242,8 @@
                     WS-DEATH-TOT
                     WS-RECVD-NEW
                     WS-RECVD-TOT
-                    WS-RECVD-TOT-2
-                    WS-TIMESTAMP.
+                    WS-TIMESTAMP
+                    WS-PERCENT.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*

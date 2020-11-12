@@ -33,6 +33,13 @@
        01  HEADING-LINES.
       *----------------------------------------------------------*
            05  HEADING-LINE-1.
+               10 HL1-DATE.
+                   15  FILLER          PIC X(12) VALUE 'TODAYS DATE:'.
+                   15  HL1-MONTH-OUT   PIC XX.
+                   15  FILLER          PIC X     VALUE '/'.
+                   15  HL1-DAY-OUT     PIC XX.
+                   15  FILLER          PIC X     VALUE '/'.
+                   15  HL1-YEAR-OUT    PIC XX.
                10  FILLER  PIC X(20) VALUE '                    '.
                10  FILLER  PIC X(20) VALUE '                    '.
                10  FILLER  PIC X(20) VALUE '                    '.
@@ -54,14 +61,14 @@
                88  END-OF-FILE                   VALUE 'Y'.
            05  WS-CURRENT-DATE-DATA.
                10  WS-CURRENT-DATE.
-                   15  WS-CURRENT-YY       PIC 9(04).
-                   15  WS-CURRENT-MM       PIC 9(02).
-                   15  WS-CURRENT-DD       PIC 9(02).
+                   15  WS-CURRENT-YEAR     PIC 9(04).
+                   15  WS-CURRENT-MONTH    PIC 9(02).
+                   15  WS-CURRENT-DAY      PIC 9(02).
                10  WS-CURRENT-TIME.
-                   15  WS-CURRENT-HH       PIC 9(02).
-                   15  WS-CURRENT-MM       PIC 9(02).
-                   15  WS-CURRENT-SS       PIC 9(02).
-                   15  WS-CURRENT-MS       PIC 9(02).
+                   15  WS-CURRENT-HOUR     PIC 9(02).
+                   15  WS-CURRENT-MINUTES  PIC 9(02).
+                   15  WS-CURRENT-SECONDS  PIC 9(02).
+                   15  WS-CURRENT-MM-SEC   PIC 9(02).
            05 PRINTER-CONTROL-FIELDS.
                10  LINE-SPACEING           PIC 9(02) VALUE 1.
                10  LINE-COUNT              PIC 9(03) VALUE 999.
@@ -88,10 +95,14 @@
       *----------------------------------------------------------*
            OPEN    INPUT  INPUT-FILE
                    OUTPUT PRINT-FILE.
+           MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR  TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY   TO HL1-DAY-OUT.
       *----------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
       *----------------------------------------------------------*
-           MOVE DETAIL-LINE-1          TO NEXT-REPORT-LINE.
+           MOVE DETAIL-LINE-1              TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-ACCT-FILE.
       *----------------------------------------------------------*
@@ -109,30 +120,30 @@
       *----------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
                PERFORM 9100-PRINT-HEADING-LINES.
-           MOVE NEXT-REPORT-LINE TO PRINT-LINE.
+           MOVE NEXT-REPORT-LINE           TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
       *----------------------------------------------------------*
        9100-PRINT-HEADING-LINES.
       *----------------------------------------------------------*
-           MOVE PAGE-COUNT           TO HL1-PAGE-COUNT.
-           MOVE HEADING-LINE-1       TO PRINT-LINE.
+           MOVE PAGE-COUNT                 TO HL1-PAGE-COUNT.
+           MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
-           MOVE 2                    TO LINE-SPACEING.
+           MOVE 2                          TO LINE-SPACEING.
            PERFORM 9120-WRITE-PRINT-LINE.
-           ADD  1                    TO PAGE-COUNT.
-           MOVE 1                    TO LINE-SPACEING.
-           MOVE 5                    TO LINE-COUNT.
+           ADD  1                          TO PAGE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE 5                          TO LINE-COUNT.
       *----------------------------------------------------------*
        9110-WRITE-TOP-OF-PAGE.
       *----------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING PAGE.
-           MOVE SPACE                TO PRINT-LINE.
+           MOVE SPACE                      TO PRINT-LINE.
       *----------------------------------------------------------*
        9120-WRITE-PRINT-LINE.
       *----------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING LINE-SPACEING.
-           MOVE SPACE                TO PRINT-LINE.
-           ADD  1                    TO LINE-COUNT.
-           MOVE 1                    TO LINE-SPACEING.
+           MOVE SPACE                      TO PRINT-LINE.
+           ADD  1                          TO LINE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.

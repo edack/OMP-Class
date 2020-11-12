@@ -11,10 +11,39 @@
        FILE SECTION.
        FD  USA-HIST-FILE
                RECORDING MODE F.
-       01  USA-HIST-RECORD            PIC X(130).
+       01  USA-HIST-RECORD            PIC X(225).
+      *01  UHR-RECORD.
+      *    05  UHR-DATE.
+      *        10  UHR-YEAR            PIC X(04).
+      *        10  UHR-MONTH           PIC X(02).
+      *        10  UHR-DAY             PIC X(02).
+      *    05  UHR-STATE               PIC X(02).
+      *    05  UHR-CASE-POSITIVE       PIC 9(07).
+      *    05  UHR-CASE-NEGATIVE       PIC 9(07).
+      *    05  UHR-CASE-PENDING        PIC 9(07).
+      *    05  UHR-HOSPITAL-CURR       PIC 9(07).
+      *    05  UHR-HOSPITAL-TOT        PIC 9(07).
+      *    05  UHR-ICU-CURR            PIC 9(07).
+      *    05  UHR-ICU-TOT             PIC 9(07).
+      *    05  UHR-VENT-CURR           PIC 9(07).
+      *    05  UHR-VENT-TOT            PIC 9(07).
+      *    05  UHR-RECOVERED           PIC 9(07).
+      *    05  UHR-DATE-CHECKED        PIC X(20).
+      *    05  UHR-DEATH               PIC 9(06).
+      *    05  UHR-HOSPTALIZED         PIC 9(07).
+      *    05  UHR-TOT-TESTS           PIC 9(09).
+      *    05  UHR-LAST-MODIFIED       PIC X(20).
+      *    05  UHR-TOTAL               PIC 9(07).
+      *    05  UHR-POS-NEG             PIC 9(07).
+      *    05  UHR-DEATH-INCREASE      PIC 9(07).
+      *    05  UHR-HOSPITAL-INCREASE   PIC 9(06).
+      *    05  UHR-NEGATIVE-INCREASE   PIC 9(07).
+      *    05  UHR-POSITIVE-INCREASE   PIC 9(07).
+      *    05  UHR-TOT-TEST-INCREASE   PIC 9(07).
+      *    05  UHR-HASH                PIC X(35).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
-               RECORDING MODE F.
+               RECORDING MODE IS F.
        01  PRINT-RECORD.
       *    05  CC                     PIC X(01).
            05  PRINT-LINE             PIC X(130).
@@ -25,29 +54,29 @@
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE       PIC X(130).
       *---------------------------------------------------------------*
-           05  UHR-RECORD.
-               10  UHR-TIMESTAMP.
-                   15  UHR-MONTH      PIC X(02).
+           05  DL1-RECORD.
+               10  DL1-TIMESTAMP.
+                   15  DL1-MONTH      PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
-                   15  UHR-DAY        PIC X(02).
+                   15  DL1-DAY        PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
-                   15  UHR-YEAR       PIC X(04).
-               10  UHR-STATE          PIC X(02)  VALUE SPACE.
-               10  UHR-CASE-POSITIVE  PIC Z,ZZZ,ZZ9.
-               10  FILLER             PIC X(02)  VALUE SPACE.
-               10  UHR-CASE-NEGATIVE  PIC Z,ZZZ,ZZ9.
-               10  FILLER             PIC X(02)  VALUE SPACE.
-               10  UHR-CASE-PENDING   PIC ZZ,ZZ9.
+                   15   DL1-YEAR       PIC X(04).
+               10  DL1-STATE          PIC X(01)  VALUE SPACE.
+               10  DL1-CASE-POSITIVE  PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  UHR-CASE-NEW       PIC Z,ZZZ,ZZ9.
-               10  UHR-HOSPITAL-TOT   PIC Z,ZZZ,ZZ9.
-               10  UHR-ICU-TOT        PIC Z,ZZZ,ZZ9.
-               10  UHR-VENT-TOT       PIC Z,ZZZ,ZZ9.
-               10  UHR-RECOVERED      PIC ZZ,ZZZ,ZZ9.
-               10  UHR-DEATH          PIC ZZ,ZZZ,ZZ9.
-               10  UHR-DEATH-NEW      PIC Z,ZZZ,ZZ9.
+               10  DL1-CASE-NEGATIVE  PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(02)  VALUE SPACE.
-               10  UHR-PERCENT        PIC Z9.9999.
+               10  DL1-CASE-PENDING   PIC ZZ,ZZ9.
+               10  FILLER             PIC X(01)  VALUE SPACE.
+               10  DL1-CASE-NEW       PIC Z,ZZZ,ZZ9.
+               10  DL1-HOSPITAL-TOT   PIC Z,ZZZ,ZZ9.
+               10  DL1-ICU-TOT        PIC Z,ZZZ,ZZ9.
+               10  DL1-VENT-TOT       PIC Z,ZZZ,ZZ9.
+               10  DL1-RECOVERED      PIC ZZ,ZZZ,ZZ9.
+               10  DL1-DEATH          PIC ZZ,ZZZ,ZZ9.
+               10  DL1-DEATH-NEW      PIC Z,ZZZ,ZZ9.
+               10  FILLER             PIC X(02)  VALUE SPACE.
+               10  DL1-PERCENT        PIC Z9.9999.
                10  FILLER             PIC X(01)  VALUE '%'.
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
@@ -92,30 +121,9 @@
                10  FILLER    PIC X(20) VALUE '-----  -------     -'.
                10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
                10  FILLER    PIC X(10) VALUE '----      '.
+       COPY UHRECORD.
       *---------------------------------------------------------------*
        01  WS-HOLD-FIELDS.
-      *---------------------------------------------------------------*
-           05  WS-UHR-RECORD.
-               10  WS-UHR-DATE.
-                   15  WS-UHR-YEAR       PIC X(04).
-                   15  WS-UHR-MONTH      PIC X(02).
-                   15  WS-UHR-DAY        PIC X(02).
-               10  WS-UHR-STATE          PIC X(02).
-               10  WS-UHR-CASE-POSITIVE  PIC 9(07).
-               10  WS-UHR-CASE-NEGATIVE  PIC 9(07).
-               10  WS-UHR-CASE-PENDING   PIC 9(07).
-               10  WS-UHR-CASE-NEW       PIC 9(07).
-               10  WS-UHR-HOSPITAL-CURR  PIC 9(07).
-               10  WS-UHR-HOSPITAL-TOT   PIC 9(07).
-               10  WS-UHR-ICU-CURR       PIC 9(07).
-               10  WS-UHR-ICU-TOT        PIC 9(07).
-               10  WS-UHR-VENT-CURR      PIC 9(07).
-               10  WS-UHR-VENT-TOT       PIC 9(07).
-               10  WS-UHR-RECOVERED      PIC 9(07).
-               10  WS-UHR-DEATH          PIC 9(07).
-               10  WS-UHR-DEATH-NEW      PIC 9(07).
-               10  WS-UHR-D-PERCENT      PIC 99V99.
-               10  WS-UHR-C-PERCENT      PIC 99V99.
       *---------------------------------------------------------------*
            05  WS-PERCENT             PIC 99V999999.
            05  TOTAL-ACCUMULATORS.
@@ -164,26 +172,26 @@
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           MOVE WS-UHR-DAY           TO UHR-DAY.
-           MOVE WS-UHR-MONTH         TO UHR-MONTH.
-           MOVE WS-UHR-YEAR          TO UHR-YEAR.
-           MOVE WS-UHR-CASE-POSITIVE TO UHR-CASE-POSITIVE.
-           MOVE WS-UHR-CASE-NEGATIVE TO UHR-CASE-NEGATIVE.
-           MOVE WS-UHR-CASE-PENDING  TO UHR-CASE-PENDING.
-           MOVE WS-UHR-CASE-NEW      TO UHR-CASE-NEW.
-           MOVE WS-UHR-HOSPITAL-TOT  TO UHR-HOSPITAL-TOT.
-           MOVE WS-UHR-ICU-TOT       TO UHR-ICU-TOT.
-           MOVE WS-UHR-VENT-TOT      TO UHR-VENT-TOT.
-           MOVE WS-UHR-RECOVERED     TO UHR-RECOVERED.
-           MOVE WS-UHR-DEATH         TO UHR-DEATH.
-           MOVE WS-UHR-DEATH-NEW     TO UHR-DEATH-NEW.
-           IF  WS-UHR-CASE-POSITIVE > ZERO
-               DIVIDE WS-UHR-DEATH BY WS-UHR-CASE-POSITIVE
+           MOVE UHR-DAY                TO DL1-DAY.
+           MOVE UHR-MONTH              TO DL1-MONTH.
+           MOVE UHR-YEAR               TO DL1-YEAR.
+           MOVE UHR-CASE-POSITIVE      TO DL1-CASE-POSITIVE.
+           MOVE UHR-CASE-NEGATIVE      TO DL1-CASE-NEGATIVE.
+           MOVE UHR-CASE-PENDING       TO DL1-CASE-PENDING.
+           MOVE UHR-POSITIVE-INCREASE  TO DL1-CASE-NEW.
+           MOVE UHR-HOSPITAL-TOT       TO DL1-HOSPITAL-TOT.
+           MOVE UHR-ICU-TOT            TO DL1-ICU-TOT.
+           MOVE UHR-VENT-TOT           TO DL1-VENT-TOT.
+           MOVE UHR-RECOVERED          TO DL1-RECOVERED.
+           MOVE UHR-DEATH              TO DL1-DEATH.
+           MOVE UHR-DEATH-INCREASE     TO DL1-DEATH-NEW.
+           IF  UHR-CASE-POSITIVE > ZERO
+               DIVIDE UHR-DEATH BY UHR-CASE-POSITIVE
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT BY 100 GIVING UHR-PERCENT
+               MULTIPLY WS-PERCENT BY 100 GIVING DL1-PERCENT
            ELSE
-               MOVE ZERO               TO UHR-PERCENT.
-           MOVE UHR-RECORD           TO NEXT-REPORT-LINE.
+               MOVE ZERO               TO DL1-PERCENT.
+           MOVE DL1-RECORD             TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
@@ -199,23 +207,31 @@
                       MOVE 'N'         TO VALID-RECORD-SW.
            IF VALID-RECORD
                UNSTRING USA-HIST-RECORD DELIMITED BY ','
-               INTO  WS-UHR-DATE
-                     WS-UHR-STATE
-                     WS-UHR-CASE-POSITIVE
-                     WS-UHR-CASE-NEGATIVE
-                     WS-UHR-CASE-PENDING
-                     WS-UHR-CASE-NEW
-                     WS-UHR-HOSPITAL-CURR
-                     WS-UHR-HOSPITAL-TOT
-                     WS-UHR-ICU-CURR
-                     WS-UHR-ICU-TOT
-                     WS-UHR-VENT-CURR
-                     WS-UHR-VENT-TOT
-                     WS-UHR-RECOVERED
-                     WS-UHR-DEATH
-                     WS-UHR-DEATH-NEW
-                     WS-UHR-D-PERCENT
-                     WS-UHR-C-PERCENT.
+               INTO UHR-DATE
+                    UHR-STATE
+                    UHR-CASE-POSITIVE
+                    UHR-CASE-NEGATIVE
+                    UHR-CASE-PENDING
+                    UHR-HOSPITAL-CURR
+                    UHR-HOSPITAL-TOT
+                    UHR-ICU-CURR
+                    UHR-ICU-TOT
+                    UHR-VENT-CURR
+                    UHR-VENT-TOT
+                    UHR-RECOVERED
+                    UHR-DATE-CHECKED
+                    UHR-DEATH
+                    UHR-HOSPTALIZED
+                    UHR-TOT-TESTS
+                    UHR-LAST-MODIFIED
+                    UHR-TOTAL
+                    UHR-POS-NEG
+                    UHR-DEATH-INCREASE
+                    UHR-HOSPITAL-INCREASE
+                    UHR-NEGATIVE-INCREASE
+                    UHR-POSITIVE-INCREASE
+                    UHR-TOT-TEST-INCREASE
+                    UHR-HASH.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
