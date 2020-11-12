@@ -4,6 +4,14 @@ import * as mustache from "mustache";
 import * as fs from "fs";
 
 /* Render Compiler.JCL */
+const batfile = fs.readFileSync("./src/templates/zowe_template.txt").toString();
+const rendered_batfile = mustache.render(batfile, config);
+
+if (!fs.existsSync("./build")) fs.mkdirSync("./build");
+fs.writeFileSync("./build/uploadcbl.bat", rendered_batfile);
+
+console.log("Generated custom upload BAT to ./build/uploadcbl.bat");
+/* Render Compiler.JCL */
 const compiler = fs.readFileSync("./src/templates/cobcl_template.txt").toString();
 const rendered_compiler = mustache.render(compiler, config);
 

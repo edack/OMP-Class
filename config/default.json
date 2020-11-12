@@ -1,6 +1,6 @@
 {
     "process": {
-        "program_name": "COVID19A",
+        "program_name": "COVID19B",
         "input_file_name": "USAHIST",
         "output_file_name": "PRINT-FILE",
         "input_dd_name": "GLBFILE",
