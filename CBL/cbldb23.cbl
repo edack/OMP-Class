@@ -49,7 +49,7 @@
       *****************************************************             00290000
       * SQL DECLARATION FOR VIEW ACCOUNTS                 *             00300000
       *****************************************************             00310000
-                EXEC SQL DECLARE Z#T TABLE                              00320002
+                EXEC SQL DECLARE Z80843T TABLE                          00320002
                         (ACCTNO     CHAR(8)  NOT NULL,                  00330000
                          LIMIT      DECIMAL(9,2)     ,                  00340000
                          BALANCE    DECIMAL(9,2)     ,                  00350000
@@ -65,7 +65,7 @@
       * SQL CURSORS                                       *             00450000
       *****************************************************             00460000
                 EXEC SQL DECLARE CUR1  CURSOR FOR                       00470000
-                         SELECT * FROM Z#T                              00480002
+                         SELECT * FROM Z80843T                          00480002
                      END-EXEC.                                          00490000
                 EXEC SQL DECLARE CUR2  CURSOR FOR                       00491000
                          SELECT *                                       00492000
