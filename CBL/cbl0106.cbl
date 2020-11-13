@@ -8,8 +8,8 @@
       *--------------------
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT PRINT-LINE ASSIGN TO PRTLINE.
-           SELECT ACCT-REC   ASSIGN TO ACCTREC.
+           SELECT PRINT-LINE ASSIGN TO PRTFILE.
+           SELECT ACCT-REC   ASSIGN TO ACCTFILE.
       *-------------
        DATA DIVISION.
       *-------------

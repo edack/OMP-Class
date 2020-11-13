@@ -1,13 +1,13 @@
 {
     "process": {
-        "program_name": "CBLGRPH",
-        "input_file_name": "USAHIST",
+        "program_name": "CBL0106",
+        "input_file_name": "ACCT-FILE",
         "output_file_name": "PRINT-FILE",
-        "input_dd_name": "USAHIST",
-        "output_dd_name": "PRTLINE",
+        "input_dd_name": "ACCTFILE",
+        "output_dd_name": "PRTFILE",
         "organization_type": "SEQUENTIAL",
         "hlq1": "Z80843",
-        "hlq2": "NCOV19" 
+        "hlq2": "DATA" 
     },
     "compiler": {
         "job_card":[

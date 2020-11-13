@@ -5,7 +5,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT ACCT-FILE  ASSIGN TO ACCTFILE.
-           SELECT PRINT-FILE ASSIGN TO UT-S-PRTLINE.
+           SELECT PRINT-FILE ASSIGN TO UT-S-PRTFILE.
       *==========================================================*
        DATA DIVISION.
       *----------------------------------------------------------*
