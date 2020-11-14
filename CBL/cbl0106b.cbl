@@ -160,28 +160,7 @@
                10  FILLER         PIC X(06) VALUE SPACES.
                10  FILLER         PIC X(13) VALUE '-------------'.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
-       01 PRINTER-CONTROL-FIELDS.
-           05  LINE-SPACEING         PIC 9(02) VALUE 1.
-           05  LINE-COUNT            PIC 9(03) VALUE 999.
-           05  LINES-ON-PAGE         PIC 9(02) VALUE 60.
-           05  PAGE-COUNT            PIC 9(02) VALUE 1.
-           05  TOP-OF-PAGE           PIC X(02) VALUE '1'.
-           05  SINGLE-SPACE          PIC X(01) VALUE ' '.
-           05  DOUBLE-SPACE          PIC X(01) VALUE '0'.
-           05  TRIPLE-SPACE          PIC X(01) VALUE '-'.
-           05  OVERPRINT             PIC X(01) VALUE '+'.
-      *----------------------------------------------------------*
-       01  WS-CURRENT-DATE-DATA.
-           05  WS-CURRENT-DATE.
-               10  WS-CURRENT-YEAR         PIC 9(04).
-               10  WS-CURRENT-MONTH        PIC 9(02).
-               10  WS-CURRENT-DAY          PIC 9(02).
-           05  WS-CURRENT-TIME.
-               10  WS-CURRENT-HOURS        PIC 9(02).
-               10  WS-CURRENT-MINUTE       PIC 9(02).
-               10  WS-CURRENT-SECOND       PIC 9(02).
-               10  WS-CURRENT-MILLISECONDS PIC 9(02).
+       COPY PRINTCTL.
       *----------------------------------------------------------*
        01  WS-SWITCHES-SUBSCRIPTS.
            05  END-OF-FILE-SW              PIC X VALUE 'N'.

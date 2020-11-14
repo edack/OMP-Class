@@ -1,13 +1,14 @@
 {
     "process": {
-        "program_name": "CBLGRPH",
-        "input_file_name": "USAHIST",
+        "program_name": "CBL0106B",
+        "input_file_name": "ACCT-FILE",
         "output_file_name": "PRINT-FILE",
-        "input_dd_name": "USAHIST",
+        "input_dd_name": "ACCTFILE",
         "output_dd_name": "PRTFILE",
         "organization_type": "SEQUENTIAL",
+        "access_type": "SEQUENTIAL",
         "hlq1": "Z80843",
-        "hlq2": "NCOV19" 
+        "hlq2": "DATA" 
     },
     "compiler": {
         "job_card":[
@@ -28,13 +29,13 @@
             "fc_input": [
                 "SELECT {{process.input_file_name}} ASSIGN TO {{process.input_dd_name}}",
                 "    ORGANIZATION IS {{process.organization_type}}",
-                "    ACCESS MODE IS {{process.organization_type}}",
+                "    ACCESS IS {{process.access_type}}",
                 "    FILE STATUS IS WS-IN-STAT."
             ],
             "fc_output": [
                 "SELECT {{process.output_file_name}} ASSIGN TO {{process.output_dd_name}}",
                 "    ORGANIZATION IS {{process.organization_type}}",
-                "    ACCESS MODE IS {{process.organization_type}}",
+                "    ACCESS MODE IS {{process.access_type}}",
                 "    FILE STATUS IS WS-OUT-STAT."
             ]
         },
