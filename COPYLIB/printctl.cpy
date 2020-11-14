@@ -3,9 +3,9 @@
       *---------------------------------------------------------------*
            05  WS-CURRENT-DATE-DATA.
                10  WS-CURRENT-DATE.
-                   15  WS-CURRENT-YY       PIC 9(04).
-                   15  WS-CURRENT-MO       PIC 9(02).
-                   15  WS-CURRENT-DD       PIC 9(02).
+                   15  WS-CURRENT-YEAR     PIC 9(04).
+                   15  WS-CURRENT-MONTH    PIC 9(02).
+                   15  WS-CURRENT-DAY      PIC 9(02).
                10  WS-CURRENT-TIME.
                    15  WS-CURRENT-HH       PIC 9(02).
                    15  WS-CURRENT-MM       PIC 9(02).

@@ -73,10 +73,10 @@
       *---------------------------------------------------------------*
            05  HEADING-LINE-2.
                10  FILLER         PIC X(05) VALUE 'Year '.
-               10  HDR-YR         PIC 9(04).
+               10  HDR-YEAR       PIC 9(04).
                10  FILLER         PIC X(02) VALUE SPACES.
                10  FILLER         PIC X(06) VALUE 'Month '.
-               10  HDR-MO         PIC X(02).
+               10  HDR-MONTH      PIC X(02).
                10  FILLER         PIC X(02) VALUE SPACES.
                10  FILLER         PIC X(04) VALUE 'Day '.
                10  HDR-DAY        PIC X(02).
@@ -189,8 +189,8 @@
            OPEN INPUT  ACCT-FILE
                 OUTPUT PRINT-FILE.
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
-           MOVE WS-CURRENT-YEAR  TO HDR-YR.
-           MOVE WS-CURRENT-MONTH TO HDR-MO.
+           MOVE WS-CURRENT-YEAR  TO HDR-YEAR.
+           MOVE WS-CURRENT-MONTH TO HDR-MONTH.
            MOVE WS-CURRENT-DAY   TO HDR-DAY.
       *---------------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
