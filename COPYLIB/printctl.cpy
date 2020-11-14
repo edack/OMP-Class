@@ -1,18 +1,16 @@
-      *----------------------------------------------------------*
-       01  WS-SWITCHES-SUBSCRIPTS-MISC.
-      *----------------------------------------------------------*
-           05  END-OF-FILE-SW              PIC X VALUE 'N'.
-               88  END-OF-FILE                   VALUE 'Y'.
+      *---------------------------------------------------------------*
+       01  PRINTER-CONTROL-DATE-FIELDS.
+      *---------------------------------------------------------------*
            05  WS-CURRENT-DATE-DATA.
                10  WS-CURRENT-DATE.
-                   15  WS-CURRENT-YEAR     PIC 9(04).
-                   15  WS-CURRENT-MONTH    PIC 9(02).
-                   15  WS-CURRENT-DAY      PIC 9(02).
+                   15  WS-CURRENT-YY       PIC 9(04).
+                   15  WS-CURRENT-MO       PIC 9(02).
+                   15  WS-CURRENT-DD       PIC 9(02).
                10  WS-CURRENT-TIME.
-                   15  WS-CURRENT-HOUR     PIC 9(02).
-                   15  WS-CURRENT-MINUTES  PIC 9(02).
-                   15  WS-CURRENT-SECONDS  PIC 9(02).
-                   15  WS-CURRENT-MM-SEC   PIC 9(02).
+                   15  WS-CURRENT-HH       PIC 9(02).
+                   15  WS-CURRENT-MM       PIC 9(02).
+                   15  WS-CURRENT-SS       PIC 9(02).
+                   15  WS-CURRENT-MS       PIC 9(02).
            05 PRINTER-CONTROL-FIELDS.
                10  LINE-SPACEING           PIC 9(02) VALUE 1.
                10  LINE-COUNT              PIC 9(03) VALUE 999.

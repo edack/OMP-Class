@@ -148,8 +148,10 @@
                10  FILLER         PIC X(40) VALUE SPACES.
       *
        COPY PRINTCTL.
-      *
+      *---------------------------------------------------------------*
        01  WS-SWITCHES-SUBSCRIPTS.
+           05  END-OF-FILE-SW              PIC X(01) VALUE 'N'.
+               88  END-OF-FILE                       VALUE 'Y'.
            05  OVERLIMIT-COUNT             PIC 999 VALUE 0.
            05  INDEX-1                     PIC 999 VALUE 1.
            05  NO-OVERLIMIT-STATUS         PIC X(32) VALUE
