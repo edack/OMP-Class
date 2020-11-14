@@ -4,7 +4,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT USA-HIST-FILE ASSIGN TO USAHIST.
-           SELECT PRINT-FILE    ASSIGN TO PRTLINE.
+           SELECT PRINT-FILE    ASSIGN TO PRTFILE.
       *================================================================*
        DATA DIVISION.
       *----------------------------------------------------------------*
