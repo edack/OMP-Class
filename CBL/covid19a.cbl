@@ -4,26 +4,26 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT COUNTRY-FILE ASSIGN TO GLBFILE.
-           SELECT PRINT-FILE   ASSIGN TO PRTLINE.
+           SELECT PRINT-FILE   ASSIGN TO PRTFILE.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
        FILE SECTION.
        FD  COUNTRY-FILE
                RECORDING MODE F.
-       01  COUNTRY-RECORD             PIC X(130).
+       01  COUNTRY-RECORD                  PIC X(130).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE F.
        01  PRINT-RECORD.
-      *    05  CC                     PIC X(01).
-           05  PRINT-LINE             PIC X(130).
+      *    05  CC                           PIC X(01).
+           05  PRINT-LINE                  PIC X(130).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
        01   REPORT-LINES.
       *---------------------------------------------------------------*
-           05  NEXT-REPORT-LINE       PIC X(80).
+           05  NEXT-REPORT-LINE            PIC X(80).
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
               10  HL1-DATE.
@@ -86,72 +86,57 @@
               10  FILLER    PIC X(20) VALUE '---       -------   '.
       *---------------------------------------------------------------*
            05  DETAIL-LINE.
-               10 DL-COUNTRY          PIC X(20).
-               10 FILLER              PIC X(01) VALUE SPACE.
-               10 DL-CASE-NEW         PIC Z,ZZZ,ZZ9.
-               10 FILLER              PIC X(01) VALUE SPACE.
-               10 DL-CASE-TOTAL       PIC ZZ,ZZZ,ZZ9.
-               10 FILLER              PIC X(03) VALUE SPACE.
-               10 DL-DEATH-NEW        PIC ZZZZ,ZZ9.
-               10 FILLER              PIC X(03) VALUE SPACE.
-               10 DL-DEATH-TOTAL      PIC ZZZZ,ZZ9.
-               10 FILLER              PIC X(05) VALUE SPACE.
-               10 DL-PERCENT          PIC ZZ9.9999.
-               10 FILLER              PIC X(02) VALUE '% '.
+               10 DL-COUNTRY               PIC X(20).
+               10 FILLER                   PIC X(01) VALUE SPACE.
+               10 DL-CASE-NEW              PIC Z,ZZZ,ZZ9.
+               10 FILLER                   PIC X(01) VALUE SPACE.
+               10 DL-CASE-TOTAL            PIC ZZ,ZZZ,ZZ9.
+               10 FILLER                   PIC X(03) VALUE SPACE.
+               10 DL-DEATH-NEW             PIC ZZZZ,ZZ9.
+               10 FILLER                   PIC X(03) VALUE SPACE.
+               10 DL-DEATH-TOTAL           PIC ZZZZ,ZZ9.
+               10 FILLER                   PIC X(05) VALUE SPACE.
+               10 DL-PERCENT               PIC ZZ9.9999.
+               10 FILLER                   PIC X(02) VALUE '% '.
       *---------------------------------------------------------------*
            05  TOTAL-LINE.
-               10 FILLER              PIC X(31) VALUE SPACE.
-               10 TL-CASE-TOTAL       PIC ZZ,ZZZ,ZZ9.
-               10 FILLER              PIC X(12) VALUE SPACE.
-               10 TL-DEATH-TOTAL      PIC ZZ,ZZZ,ZZ9.
-               10 FILLER              PIC X(05) VALUE SPACE.
-               10 TL-PERCENT          PIC ZZ9.9999.
-               10 FILLER              PIC X(02) VALUE '% '.
-      *---------------------------------------------------------------*
-           05  HOLD-AREA.
-               10  WS-COUNTRY         PIC X(44).
-               10  WS-CODE            PIC X(02).
-               10  WS-SLUG            PIC X(44).
-               10  WS-CASE-NEW        PIC 9(08).
-               10  WS-CASE-TOT        PIC 9(08).
-               10  WS-DEATH-NEW       PIC 9(07).
-               10  WS-DEATH-TOT       PIC 9(07).
-               10  WS-RECVD-NEW       PIC 9(07).
-               10  WS-RECVD-TOT       PIC 9(07).
-               10  WS-TIMESTAMP.
-                   15  WS-AOD-YEAR    PIC X(04).
-                   15  FILLER         PIC X(01).
-                   15  WS-AOD-MONTH   PIC X(02).
-                   15  FILLER         PIC X(01).
-                   15  WS-AOD-DAY     PIC X(02).
-                   15  FILLER         PIC X(11).
-               10  WS-PERCENT         PIC 99V999999.
-           05  TOTAL-ACCUMULATORS.
-               10  TA-CASE-TOT        PIC 9(08).
-               10  TA-DEATH-TOT       PIC 9(08).
+               10 FILLER                   PIC X(31) VALUE SPACE.
+               10 TL-CASE-TOTAL            PIC ZZ,ZZZ,ZZ9.
+               10 FILLER                   PIC X(12) VALUE SPACE.
+               10 TL-DEATH-TOTAL           PIC ZZ,ZZZ,ZZ9.
+               10 FILLER                   PIC X(05) VALUE SPACE.
+               10 TL-PERCENT               PIC ZZ9.9999.
+               10 FILLER                   PIC X(02) VALUE '% '.
       *---------------------------------------------------------------*
        01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
-           05  END-OF-FILE-SW         PIC X(01)   VALUE 'N'.
-               88  END-OF-FILE                    VALUE 'Y'.
+           05  HOLD-AREA.
+               10  WS-COUNTRY              PIC X(44).
+               10  WS-CODE                 PIC X(02).
+               10  WS-SLUG                 PIC X(44).
+               10  WS-CASE-NEW             PIC 9(08).
+               10  WS-CASE-TOT             PIC 9(08).
+               10  WS-DEATH-NEW            PIC 9(07).
+               10  WS-DEATH-TOT            PIC 9(07).
+               10  WS-RECVD-NEW            PIC 9(07).
+               10  WS-RECVD-TOT            PIC 9(07).
+               10  WS-TIMESTAMP.
+                   15  WS-AOD-YEAR         PIC X(04).
+                   15  FILLER              PIC X(01).
+                   15  WS-AOD-MONTH        PIC X(02).
+                   15  FILLER              PIC X(01).
+                   15  WS-AOD-DAY          PIC X(02).
+                   15  FILLER              PIC X(11).
+               10  WS-PERCENT              PIC 99V999999.
+      *---------------------------------------------------------------*
+           05  TOTAL-ACCUMULATORS.
+               10  TA-CASE-TOT        PIC 9(08).
+               10  TA-DEATH-TOT       PIC 9(08).
            05  VALID-RECORD-SW        PIC X(01)   VALUE 'Y'.
                88  VALID-RECORD                   VALUE 'Y'.
-           05  TODAYS-DATE.
-               10  TD-YEAR            PIC 99.
-               10  TD-MONTH           PIC 99.
-               10  TD-DAY             PIC 99.
-           05  FILE-STATUS            PIC X(02).
-           05  CARRAGE-CONTROL.
-               10  TOP-OF-PAGE        PIC X       VALUE '1'.
-               10  SINGLE-SPACE       PIC X       VALUE ' '.
-               10  DOUBLE-SPACE       PIC X       VALUE '0'.
-      *---------------------------------------------------------------*
-       01  PRINTER-CONTROL-FIELDS.
-      *---------------------------------------------------------------*
-           05  LINE-SPACEING          PIC 9(02) VALUE 1.
-           05  LINE-COUNT             PIC 9(03) VALUE 999.
-           05  LINES-ON-PAGE          PIC 9(03) VALUE 56.
-           05  PAGE-COUNT             PIC 9(03) VALUE 1.
+           05  END-OF-FILE-SW         PIC X(01)   VALUE 'N'.
+               88  END-OF-FILE                    VALUE 'Y'.
+       COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
       *---------------------------------------------------------------*
@@ -169,56 +154,56 @@
       *---------------------------------------------------------------*
            OPEN INPUT  COUNTRY-FILE
                 OUTPUT PRINT-FILE.
-           ACCEPT TODAYS-DATE FROM DATE.
-           MOVE TD-YEAR                TO HL1-YEAR-OUT.
-           MOVE TD-MONTH               TO HL1-MONTH-OUT.
-           MOVE TD-DAY                 TO HL1-DAY-OUT.
+           MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
       *---------------------------------------------------------------*
        2000-PROCESS-COUNTRY-FILE.
       *---------------------------------------------------------------*
-           MOVE  WS-COUNTRY            TO DL-COUNTRY.
-           MOVE  WS-CASE-NEW           TO DL-CASE-NEW.
-           MOVE  WS-CASE-TOT           TO DL-CASE-TOTAL.
-           MOVE  WS-DEATH-NEW          TO DL-DEATH-NEW.
-           MOVE  WS-DEATH-TOT          TO DL-DEATH-TOTAL.
+           MOVE  WS-COUNTRY                TO DL-COUNTRY.
+           MOVE  WS-CASE-NEW               TO DL-CASE-NEW.
+           MOVE  WS-CASE-TOT               TO DL-CASE-TOTAL.
+           MOVE  WS-DEATH-NEW              TO DL-DEATH-NEW.
+           MOVE  WS-DEATH-TOT              TO DL-DEATH-TOTAL.
            IF  WS-CASE-TOT > ZERO
                DIVIDE WS-DEATH-TOT BY WS-CASE-TOT GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL-PERCENT
            ELSE
-               MOVE ZERO               TO DL-PERCENT.
+               MOVE ZERO                   TO DL-PERCENT.
            PERFORM 2100-ACCUMULATE-TOTALS.
-           MOVE DETAIL-LINE            TO NEXT-REPORT-LINE.
+           MOVE DETAIL-LINE                TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-COUNTRY-FILE.
       *---------------------------------------------------------------*
        2100-ACCUMULATE-TOTALS.
       *---------------------------------------------------------------*
-           ADD   WS-CASE-TOT           TO TA-CASE-TOT.
-           ADD   WS-DEATH-TOT          TO TA-DEATH-TOT.
+           ADD   WS-CASE-TOT               TO TA-CASE-TOT.
+           ADD   WS-DEATH-TOT              TO TA-DEATH-TOT.
       *---------------------------------------------------------------*
        3000-PRINT-TOTAL-LINE.
       *---------------------------------------------------------------*
            PERFORM 3100-PRINT-TOTAL-HEADING.
-           MOVE  1                     TO LINE-COUNT.
-           MOVE  TA-CASE-TOT           TO TL-CASE-TOTAL.
-           MOVE  TA-DEATH-TOT          TO TL-DEATH-TOTAL.
+           MOVE  1                         TO LINE-COUNT.
+           MOVE  TA-CASE-TOT               TO TL-CASE-TOTAL.
+           MOVE  TA-DEATH-TOT              TO TL-DEATH-TOTAL.
            IF  TA-CASE-TOT > ZERO
                DIVIDE TA-DEATH-TOT BY TA-CASE-TOT GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING TL-PERCENT
            ELSE
-               MOVE ZERO               TO TL-PERCENT.
-           MOVE TOTAL-LINE             TO  NEXT-REPORT-LINE.
+               MOVE ZERO                   TO TL-PERCENT.
+           MOVE TOTAL-LINE                 TO  NEXT-REPORT-LINE.
            PERFORM  9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
        3100-PRINT-TOTAL-HEADING.
       *---------------------------------------------------------------*
            MOVE 3 TO LINE-SPACEING.
-           MOVE TOTAL-HEADING-LINE-1   TO PRINT-LINE.
+           MOVE TOTAL-HEADING-LINE-1       TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
            MOVE 1        TO LINE-SPACEING.
-           MOVE TOTAL-HEADING-LINE-2   TO PRINT-LINE.
+           MOVE TOTAL-HEADING-LINE-2       TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
-           MOVE TOTAL-HEADING-LINE-3   TO PRINT-LINE.
+           MOVE TOTAL-HEADING-LINE-3       TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
        4000-CLOSE-FILES.
@@ -229,8 +214,8 @@
        8000-READ-COUNTRY-FILE.
       *---------------------------------------------------------------*
            READ COUNTRY-FILE
-               AT END MOVE 'Y'         TO END-OF-FILE-SW
-                      MOVE 'N'         TO VALID-RECORD-SW.
+               AT END MOVE 'Y'             TO END-OF-FILE-SW
+                      MOVE 'N'             TO VALID-RECORD-SW.
            IF VALID-RECORD
                UNSTRING COUNTRY-RECORD DELIMITED BY ','
                INTO WS-COUNTRY
@@ -249,27 +234,27 @@
       *---------------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
               PERFORM 9100-PRINT-HEADING-LINES.
-           MOVE NEXT-REPORT-LINE       TO PRINT-LINE.
+           MOVE NEXT-REPORT-LINE           TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
-           MOVE WS-AOD-YEAR            TO HL1-AOD-YY-OUT.
-           MOVE WS-AOD-MONTH           TO HL1-AOD-MM-OUT.
-           MOVE WS-AOD-DAY             TO HL1-AOD-DD-OUT.
-           MOVE PAGE-COUNT             TO HL1-PAGE-NUM.
-           MOVE HEADING-LINE-1         TO PRINT-LINE.
+           MOVE WS-AOD-YEAR                TO HL1-AOD-YY-OUT.
+           MOVE WS-AOD-MONTH               TO HL1-AOD-MM-OUT.
+           MOVE WS-AOD-DAY                 TO HL1-AOD-DD-OUT.
+           MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
+           MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
-           MOVE 2                      TO LINE-SPACEING.
-           MOVE HEADING-LINE-2         TO PRINT-LINE.
+           MOVE 2                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-2             TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
-           MOVE 1                      TO LINE-SPACEING.
-           MOVE HEADING-LINE-3         TO PRINT-LINE.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-3             TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
-           MOVE HEADING-LINE-4         TO PRINT-LINE.
+           MOVE HEADING-LINE-4             TO PRINT-LINE.
            PERFORM 9200-WRITE-PRINT-LINE.
-           ADD 1                       TO PAGE-COUNT.
-           MOVE 6                      TO LINE-COUNT.
+           ADD 1                           TO PAGE-COUNT.
+           MOVE 6                          TO LINE-COUNT.
       *---------------------------------------------------------------*
        9110-WRITE-TOP-OF-PAGE.
       *---------------------------------------------------------------*
@@ -280,6 +265,6 @@
       *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING LINE-SPACEING.
-           ADD LINE-SPACEING           TO LINE-COUNT.
-           MOVE 1                      TO LINE-SPACEING.
-           MOVE SPACE                  TO PRINT-LINE.
+           ADD LINE-SPACEING               TO LINE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE SPACE                      TO PRINT-LINE.

@@ -156,18 +156,18 @@
            MOVE UHR-YEAR            TO PR-YEAR.
            MOVE ALL SPACES             TO UHR-GRAPH.
            IF  UHR-CASE-POSITIVE > ZERO
-               COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
-               MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
-      *         DIVIDE UHR-DEATH     BY UHR-CASE-POSITIVE
-      *            GIVING WS-PERCENT
-      *         MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
+      *         COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
+      *         MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
+               DIVIDE UHR-DEATH     BY UHR-CASE-POSITIVE
+                  GIVING WS-PERCENT
+               MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
                DIVIDE UHR-POSITIVE-INCREASE  BY UHR-CASE-POSITIVE
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
            ELSE
                MOVE ZERO               TO WS-C-GRAPH-PNT
                                           WS-D-GRAPH-PNT.
-           COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 1) + 6.
+           COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6.
            IF  WS-D-GRAPH-PNT GREATER THAN 110 OR
                WS-C-GRAPH-PNT GREATER THAN 11
                MOVE UHR-DAY         TO EL-DAY
@@ -197,7 +197,7 @@
       *----------------------------------------------------------------*
        2100-FORMAT-PERCENT.
       *----------------------------------------------------------------*
-           MOVE WS-C-GRAPH-PNT            TO WS-GRAPH-PNT-X.
+           MOVE WS-D-GRAPH-PNT            TO WS-GRAPH-PNT-X.
            MOVE WS-GRAPH-PNT-X(WS-PNT2:1) TO UHR-GRAPH-DATA(WS-PNT1).
            ADD  1                         TO WS-PNT1.
            MOVE ' '                       TO UHR-GRAPH-DATA(WS-PNT1).
