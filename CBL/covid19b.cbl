@@ -204,9 +204,12 @@
                    STR-NEG-TEST-ANTIBODY-P
                    STR-TOT-TEST-ANTIGEN-P
                    STR-POS-TEST-ANTIGEN-P
+                   STR-TOT-TEST-ANTIGEN
+                   STR-POS-TEST-ANTIGEN
                    STR-FIPS-NUMBER
                    STR-POSITIVE-INCREASE
                    STR-NEGATIVE-INCREASE
+                   STR-TOTAL
                    STR-TOT-TEST-INCREASE
                    STR-POS-NEG
                    STR-DEATH-INCREASE
