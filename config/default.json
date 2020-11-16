@@ -1,0 +1,56 @@
+{
+    "process": {
+        "program_name": "COVID19A",
+        "input_file_name": "ACCT-FILE",
+        "output_file_name": "PRINT-FILE",
+        "input_dd_name": "GLBFILE",
+        "output_dd_name": "PRTFILE",
+        "organization_type": "SEQUENTIAL",
+        "access_type": "SEQUENTIAL",
+        "hlq1": "Z80843",
+        "hlq2": "NCOV19" 
+    },
+    "compiler": {
+        "job_card":[
+            "CBLCMPLR  JOB (CBLCMPLR),'COBOL COMPILER',CLASS=A,",
+            "          MSGLEVEL=(1,1),NOTIFY=&SYSUID"
+        ],
+        "job_card2":[
+            "RUNJOBTM JOB ('RUNJOBTM'),'RUNJCL',MSGCLASS=X,",
+            "             CLASS=A,NOTIFY=&SYSUID"
+        ],
+        "source_library": "CBL",
+        "copy_library": "COPYLIB",
+        "object_library": "COBOBJS.OBJ",
+        "load_library": "LOAD"
+    },
+    "initialization": {
+        "file_control": {
+            "fc_input": [
+                "SELECT {{process.input_file_name}} ASSIGN TO {{process.input_dd_name}}",
+                "    ORGANIZATION IS {{process.organization_type}}",
+                "    ACCESS IS {{process.access_type}}",
+                "    FILE STATUS IS WS-IN-STAT."
+            ],
+            "fc_output": [
+                "SELECT {{process.output_file_name}} ASSIGN TO {{process.output_dd_name}}",
+                "    ORGANIZATION IS {{process.organization_type}}",
+                "    ACCESS MODE IS {{process.access_type}}",
+                "    FILE STATUS IS WS-OUT-STAT."
+            ]
+        },
+        "file_section": {
+            "fd_input": [
+                "FD  {{process.input_file_name}}",
+                "    RECORDING MODE F.",
+                "COPY INREC001."
+            ],
+            "fd_output": [
+                "FD  {{process.output_file_name}}",
+                "    RECORDING MODE F.",
+                "01  PRINT-RECORD.",
+                "    05 PRINT-LINE                   PIC X(132)."
+]
+        }
+    }
+}
