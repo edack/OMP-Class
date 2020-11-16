@@ -1,9 +1,9 @@
 {
     "process": {
-        "program_name": "COVID19B",
+        "program_name": "COVID19A",
         "input_file_name": "ACCT-FILE",
         "output_file_name": "PRINT-FILE",
-        "input_dd_name": "STATEFL",
+        "input_dd_name": "GLBFILE",
         "output_dd_name": "PRTFILE",
         "organization_type": "SEQUENTIAL",
         "access_type": "SEQUENTIAL",

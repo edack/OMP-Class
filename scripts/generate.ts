@@ -4,7 +4,7 @@ import * as mustache from "mustache";
 import * as fs from "fs";
 
 /* Render Compiler.JCL */
-const batfile = fs.readFileSync("./src/templates/zowe_template.txt").toString();
+const batfile = fs.readFileSync("./src/templates/bat_template.txt").toString();
 const rendered_batfile = mustache.render(batfile, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
