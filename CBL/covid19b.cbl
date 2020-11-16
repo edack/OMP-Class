@@ -3,44 +3,15 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT USA-HIST-FILE ASSIGN TO USAHIST.
-           SELECT PRINT-FILE    ASSIGN TO PRTLINE.
+           SELECT USA-HIST-FILE ASSIGN TO STATEFL.
+           SELECT PRINT-FILE    ASSIGN TO UT-S-PRTFILE.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
        FILE SECTION.
        FD  USA-HIST-FILE
                RECORDING MODE F.
-       01  USA-HIST-RECORD            PIC X(225).
-      *01  UHR-RECORD.
-      *    05  UHR-DATE.
-      *        10  UHR-YEAR            PIC X(04).
-      *        10  UHR-MONTH           PIC X(02).
-      *        10  UHR-DAY             PIC X(02).
-      *    05  UHR-STATE               PIC X(02).
-      *    05  UHR-CASE-POSITIVE       PIC 9(07).
-      *    05  UHR-CASE-NEGATIVE       PIC 9(07).
-      *    05  UHR-CASE-PENDING        PIC 9(07).
-      *    05  UHR-HOSPITAL-CURR       PIC 9(07).
-      *    05  UHR-HOSPITAL-TOT        PIC 9(07).
-      *    05  UHR-ICU-CURR            PIC 9(07).
-      *    05  UHR-ICU-TOT             PIC 9(07).
-      *    05  UHR-VENT-CURR           PIC 9(07).
-      *    05  UHR-VENT-TOT            PIC 9(07).
-      *    05  UHR-RECOVERED           PIC 9(07).
-      *    05  UHR-DATE-CHECKED        PIC X(20).
-      *    05  UHR-DEATH               PIC 9(06).
-      *    05  UHR-HOSPTALIZED         PIC 9(07).
-      *    05  UHR-TOT-TESTS           PIC 9(09).
-      *    05  UHR-LAST-MODIFIED       PIC X(20).
-      *    05  UHR-TOTAL               PIC 9(07).
-      *    05  UHR-POS-NEG             PIC 9(07).
-      *    05  UHR-DEATH-INCREASE      PIC 9(07).
-      *    05  UHR-HOSPITAL-INCREASE   PIC 9(06).
-      *    05  UHR-NEGATIVE-INCREASE   PIC 9(07).
-      *    05  UHR-POSITIVE-INCREASE   PIC 9(07).
-      *    05  UHR-TOT-TEST-INCREASE   PIC 9(07).
-      *    05  UHR-HASH                PIC X(35).
+       01  USA-HIST-RECORD            PIC X(285).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -72,10 +43,12 @@
                10  DL1-HOSPITAL-TOT   PIC Z,ZZZ,ZZ9.
                10  DL1-ICU-TOT        PIC Z,ZZZ,ZZ9.
                10  DL1-VENT-TOT       PIC Z,ZZZ,ZZ9.
-               10  DL1-RECOVERED      PIC ZZ,ZZZ,ZZ9.
+               10  DL1-RECOVERED      PIC Z,ZZZ,ZZ9.
+               10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-DEATH          PIC ZZ,ZZZ,ZZ9.
+               10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-DEATH-NEW      PIC Z,ZZZ,ZZ9.
-               10  FILLER             PIC X(02)  VALUE SPACE.
+               10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-PERCENT        PIC Z9.9999.
                10  FILLER             PIC X(01)  VALUE '%'.
       *---------------------------------------------------------------*
@@ -121,34 +94,20 @@
                10  FILLER    PIC X(20) VALUE '-----  -------     -'.
                10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
                10  FILLER    PIC X(10) VALUE '----      '.
-       COPY UHRECORD.
+       COPY STATEREC.
       *---------------------------------------------------------------*
-       01  WS-HOLD-FIELDS.
+       01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
            05  WS-PERCENT             PIC 99V999999.
            05  TOTAL-ACCUMULATORS.
                10  TA-CASE-TOT        PIC 9(08).
                10  TA-DEATH-TOT       PIC 9(08).
-           05  TODAYS-DATE.
-               10  TD-YEAR            PIC 99.
-               10  TD-MONTH           PIC 99.
-               10  TD-DAY             PIC 99.
            05  FILE-STATUS            PIC X(02).
            05  END-OF-FILE-SW         PIC X(01)   VALUE 'N'.
                88  END-OF-FILE                    VALUE 'Y'.
            05  VALID-RECORD-SW        PIC X(01)   VALUE 'Y'.
                88  VALID-RECORD                   VALUE 'Y'.
-      *---------------------------------------------------------------*
-       01  PRINTER-CONTROL-FIELDS.
-      *---------------------------------------------------------------*
-           05  LINE-SPACEING          PIC 9(02) VALUE 1.
-           05  LINE-COUNT             PIC 9(03) VALUE 999.
-           05  LINES-ON-PAGE          PIC 9(03) VALUE 56.
-           05  PAGE-COUNT             PIC 9(03) VALUE 1.
-           05  TOP-OF-PAGE            PIC X     VALUE '1'.
-           05  SINGLE-SPACE           PIC X     VALUE ' '.
-           05  DOUBLE-SPACE           PIC X     VALUE '0'.
-           05  TRIPLE-SPACE           PIC X     VALUE '-'.
+       COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
       *---------------------------------------------------------------*
@@ -165,28 +124,28 @@
       *---------------------------------------------------------------*
            OPEN INPUT  USA-HIST-FILE
                 OUTPUT PRINT-FILE.
-           ACCEPT TODAYS-DATE FROM DATE.
-           MOVE TD-YEAR                TO HL1-YEAR-OUT.
-           MOVE TD-MONTH               TO HL1-MONTH-OUT.
-           MOVE TD-DAY                 TO HL1-DAY-OUT.
+           MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           MOVE UHR-DAY                TO DL1-DAY.
-           MOVE UHR-MONTH              TO DL1-MONTH.
-           MOVE UHR-YEAR               TO DL1-YEAR.
-           MOVE UHR-CASE-POSITIVE      TO DL1-CASE-POSITIVE.
-           MOVE UHR-CASE-NEGATIVE      TO DL1-CASE-NEGATIVE.
-           MOVE UHR-CASE-PENDING       TO DL1-CASE-PENDING.
-           MOVE UHR-POSITIVE-INCREASE  TO DL1-CASE-NEW.
-           MOVE UHR-HOSPITAL-TOT       TO DL1-HOSPITAL-TOT.
-           MOVE UHR-ICU-TOT            TO DL1-ICU-TOT.
-           MOVE UHR-VENT-TOT           TO DL1-VENT-TOT.
-           MOVE UHR-RECOVERED          TO DL1-RECOVERED.
-           MOVE UHR-DEATH              TO DL1-DEATH.
-           MOVE UHR-DEATH-INCREASE     TO DL1-DEATH-NEW.
-           IF  UHR-CASE-POSITIVE > ZERO
-               DIVIDE UHR-DEATH  BY UHR-CASE-POSITIVE
+           MOVE STR-DAY                TO DL1-DAY.
+           MOVE STR-MONTH              TO DL1-MONTH.
+           MOVE STR-YEAR               TO DL1-YEAR.
+           MOVE STR-CASE-POSITIVE      TO DL1-CASE-POSITIVE.
+           MOVE STR-CASE-NEGATIVE      TO DL1-CASE-NEGATIVE.
+           MOVE STR-CASE-PENDING       TO DL1-CASE-PENDING.
+           MOVE STR-POSITIVE-INCREASE  TO DL1-CASE-NEW.
+           MOVE STR-HOSPITAL-TOT       TO DL1-HOSPITAL-TOT.
+           MOVE STR-ICU-TOT            TO DL1-ICU-TOT.
+           MOVE STR-VENT-TOT           TO DL1-VENT-TOT.
+           MOVE STR-RECOVERED          TO DL1-RECOVERED.
+           MOVE STR-DEATH              TO DL1-DEATH.
+           MOVE STR-DEATH-INCREASE     TO DL1-DEATH-NEW.
+           IF  STR-CASE-POSITIVE > ZERO
+               DIVIDE STR-DEATH  BY STR-CASE-POSITIVE
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-PERCENT
            ELSE
@@ -207,31 +166,58 @@
                       MOVE 'N'         TO VALID-RECORD-SW.
            IF VALID-RECORD
                UNSTRING USA-HIST-RECORD DELIMITED BY ','
-               INTO UHR-DATE
-                    UHR-STATE
-                    UHR-CASE-POSITIVE
-                    UHR-CASE-NEGATIVE
-                    UHR-CASE-PENDING
-                    UHR-HOSPITAL-CURR
-                    UHR-HOSPITAL-TOT
-                    UHR-ICU-CURR
-                    UHR-ICU-TOT
-                    UHR-VENT-CURR
-                    UHR-VENT-TOT
-                    UHR-RECOVERED
-                    UHR-DATE-CHECKED
-                    UHR-DEATH
-                    UHR-HOSPTALIZED
-                    UHR-TOT-TESTS
-                    UHR-LAST-MODIFIED
-                    UHR-TOTAL
-                    UHR-POS-NEG
-                    UHR-DEATH-INCREASE
-                    UHR-HOSPITAL-INCREASE
-                    UHR-NEGATIVE-INCREASE
-                    UHR-POSITIVE-INCREASE
-                    UHR-TOT-TEST-INCREASE
-                    UHR-HASH.
+               INTO STR-DATE
+                   STR-STATE
+                   STR-CASE-POSITIVE
+                   STR-CASE-PROBOBALE
+                   STR-CASE-NEGATIVE
+                   STR-CASE-PENDING
+                   STR-TOT-TEST-RES-SRC
+                   STR-TOT-TEST-RESULTS
+                   STR-HOSPITAL-CURR
+                   STR-HOSPITAL-TOT
+                   STR-ICU-CURR
+                   STR-ICU-TOT
+                   STR-VENT-CURR
+                   STR-VENT-TOT
+                   STR-RECOVERED
+                   STR-DATA-GRADE
+                   STR-DATE-UPDATED
+                   STR-DATE-MODIFIED
+                   STR-CHECK-TIME
+                   STR-DEATH
+                   STR-HOSPTALIZED
+                   STR-CHECK-DATE
+                   STR-TOT-TESTS-VIRAL
+                   STR-POS-TESTS-VIRAL
+                   STR-NEG-TESTS-VIRAL
+                   STR-POS-CASES-VIRAL
+                   STR-DEATH-CONFIRMED
+                   STR-DEATH-PROBABLE
+                   STR-TOT-TEST-ENCNTR-V
+                   STR-TOT-TEST-PEOPLE-V
+                   STR-TOT-TEST-ANTIBODY
+                   STR-POS-TEST-ANTIBODY
+                   STR-NEG-TEST-ANTIBODY
+                   STR-TOT-TEST-ANTIBODY-P
+                   STR-POS-TEST-ANTIBODY-P
+                   STR-NEG-TEST-ANTIBODY-P
+                   STR-TOT-TEST-ANTIGEN-P
+                   STR-POS-TEST-ANTIGEN-P
+                   STR-FIPS-NUMBER
+                   STR-POSITIVE-INCREASE
+                   STR-NEGATIVE-INCREASE
+                   STR-TOT-TEST-INCREASE
+                   STR-POS-NEG
+                   STR-DEATH-INCREASE
+                   STR-HOSPITAL-INCREASE
+                   STR-HASH
+                   STR-COMMERCIAL-SCORE
+                   STR-NEG-REG-SCORE
+                   STR-NEGATIVE-SCORE
+                   STR-POSITIVE-SCORE
+                   STR-SCORE
+                   STR-GRADE.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*

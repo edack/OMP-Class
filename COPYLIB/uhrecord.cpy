@@ -5,7 +5,7 @@
                10 UHR-YEAR                 PIC X(04).
                10 UHR-MONTH                PIC X(02).
                10 UHR-DAY                  PIC X(02).
-               05 UHR-STATE                PIC X(02).
+           05 UHR-STATE                    PIC X(02).
            05 UHR-CASE-POSITIVE            PIC 9(08).
            05 UHR-CASE-NEGATIVE            PIC 9(08).
            05 UHR-CASE-PENDING             PIC 9(08).
