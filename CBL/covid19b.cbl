@@ -17,13 +17,13 @@
                RECORDING MODE IS F.
        01  PRINT-RECORD.
       *    05  CC                     PIC X(01).
-           05  PRINT-LINE             PIC X(130).
+           05  PRINT-LINE             PIC X(132).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
        01   REPORT-LINES.
       *---------------------------------------------------------------*
-           05  NEXT-REPORT-LINE       PIC X(130).
+           05  NEXT-REPORT-LINE       PIC X(132).
       *---------------------------------------------------------------*
            05  DL1-RECORD.
                10  DL1-TIMESTAMP.
@@ -49,7 +49,9 @@
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-DEATH-NEW      PIC Z,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-PERCENT        PIC Z9.9999.
+               10  DL1-DEATH-PERCENT  PIC Z9.9999.
+               10  FILLER             PIC X(03)  VALUE '%  '.
+               10  DL1-CASE-PERCENT   PIC Z9.9999.
                10  FILLER             PIC X(01)  VALUE '%'.
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
@@ -74,8 +76,8 @@
                10  FILLER    PIC X(20) VALUE '    PEND     NEW +  '.
                10  FILLER    PIC X(20) VALUE 'HOSPITAL   ICU      '.
                10  FILLER    PIC X(20) VALUE 'VENT                '.
-               10  FILLER    PIC X(20) VALUE 'TOTAL     NEW       '.
-               10  FILLER    PIC X(10) VALUE '         '.
+               10  FILLER    PIC X(20) VALUE 'TOTAL     NEW    DEA'.
+               10  FILLER    PIC X(20) VALUE 'TH    N CASE        '.
       *---------------------------------------------------------------*
            05  HEADING-LINE-3.
                10  FILLER    PIC X(12) VALUE '  DATE      '.
@@ -84,7 +86,7 @@
                10  FILLER    PIC X(20) VALUE ' ADMITS   ADMITS    '.
                10  FILLER    PIC X(20) VALUE 'ADMIT  RECOVER     D'.
                10  FILLER    PIC X(20) VALUE 'EATHS    DEATHS  PER'.
-               10  FILLER    PIC X(10) VALUE 'CENT      '.
+               10  FILLER    PIC X(20) VALUE 'CENT  PERCENT       '.
       *---------------------------------------------------------------*
            05  HEADING-LINE-4.
                10  FILLER    PIC X(12) VALUE '  ----      '.
@@ -93,7 +95,7 @@
                10  FILLER    PIC X(20) VALUE ' ------   ------    '.
                10  FILLER    PIC X(20) VALUE '-----  -------     -'.
                10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
-               10  FILLER    PIC X(10) VALUE '----      '.
+               10  FILLER    PIC X(20) VALUE '----  -------       '.
        COPY STATEREC.
       *---------------------------------------------------------------*
        01  SWITCHES-MISC-FIELDS.
@@ -147,9 +149,13 @@
            IF  STR-CASE-POSITIVE > ZERO
                DIVIDE STR-DEATH  BY STR-CASE-POSITIVE
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT BY 100 GIVING DL1-PERCENT
+               MULTIPLY WS-PERCENT BY 100 GIVING DL1-DEATH-PERCENT
+               DIVIDE STR-POSITIVE-INCREASE   BY STR-CASE-POSITIVE
+                   GIVING WS-PERCENT
+               MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
-               MOVE ZERO               TO DL1-PERCENT.
+               MOVE ZERO               TO DL1-DEATH-PERCENT 
+                                          DL1-CASE-PERCENT.
            MOVE DL1-RECORD             TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-USA-HIST-FILE.
