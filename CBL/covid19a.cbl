@@ -17,13 +17,13 @@
                RECORDING MODE F.
        01  PRINT-RECORD.
       *    05  CC                           PIC X(01).
-           05  PRINT-LINE                  PIC X(130).
+           05  PRINT-LINE                  PIC X(132).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
        01   REPORT-LINES.
       *---------------------------------------------------------------*
-           05  NEXT-REPORT-LINE            PIC X(80).
+           05  NEXT-REPORT-LINE            PIC X(132).
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
               10  HL1-DATE.
@@ -54,36 +54,48 @@
               10  FILLER    PIC X(20) VALUE '      NEW       TOTA'.
               10  FILLER    PIC X(20) VALUE 'L       NEW       TO'.
               10  FILLER    PIC X(20) VALUE 'TAL        FATAL    '.
+              10  FILLER    PIC X(20) VALUE '   CASE             '.
+              10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05 HEADING-LINE-3.
               10  FILLER    PIC X(20) VALUE ' COUNTRY            '.
               10  FILLER    PIC X(20) VALUE '     CASES      CASE'.
               10  FILLER    PIC X(20) VALUE 'S     DEATHS     DEA'.
               10  FILLER    PIC X(20) VALUE 'THS       PERCENT   '.
+              10  FILLER    PIC X(20) VALUE '  PERCENT           '.
+              10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05 HEADING-LINE-4.
               10  FILLER    PIC X(20) VALUE ' -------            '.
               10  FILLER    PIC X(20) VALUE '     -----      ----'.
               10  FILLER    PIC X(20) VALUE '-     ------     ---'.
               10  FILLER    PIC X(20) VALUE '---       -------   '.
+              10  FILLER    PIC X(20) VALUE '  -------           '.
+              10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05  TOTAL-HEADING-LINE-1.
               10  FILLER    PIC X(20) VALUE '                    '.
               10  FILLER    PIC X(20) VALUE 'WORLD           TOTA'.
               10  FILLER    PIC X(20) VALUE 'L                TOT'.
               10  FILLER    PIC X(20) VALUE 'AL         FATAL    '.
+              10  FILLER    PIC X(20) VALUE '                    '.
+              10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05  TOTAL-HEADING-LINE-2.
               10  FILLER    PIC X(20) VALUE '                    '.
               10  FILLER    PIC X(20) VALUE 'TOTALS          CASE'.
               10  FILLER    PIC X(20) VALUE 'S                DEA'.
               10  FILLER    PIC X(20) VALUE 'THS       PERCENT   '.
+              10  FILLER    PIC X(20) VALUE '                    '.
+              10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05  TOTAL-HEADING-LINE-3.
               10  FILLER    PIC X(20) VALUE '                    '.
               10  FILLER    PIC X(20) VALUE '------          ----'.
               10  FILLER    PIC X(20) VALUE '-                ---'.
               10  FILLER    PIC X(20) VALUE '---       -------   '.
+              10  FILLER    PIC X(20) VALUE '  -------           '.
+              10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05  DETAIL-LINE.
                10 DL-COUNTRY               PIC X(20).
@@ -96,8 +108,11 @@
                10 FILLER                   PIC X(03) VALUE SPACE.
                10 DL-DEATH-TOTAL           PIC ZZZZ,ZZ9.
                10 FILLER                   PIC X(05) VALUE SPACE.
-               10 DL-PERCENT               PIC ZZ9.9999.
-               10 FILLER                   PIC X(02) VALUE '% '.
+               10 DL-DEATH-PERCENT         PIC ZZ9.9999.
+               10 FILLER                   PIC X(02) VALUE ' %'.
+               10 FILLER                   PIC X(02) VALUE SPACE.
+               10 DL-CASE-PERCENT          PIC ZZ9.9999.
+               10 FILLER                   PIC X(02) VALUE ' %'.
       *---------------------------------------------------------------*
            05  TOTAL-LINE.
                10 FILLER                   PIC X(31) VALUE SPACE.
@@ -168,9 +183,12 @@
            MOVE  WS-DEATH-TOT              TO DL-DEATH-TOTAL.
            IF  WS-CASE-TOT > ZERO
                DIVIDE WS-DEATH-TOT BY WS-CASE-TOT GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT BY 100 GIVING DL-PERCENT
+               MULTIPLY WS-PERCENT BY 100 GIVING DL-DEATH-PERCENT
+               DIVIDE WS-CASE-NEW  BY WS-CASE-TOT GIVING WS-PERCENT
+               MULTIPLY WS-PERCENT BY 100 GIVING DL-CASE-PERCENT
            ELSE
-               MOVE ZERO                   TO DL-PERCENT.
+               MOVE ZERO                   TO DL-DEATH-PERCENT
+                                              DL-CASE-PERCENT.
            PERFORM 2100-ACCUMULATE-TOTALS.
            MOVE DETAIL-LINE                TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
