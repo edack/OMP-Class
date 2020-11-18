@@ -77,7 +77,7 @@
                10  FILLER    PIC X(20) VALUE 'HOSPITAL   ICU      '.
                10  FILLER    PIC X(20) VALUE 'VENT                '.
                10  FILLER    PIC X(20) VALUE 'TOTAL     NEW    DEA'.
-               10  FILLER    PIC X(20) VALUE 'TH    N CASE        '.
+               10  FILLER    PIC X(20) VALUE 'TH     N CASE       '.
       *---------------------------------------------------------------*
            05  HEADING-LINE-3.
                10  FILLER    PIC X(12) VALUE '  DATE      '.
@@ -86,16 +86,16 @@
                10  FILLER    PIC X(20) VALUE ' ADMITS   ADMITS    '.
                10  FILLER    PIC X(20) VALUE 'ADMIT  RECOVER     D'.
                10  FILLER    PIC X(20) VALUE 'EATHS    DEATHS  PER'.
-               10  FILLER    PIC X(20) VALUE 'CENT  PERCENT       '.
+               10  FILLER    PIC X(20) VALUE 'CENT   PERCENT      '.
       *---------------------------------------------------------------*
            05  HEADING-LINE-4.
                10  FILLER    PIC X(12) VALUE '  ----      '.
                10  FILLER    PIC X(20) VALUE '  -------  ---------'.
-               10  FILLER    PIC X(20) VALUE '  -----    -----  '.
+               10  FILLER    PIC X(20) VALUE '  -----    -----    '.
                10  FILLER    PIC X(20) VALUE ' ------   ------    '.
                10  FILLER    PIC X(20) VALUE '-----  -------     -'.
                10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
-               10  FILLER    PIC X(20) VALUE '----  -------       '.
+               10  FILLER    PIC X(20) VALUE '----   -------      '.
        COPY STATEREC.
       *---------------------------------------------------------------*
        01  SWITCHES-MISC-FIELDS.
