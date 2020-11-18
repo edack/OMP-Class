@@ -76,19 +76,7 @@
                10  FILLER  PIC X(20) VALUE '--------------------'.
                10  FILLER  PIC X(20) VALUE '----                '.
                10  FILLER  PIC X(20) VALUE '                    '.
-      *---------------------------------------------------------------*
-       01  WS-HACKER-NEWS-RECORD.
-      *---------------------------------------------------------------*
-           05  HNR-KEY                     PIC X(08).
-           05  HNR-TITLE                   PIC X(96).
-           05  HNR-VOTES                   PIC 9(04).
-           05  HNR-COMMENT-CNT             PIC 9(04).
-           05  HNR-AUTHOR                  PIC X(15).
-           05  HNR-CREATED-DATE            PIC X(16).
-           05  HNR-DATE                    PIC X(11).
-           05  HNR-TIME                    PIC X(05) JUSTIFIED RIGHT.
-           05  HNR-TIME-HH                 PIC 9(02).
-           05  HNR-TIME-MM                 PIC 9(02).
+       COPY HACKNEWS.
       *---------------------------------------------------------------*
        01  WS-SWITCHES-SUBSCRIPTS-MISC.
       *---------------------------------------------------------------*
@@ -99,27 +87,8 @@
            05  COUNTER-1                   PIC 9(02) VALUE 0.
            05  COUNTER-2                   PIC 9(02) VALUE 0.
            05  SR-STATUS                   PIC X(02) VALUE '00'.
-           05  WS-HN-TIME                  PIC 99V9999.
-           05  WS-CURRENT-DATE-DATA.
-               10  WS-CURRENT-DATE.
-                   15  WS-CURRENT-YY       PIC 9(04).
-                   15  WS-CURRENT-MM       PIC 9(02).
-                   15  WS-CURRENT-DD       PIC 9(02).
-               10  WS-CURRENT-TIME.
-                   15  WS-CURRENT-HH       PIC 9(02).
-                   15  WS-CURRENT-MM       PIC 9(02).
-                   15  WS-CURRENT-SS       PIC 9(02).
-                   15  WS-CURRENT-MS       PIC 9(02).
-           05 PRINTER-CONTROL-FIELDS.
-               10  LINE-SPACEING           PIC 9(02) VALUE 1.
-               10  LINE-COUNT              PIC 9(03) VALUE 999.
-               10  LINES-ON-PAGE           PIC 9(02) VALUE 60.
-               10  PAGE-COUNT              PIC 9(02) VALUE 1.
-               10  TOP-OF-PAGE             PIC X(02) VALUE '1'.
-               10  SINGLE-SPACE            PIC X(01) VALUE ' '.
-               10  DOUBLE-SPACE            PIC X(01) VALUE '0'.
-               10  TRIPLE-SPACE            PIC X(01) VALUE '-'.
-               10  OVERPRINT               PIC X(01) VALUE '+'.
+           05  WS-HNR-TIME                 PIC 99V9999.
+       COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
       *---------------------------------------------------------------*
@@ -137,6 +106,10 @@
            OPEN INPUT  HACKER-NEWS-FILE
                 OUTPUT SORT-FILE
                        PRINT-FILE.
+           MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
+      *     MOVE WS-CURRENT-YEAR  TO HDR-YEAR.
+      *     MOVE WS-CURRENT-MONTH TO HDR-MONTH.
+      *     MOVE WS-CURRENT-DAY   TO HDR-DAY.
       *---------------------------------------------------------------*
        2000-PROCESS-HACKER-NEWS-FILE.
       *---------------------------------------------------------------*
@@ -149,9 +122,9 @@
                COUNTER-2  > ZERO
                UNSTRING HNR-CREATED-DATE DELIMITED BY SPACE
                    INTO HNR-DATE
-                        HNR-TIME
-               INSPECT  HNR-TIME REPLACING ALL ' ' BY '0'
-               UNSTRING HNR-TIME         DELIMITED BY ':'
+                        WS-HNR-TIME
+               INSPECT  WS-HNR-TIME REPLACING ALL ' ' BY '0'
+               UNSTRING WS-HNR-TIME         DELIMITED BY ':'
                    INTO HNR-TIME-HH
                         HNR-TIME-MM
                PERFORM 2100-CALCULATE-RANKING
@@ -160,7 +133,7 @@
                MOVE HNR-TITLE          TO SR-TITLE
                                           DL-TITLE
                MOVE HNR-AUTHOR         TO SR-AUTHOR
-               MOVE WS-HN-TIME         TO SR-CREATED-TIME
+               MOVE    HNR-TIME         TO SR-CREATED-TIME
                                           DL-CREATED-TIME
                MOVE HNR-VOTES          TO SR-VOTES
                                           DL-VOTES
@@ -176,9 +149,9 @@
       *---------------------------------------------------------------*
        2100-CALCULATE-RANKING.
       *---------------------------------------------------------------*
-           COMPUTE WS-HN-TIME = HNR-TIME-HH + (HNR-TIME-MM / 60)
+           COMPUTE HNR-TIME = HNR-TIME-HH + (HNR-TIME-MM / 60)
            COMPUTE DL-RANKING = (HNR-VOTES - 1) ** .8
-                              / (WS-HN-TIME + 2) ** 1.8.
+                              / (HNR-TIME + 2) ** 1.8.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
