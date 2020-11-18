@@ -3,7 +3,7 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT USA-HIST-FILE ASSIGN TO USAHIST.
+           SELECT USA-HIST-FILE ASSIGN TO USAFILE.
            SELECT PRINT-FILE    ASSIGN TO PRTFILE.
       *================================================================*
        DATA DIVISION.
@@ -197,7 +197,7 @@
       *----------------------------------------------------------------*
        2100-FORMAT-PERCENT.
       *----------------------------------------------------------------*
-           MOVE WS-D-GRAPH-PNT            TO WS-GRAPH-PNT-X.
+           MOVE WS-C-GRAPH-PNT            TO WS-GRAPH-PNT-X.
            MOVE WS-GRAPH-PNT-X(WS-PNT2:1) TO UHR-GRAPH-DATA(WS-PNT1).
            ADD  1                         TO WS-PNT1.
            MOVE ' '                       TO UHR-GRAPH-DATA(WS-PNT1).
