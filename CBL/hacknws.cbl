@@ -27,7 +27,7 @@
            05 PRINT-LINE                   PIC X(132).
       *
        FD  HACKER-NEWS-FILE RECORDING MODE F.
-       01  HACKER-NEWS-RECORD.
+       01  HACKER-NEWS-RECORD-IN.
            05 FILLER                       PIC X(143).
        FD  SORT-FILE RECORDING MODE F.
        01  SORT-RECORD.
@@ -64,18 +64,26 @@
        01  HEADING-LINES.
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
-               10  FILLER  PIC X(20) VALUE '         LISTING OF '.
-               10  FILLER  PIC X(20) VALUE 'RECORDS WITH COBOL O'.
-               10  FILLER  PIC X(20) VALUE 'R MAINFRAME IN THE T'.
-               10  FILLER  PIC X(20) VALUE 'ITLE                '.
-               10  FILLER  PIC X(20) VALUE '              PAGE: '.
+               10  FILLER      PIC X(07) VALUE ' DATE: '.
+               10  HL1-MONTH   PIC X(02).
+               10  FILLER      PIC X(01) VALUE '/'.
+               10  HL1-DAY     PIC X(02).
+               10  FILLER      PIC X(01) VALUE '/'.
+               10  HL1-YEAR    PIC X(04).
+               10  FILLER      PIC X(03) VALUE SPACE.
+               10  FILLER      PIC X(20) VALUE '         LISTING OF '.
+               10  FILLER      PIC X(20) VALUE 'RECORDS WITH COBOL O'.
+               10  FILLER      PIC X(20) VALUE 'R MAINFRAME IN THE T'.
+               10  FILLER      PIC X(20) VALUE 'ITLE                '.
+               10  FILLER      PIC X(20) VALUE '              PAGE: '.
                10  HL1-PAGE-COUNT          PIC ZZ9.
            05  HEADING-LINE-2.
-               10  FILLER  PIC X(20) VALUE '         -----------'.
-               10  FILLER  PIC X(20) VALUE '--------------------'.
-               10  FILLER  PIC X(20) VALUE '--------------------'.
-               10  FILLER  PIC X(20) VALUE '----                '.
-               10  FILLER  PIC X(20) VALUE '                    '.
+               10  FILLER      PIC X(20) VALUE '                    '.
+               10  FILLER      PIC X(20) VALUE '         -----------'.
+               10  FILLER      PIC X(20) VALUE '--------------------'.
+               10  FILLER      PIC X(20) VALUE '--------------------'.
+               10  FILLER      PIC X(20) VALUE '----                '.
+               10  FILLER      PIC X(20) VALUE '                    '.
        COPY HACKNEWS.
       *---------------------------------------------------------------*
        01  WS-SWITCHES-SUBSCRIPTS-MISC.
@@ -107,9 +115,9 @@
                 OUTPUT SORT-FILE
                        PRINT-FILE.
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
-      *     MOVE WS-CURRENT-YEAR  TO HDR-YEAR.
-      *     MOVE WS-CURRENT-MONTH TO HDR-MONTH.
-      *     MOVE WS-CURRENT-DAY   TO HDR-DAY.
+           MOVE WS-CURRENT-YEAR  TO HL1-YEAR.
+           MOVE WS-CURRENT-MONTH TO HL1-MONTH.
+           MOVE WS-CURRENT-DAY   TO HL1-DAY.
       *---------------------------------------------------------------*
        2000-PROCESS-HACKER-NEWS-FILE.
       *---------------------------------------------------------------*
@@ -122,9 +130,9 @@
                COUNTER-2  > ZERO
                UNSTRING HNR-CREATED-DATE DELIMITED BY SPACE
                    INTO HNR-DATE
-                        WS-HNR-TIME
-               INSPECT  WS-HNR-TIME REPLACING ALL ' ' BY '0'
-               UNSTRING WS-HNR-TIME         DELIMITED BY ':'
+                        HNR-TIME
+               INSPECT  HNR-TIME REPLACING ALL ' ' BY '0'
+               UNSTRING HNR-TIME         DELIMITED BY ':'
                    INTO HNR-TIME-HH
                         HNR-TIME-MM
                PERFORM 2100-CALCULATE-RANKING
@@ -133,7 +141,7 @@
                MOVE HNR-TITLE          TO SR-TITLE
                                           DL-TITLE
                MOVE HNR-AUTHOR         TO SR-AUTHOR
-               MOVE    HNR-TIME         TO SR-CREATED-TIME
+               MOVE HNR-TIME           TO SR-CREATED-TIME
                                           DL-CREATED-TIME
                MOVE HNR-VOTES          TO SR-VOTES
                                           DL-VOTES
@@ -149,9 +157,9 @@
       *---------------------------------------------------------------*
        2100-CALCULATE-RANKING.
       *---------------------------------------------------------------*
-           COMPUTE HNR-TIME = HNR-TIME-HH + (HNR-TIME-MM / 60)
+           COMPUTE WS-HNR-TIME = HNR-TIME-HH + (HNR-TIME-MM / 60)
            COMPUTE DL-RANKING = (HNR-VOTES - 1) ** .8
-                              / (HNR-TIME + 2) ** 1.8.
+                              / (WS-HNR-TIME + 2) ** 1.8.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
@@ -169,16 +177,16 @@
       *---------------------------------------------------------------*
        8100-BREAKOUT-HACKER-RECORD.
       *---------------------------------------------------------------*
-           INSPECT HACKER-NEWS-RECORD
+           INSPECT HACKER-NEWS-RECORD-IN 
                REPLACING ALL '"' BY '#'
                AFTER INITIAL '"'.
-           INSPECT HACKER-NEWS-RECORD
+           INSPECT HACKER-NEWS-RECORD-IN 
                REPLACING ALL ',' BY ' '
                AFTER QUOTE BEFORE '#'.
-           INSPECT HACKER-NEWS-RECORD
+           INSPECT HACKER-NEWS-RECORD-IN 
                REPLACING ALL '#' BY '"'
                AFTER INITIAL '"'.
-           UNSTRING HACKER-NEWS-RECORD DELIMITED BY ','
+           UNSTRING HACKER-NEWS-RECORD-IN  DELIMITED BY ','
                 INTO HNR-KEY
                      HNR-TITLE
                      HNR-VOTES
