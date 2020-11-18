@@ -92,7 +92,7 @@
            05  HEADING-LINE-4.
                10  FILLER    PIC X(12) VALUE '  ----      '.
                10  FILLER    PIC X(20) VALUE '  -------  ---------'.
-               10  FILLER    PIC X(20) VALUE '  -----      -----  '.
+               10  FILLER    PIC X(20) VALUE '   -----     -----  '.
                10  FILLER    PIC X(20) VALUE ' ------   ------    '.
                10  FILLER    PIC X(20) VALUE '-----  -------     -'.
                10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
