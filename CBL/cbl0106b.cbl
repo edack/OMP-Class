@@ -8,7 +8,7 @@
                ORGANIZATION IS INDEXED
                RECORD KEY IS ACCT-NO
                ACCESS MODE IS SEQUENTIAL.
-           SELECT PRINT-FILE ASSIGN TO UT-S-PRTLINE.
+           SELECT PRINT-FILE ASSIGN TO UT-S-PRTFILE.
       *==========================================================*
        DATA DIVISION.
       *----------------------------------------------------------*
