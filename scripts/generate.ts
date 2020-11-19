@@ -33,7 +33,6 @@ const rendered_compiler = mustache.render(compiler, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/compiler.jcl", rendered_compiler);
-
 console.log("Generated custom JCL to ./build/compiler.jcl");
 
 /* Render Run JCL */
