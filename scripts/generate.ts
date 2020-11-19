@@ -3,22 +3,22 @@ import * as config from "config";
 import * as mustache from "mustache";
 import * as fs from "fs";
 
-/* Render Compiler.JCL */
+/* Render UloadDat_template */
 const ulbatfile = fs.readFileSync("./src/templates/UloadDat_template.txt").toString();
 const rendered_ulbatfile = mustache.render(ulbatfile, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/uploaddat.bat", rendered_ulbatfile);
-
 console.log("Generated custom data upload BAT to ./build/uploaddat.bat");
-/* Render Compiler.JCL */
+
+/* Render UloadCbl_template */
 const batfile = fs.readFileSync("./src/templates/UloadCbl_template.txt").toString();
 const rendered_batfile = mustache.render(batfile, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/uploadcbl.bat", rendered_batfile);
-
 console.log("Generated custom cbl upload BAT to ./build/uploadcbl.bat");
+
 /* Render Compiler.JCL */
 const compiler = fs.readFileSync("./src/templates/cobcl_template.txt").toString();
 const rendered_compiler = mustache.render(compiler, config);
