@@ -6,8 +6,9 @@
     "postinstall": "npm run compile:scripts",
     "append": "node ./scripts/lib/append",
     "generate": "node ./scripts/lib/generate",
-    "upload:bat": "c:/Users/edack/git/\"OMP Class\"/build/uploadcbl.bat",
-    "build": "node ./scripts/lib/append && node ./scripts/lib/generate && npm run upload:bat && npm run compile:cobol && npm run run:job",
+    "upload:cbl": "c:/Users/edack/git/\"OMP Class\"/build/uploadcbl.bat",
+    "upload:data": "c:/Users/edack/git/\"OMP Class\"/build/uploaddat.bat",
+    "build": "node ./scripts/lib/append && node ./scripts/lib/generate && npm run upload:cbl && npm run compile:cobol && npm run run:job",
     "compile:cobol": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
     "run:job": "zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
     "compile:scripts": "tsc --pretty",
@@ -16,10 +17,7 @@
     "parsest": "node ./scripts/lib/parsest",
     "allocate:input": "zowe files cre ps \"Z80843.NCOV19.GLBFILE\" --rl 130 --bs 19500 --zosmf-p OpenCOBOL",
     "allocate:usinput": "zowe files cre ps \"Z80843.NCOV19.USAFILE\" --rl 225 --bs 27900 --zosmf-p OpenCOBOL",
-    "allocate:stinput": "zowe files cre ps \"Z80843.NCOV19.STATEFL\" --rl 285 --bs 27930 --zosmf-p OpenCOBOL",
-    "upload:data": "zowe files ul ftds \"./build/countries.txt\" \"Z80843.NCOV19.GLBFILE\" --zosmf-p OpenCOBOL",
-    "upload:usdata": "zowe files ul ftds \"./build/usahist.txt\" \"Z80843.NCOV19.USAFILE\" --zosmf-p OpenCOBOL",
-    "upload:stdata": "zowe files ul ftds \"./build/statefl.txt\" \"Z80843.NCOV19.STATEFL\" --zosmf-p OpenCOBOL"
+    "allocate:stinput": "zowe files cre ps \"Z80843.NCOV19.STATEFL\" --rl 285 --bs 27930 --zosmf-p OpenCOBOL"
   },
   "author": "",
   "license": "ISC",

@@ -1,1 +1,0 @@
-zowe zos-files upload file-to-data-set \"./cbl/{{process.program_name}}.cbl\" \"{{process.hlq1}}.{{compiler.source_library}}({{process.program_name}})\" --zosmf-p OpenCOBOL

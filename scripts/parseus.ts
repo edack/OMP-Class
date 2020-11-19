@@ -26,7 +26,7 @@ https.get('https://api.covidtracking.com/v1/us/daily.json', (res: any) => {
     const convertedCSV = csv.join('\r\n');
     // console.log(csv)
 
-    fs.writeFileSync("./build/usahist.txt", convertedCSV);
+    fs.writeFileSync("./build/usafile.txt", convertedCSV);
 
   });
 

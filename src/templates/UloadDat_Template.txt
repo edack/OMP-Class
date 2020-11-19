@@ -1,0 +1,1 @@
+zowe files ul ftds \"./build/{{process.input_dd_name}}.txt\" \"{{process.hlq1}}.{{process.hlq2}}.{{process.input_dd_name}}\" --zosmf-p {{process.profile}}
