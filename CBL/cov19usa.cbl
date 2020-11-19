@@ -31,7 +31,7 @@
                    15  FILLER         PIC X(01)  VALUE '/'.
                    15  DL1-DAY        PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
-                   15   DL1-YEAR       PIC X(04).
+                   15   DL1-YEAR      PIC X(04).
                10  DL1-STATE          PIC X(01)  VALUE SPACE.
                10  DL1-CASE-POSITIVE  PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
@@ -101,15 +101,15 @@
       *---------------------------------------------------------------*
        01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
-           05  WS-PERCENT             PIC 99V999999.
+           05  WS-PERCENT                  PIC 99V999999.
            05  TOTAL-ACCUMULATORS.
-               10  TA-CASE-TOT        PIC 9(08).
-               10  TA-DEATH-TOT       PIC 9(08).
-           05  FILE-STATUS            PIC X(02).
-           05  END-OF-FILE-SW         PIC X(01)   VALUE 'N'.
-               88  END-OF-FILE                    VALUE 'Y'.
-           05  VALID-RECORD-SW        PIC X(01)   VALUE 'Y'.
-               88  VALID-RECORD                   VALUE 'Y'.
+               10  TA-CASE-TOT             PIC 9(08).
+               10  TA-DEATH-TOT            PIC 9(08).
+           05  FILE-STATUS                 PIC X(02).
+           05  END-OF-FILE-SW              PIC X(01)   VALUE 'N'.
+               88  END-OF-FILE                         VALUE 'Y'.
+           05  VALID-RECORD-SW             PIC X(01)   VALUE 'Y'.
+               88  VALID-RECORD                        VALUE 'Y'.
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -134,19 +134,19 @@
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           MOVE UHR-DAY                TO DL1-DAY.
-           MOVE UHR-MONTH              TO DL1-MONTH.
-           MOVE UHR-YEAR               TO DL1-YEAR.
-           MOVE UHR-CASE-POSITIVE      TO DL1-CASE-POSITIVE.
-           MOVE UHR-CASE-NEGATIVE      TO DL1-CASE-NEGATIVE.
-           MOVE UHR-CASE-PENDING       TO DL1-CASE-PENDING.
-           MOVE UHR-POSITIVE-INCREASE  TO DL1-CASE-NEW.
-           MOVE UHR-HOSPITAL-TOT       TO DL1-HOSPITAL-TOT.
-           MOVE UHR-ICU-TOT            TO DL1-ICU-TOT.
-           MOVE UHR-VENT-TOT           TO DL1-VENT-TOT.
-           MOVE UHR-RECOVERED          TO DL1-RECOVERED.
-           MOVE UHR-DEATH              TO DL1-DEATH.
-           MOVE UHR-DEATH-INCREASE     TO DL1-DEATH-NEW.
+           MOVE UHR-DAY                    TO DL1-DAY.
+           MOVE UHR-MONTH                  TO DL1-MONTH.
+           MOVE UHR-YEAR                   TO DL1-YEAR.
+           MOVE UHR-CASE-POSITIVE          TO DL1-CASE-POSITIVE.
+           MOVE UHR-CASE-NEGATIVE          TO DL1-CASE-NEGATIVE.
+           MOVE UHR-CASE-PENDING           TO DL1-CASE-PENDING.
+           MOVE UHR-POSITIVE-INCREASE      TO DL1-CASE-NEW.
+           MOVE UHR-HOSPITAL-TOT           TO DL1-HOSPITAL-TOT.
+           MOVE UHR-ICU-TOT                TO DL1-ICU-TOT.
+           MOVE UHR-VENT-TOT               TO DL1-VENT-TOT.
+           MOVE UHR-RECOVERED              TO DL1-RECOVERED.
+           MOVE UHR-DEATH                  TO DL1-DEATH.
+           MOVE UHR-DEATH-INCREASE         TO DL1-DEATH-NEW.
            IF  UHR-CASE-POSITIVE > ZERO
                DIVIDE UHR-DEATH  BY UHR-CASE-POSITIVE
                    GIVING WS-PERCENT
@@ -155,9 +155,9 @@
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
-               MOVE ZERO               TO DL1-DEATH-PERCENT 
-                                          DL1-CASE-PERCENT.
-           MOVE DL1-RECORD             TO NEXT-REPORT-LINE.
+               MOVE ZERO                   TO DL1-DEATH-PERCENT 
+                                              DL1-CASE-PERCENT.
+           MOVE DL1-RECORD                 TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
@@ -169,8 +169,8 @@
        8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
            READ USA-HIST-FILE
-               AT END MOVE 'Y'         TO END-OF-FILE-SW
-                      MOVE 'N'         TO VALID-RECORD-SW.
+               AT END MOVE 'Y'             TO END-OF-FILE-SW
+                      MOVE 'N'             TO VALID-RECORD-SW.
            IF VALID-RECORD
                UNSTRING USA-HIST-RECORD DELIMITED BY ','
                INTO UHR-DATE
@@ -203,24 +203,24 @@
       *---------------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
               PERFORM 9100-PRINT-HEADING-LINES.
-           MOVE NEXT-REPORT-LINE       TO PRINT-LINE.
+           MOVE NEXT-REPORT-LINE           TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
-           MOVE PAGE-COUNT             TO HL1-PAGE-NUM.
-           MOVE HEADING-LINE-1         TO PRINT-LINE.
+           MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
+           MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
-           MOVE 2                      TO LINE-SPACEING.
-           MOVE HEADING-LINE-2         TO PRINT-LINE.
+           MOVE 2                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-2             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE 1                      TO LINE-SPACEING.
-           MOVE HEADING-LINE-3         TO PRINT-LINE.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-3             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE HEADING-LINE-4         TO PRINT-LINE.
+           MOVE HEADING-LINE-4             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           ADD 1                       TO PAGE-COUNT.
-           MOVE 6                      TO LINE-COUNT.
+           ADD 1                           TO PAGE-COUNT.
+           MOVE 6                          TO LINE-COUNT.
       *---------------------------------------------------------------*
        9110-WRITE-TOP-OF-PAGE.
       *---------------------------------------------------------------*
@@ -231,6 +231,6 @@
       *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING LINE-SPACEING.
-           ADD LINE-SPACEING           TO LINE-COUNT.
-           MOVE 1                      TO LINE-SPACEING.
-           MOVE SPACE                  TO PRINT-LINE.
+           ADD LINE-SPACEING               TO LINE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE SPACE                      TO PRINT-LINE.

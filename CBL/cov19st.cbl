@@ -31,7 +31,7 @@
                    15  FILLER         PIC X(01)  VALUE '/'.
                    15  DL1-DAY        PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
-                   15   DL1-YEAR       PIC X(04).
+                   15  DL1-YEAR       PIC X(04).
                10  DL1-STATE          PIC X(01)  VALUE SPACE.
                10  DL1-CASE-POSITIVE  PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
