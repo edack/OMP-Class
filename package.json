@@ -7,7 +7,7 @@
     "generate": "node ./scripts/lib/generate",
     "upload:cbl": "c:/Users/edack/git/\"OMP Class\"/build/uploadcbl.bat",
     "upload:data": "c:/Users/edack/git/\"OMP Class\"/build/uploaddat.bat",
-    "build": "node ./scripts/lib/append && node ./scripts/lib/generate && npm run upload:cbl && npm run compile:cobol && npm run run:job",
+    "build": "node ./scripts/lib/generate && npm run upload:cbl && npm run compile:cobol && npm run run:job",
     "compile:cobol": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
     "run:job": "zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
     "compile:scripts": "tsc --pretty",
