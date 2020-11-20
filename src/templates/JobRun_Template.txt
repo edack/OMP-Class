@@ -1,0 +1,1 @@
+zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p {{process.profile}}

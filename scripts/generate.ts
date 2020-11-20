@@ -27,7 +27,12 @@ if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/uploadcbl.bat", rendered_batfile);
 console.log("Generated custom cbl upload BAT to ./build/uploadcbl.bat");
 
-/* Render Compiler.JCL */
+/* Render Compiler.JCL including BAT file*/
+const clbat = fs.readFileSync("./src/templates/compile_template.txt").toString();
+const rendered_clbat = mustache.render(clbat, config);
+if (!fs.existsSync("./build")) fs.mkdirSync("./build");
+fs.writeFileSync("./build/compiler.bat", rendered_clbat);
+
 const compiler = fs.readFileSync("./src/templates/cobcl_template.txt").toString();
 const rendered_compiler = mustache.render(compiler, config);
 
@@ -35,12 +40,20 @@ if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/compiler.jcl", rendered_compiler);
 console.log("Generated custom JCL to ./build/compiler.jcl");
 
-/* Render Run JCL */
+/* Render Run JCL including BAT file*/
+const runjob1 = fs.readFileSync("./src/templates/jobrun_template.txt").toString();
+const rendered_runjob1 = mustache.render(runjob1, config);
+
+if (!fs.existsSync("./build")) fs.mkdirSync("./build");
+fs.writeFileSync("./build/runjob.bat", rendered_runjob1);
+
 const runjob = fs.readFileSync("./src/templates/runjob_template.txt").toString();
 const rendered_runjob = mustache.render(runjob, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/runjob.jcl", rendered_runjob);
+
+
 console.log("Generated custom JCL to ./build/runjob.jcl");
 
 /* Render Source Program Part 1
