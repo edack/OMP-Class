@@ -92,36 +92,21 @@
                10  FILLER    PIC X(13) VALUE '             '.
        COPY UHRECORD.
       *----------------------------------------------------------------*
-       01  INDEX-COUNTER-FIELDS.
+       01  SWITCHES-INDEX-COUNTER-FIELDS.
       *----------------------------------------------------------------*
-           05  WS-PERCENT              PIC 99V9999999999.
-           05  WS-C-GRAPH-PNT          PIC 999V999999.
-           05  WS-D-GRAPH-PNT          PIC 999V9999999999.
-           05  WS-GRAPH-PNT-X          PIC ZZ9.99999.
-           05  WS-GRAPH-DATA           PIC 999.
-           05  WS-PNT1                 PIC 99.
-           05  WS-PNT2                 PIC 99.
-           05  WS-PREV-STATE           PIC X(02).
-      *----------------------------------------------------------------*
-       01  PRINTER-CONTROL-FIELDS.
-      *----------------------------------------------------------------*
-           05  TODAYS-DATE.
-               10  TD-YEAR             PIC 99.
-               10  TD-MONTH            PIC 99.
-               10  TD-DAY              PIC 99.
-           05  END-OF-FILE-SW          PIC X(01)  VALUE 'N'.
-               88  END-OF-FILE                    VALUE 'Y'.
-           05  VALID-RECORD-SW         PIC X(01)  VALUE 'Y'.
-               88  VALID-RECORD                   VALUE 'Y'.
-           05  LINE-SPACEING           PIC 9(02)  VALUE 1.
-           05  LINE-COUNT              PIC 9(03)  VALUE 999.
-           05  LINES-ON-PAGE           PIC 9(03)  VALUE 60.
-           05  PAGE-COUNT              PIC 9(03)  VALUE 1.
-           05  TOP-OF-PAGE             PIC X      VALUE '1'.
-           05  SINGLE-SPACE            PIC X      VALUE ' '.
-           05  DOUBLE-SPACE            PIC X      VALUE '0'.
-           05  TRIPLE-SPACE            PIC X      VALUE '-'.
-           05  OVERPRINT               PIC X      VALUE '+'.
+           05  END-OF-FILE-SW              PIC X(01)  VALUE 'N'.
+               88  END-OF-FILE                        VALUE 'Y'.
+           05  VALID-RECORD-SW             PIC X(01)  VALUE 'Y'.
+               88  VALID-RECORD                       VALUE 'Y'.
+           05  WS-PERCENT                  PIC 99V9999999999.
+           05  WS-C-GRAPH-PNT              PIC 999V999999.
+           05  WS-D-GRAPH-PNT              PIC 999V9999999999.
+           05  WS-GRAPH-PNT-X              PIC ZZ9.99999.
+           05  WS-GRAPH-DATA               PIC 999.
+           05  WS-PNT1                     PIC 99.
+           05  WS-PNT2                     PIC 99.
+           05  WS-PREV-STATE               PIC X(02).
+       COPY PRINTCTL.
       *================================================================*
        PROCEDURE DIVISION.
       *----------------------------------------------------------------*
@@ -130,8 +115,8 @@
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-USA-HIST-FILE.
            IF  UHR-STATE NOT = WS-PREV-STATE
-               MOVE 999                TO  LINE-COUNT
-               MOVE  UHR-STATE      TO  WS-PREV-STATE.
+               MOVE 999                    TO  LINE-COUNT
+               MOVE UHR-STATE              TO  WS-PREV-STATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 3000-CLOSE-FILES.
@@ -141,20 +126,20 @@
       *----------------------------------------------------------------*
            OPEN INPUT  USA-HIST-FILE
                 OUTPUT PRINT-FILE.
-           ACCEPT TODAYS-DATE FROM DATE.
-           MOVE TD-YEAR                TO HL1-YEAR-OUT.
-           MOVE TD-MONTH               TO HL1-MONTH-OUT.
-           MOVE TD-DAY                 TO HL1-DAY-OUT.
+           MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
       *----------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *----------------------------------------------------------------*
            IF  UHR-STATE NOT = WS-PREV-STATE
-               MOVE 999                TO  LINE-COUNT
-               MOVE  UHR-STATE      TO  WS-PREV-STATE.
-           MOVE UHR-DAY             TO PR-DAY.
-           MOVE UHR-MONTH           TO PR-MONTH.
-           MOVE UHR-YEAR            TO PR-YEAR.
-           MOVE ALL SPACES             TO UHR-GRAPH.
+               MOVE 999                    TO LINE-COUNT
+               MOVE  UHR-STATE             TO WS-PREV-STATE.
+           MOVE UHR-DAY                    TO PR-DAY.
+           MOVE UHR-MONTH                  TO PR-MONTH.
+           MOVE UHR-YEAR                   TO PR-YEAR.
+           MOVE ALL SPACES                 TO UHR-GRAPH.
            IF  UHR-CASE-POSITIVE > ZERO
       *         COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
       *         MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
@@ -165,23 +150,23 @@
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
            ELSE
-               MOVE ZERO               TO WS-C-GRAPH-PNT
-                                          WS-D-GRAPH-PNT.
+               MOVE ZERO                   TO WS-C-GRAPH-PNT
+                                              WS-D-GRAPH-PNT.
            COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6.
            IF  WS-D-GRAPH-PNT GREATER THAN 110 OR
                WS-C-GRAPH-PNT GREATER THAN 11
-               MOVE UHR-DAY         TO EL-DAY
-               MOVE UHR-MONTH       TO EL-MONTH
-               MOVE UHR-YEAR        TO EL-YEAR
+               MOVE UHR-DAY                TO EL-DAY
+               MOVE UHR-MONTH              TO EL-MONTH
+               MOVE UHR-YEAR               TO EL-YEAR
                IF  WS-D-GRAPH-PNT GREATER THAN 110
-                   MOVE WS-D-GRAPH-PNT TO EL-GRAPH-POINT
-                   MOVE 'DEATH'        TO EL-CAUSE
+                   MOVE WS-D-GRAPH-PNT     TO EL-GRAPH-POINT
+                   MOVE 'DEATH'            TO EL-CAUSE
                ELSE
-                   MOVE WS-C-GRAPH-PNT TO EL-GRAPH-POINT
-                   MOVE 'CASES'        TO EL-CAUSE
+                   MOVE WS-C-GRAPH-PNT     TO EL-GRAPH-POINT
+                   MOVE 'CASES'            TO EL-CAUSE
                END-IF
-      *         MOVE '   ERROR  '      TO EL-PERCENT
-               MOVE ERROR-LINE-1      TO NEXT-REPORT-LINE
+      *         MOVE '   ERROR  '           TO EL-PERCENT
+               MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
                MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
                COMPUTE WS-GRAPH-DATA = (WS-C-GRAPH-PNT * 10) + 6
@@ -197,10 +182,10 @@
       *----------------------------------------------------------------*
        2100-FORMAT-PERCENT.
       *----------------------------------------------------------------*
-           MOVE WS-C-GRAPH-PNT            TO WS-GRAPH-PNT-X.
-           MOVE WS-GRAPH-PNT-X(WS-PNT2:1) TO UHR-GRAPH-DATA(WS-PNT1).
-           ADD  1                         TO WS-PNT1.
-           MOVE ' '                       TO UHR-GRAPH-DATA(WS-PNT1).
+           MOVE WS-C-GRAPH-PNT             TO WS-GRAPH-PNT-X.
+           MOVE WS-GRAPH-PNT-X(WS-PNT2:1)  TO UHR-GRAPH-DATA(WS-PNT1).
+           ADD  1                          TO WS-PNT1.
+           MOVE ' '                        TO UHR-GRAPH-DATA(WS-PNT1).
       *----------------------------------------------------------------*
        3000-CLOSE-FILES.
       *----------------------------------------------------------------*
@@ -246,39 +231,39 @@
       *----------------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
               PERFORM 9100-PRINT-HEADING-LINES.
-           MOVE NEXT-REPORT-LINE       TO PRINT-LINE.
+           MOVE NEXT-REPORT-LINE           TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE SPACE                  TO NEXT-REPORT-LINE.
+           MOVE SPACE                      TO NEXT-REPORT-LINE.
       *----------------------------------------------------------------*
        9100-PRINT-HEADING-LINES.
       *----------------------------------------------------------------*
-           MOVE PAGE-COUNT             TO HL1-PAGE-NUM.
+           MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
            IF  UHR-STATE  = '56'
-               MOVE 'ALL'              TO HL1-REPORTING-STATE
+               MOVE 'ALL'                  TO HL1-REPORTING-STATE
            ELSE
-               MOVE UHR-STATE       TO HL1-REPORTING-STATE.
-           MOVE HEADING-LINE-1         TO PRINT-LINE.
+               MOVE UHR-STATE              TO HL1-REPORTING-STATE.
+           MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
-           MOVE 1                      TO LINE-SPACEING.
-           MOVE HEADING-LINE-2         TO PRINT-LINE.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-2             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE 2                      TO LINE-SPACEING.
-           MOVE HEADING-LINE-3         TO PRINT-LINE.
+           MOVE 2                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-3             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE 1                      TO LINE-SPACEING.
-           ADD  1                      TO PAGE-COUNT.
-           MOVE 6                      TO LINE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
+           ADD  1                          TO PAGE-COUNT.
+           MOVE 6                          TO LINE-COUNT.
       *----------------------------------------------------------------*
        9110-WRITE-TOP-OF-PAGE.
       *----------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING PAGE.
-           MOVE SPACE                  TO PRINT-LINE.
+           MOVE SPACE                      TO PRINT-LINE.
       *----------------------------------------------------------------*
        9120-WRITE-PRINT-LINE.
       *----------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING LINE-SPACEING.
-           ADD LINE-SPACEING           TO LINE-COUNT.
-           MOVE 1                      TO LINE-SPACEING.
-           MOVE SPACE                  TO PRINT-LINE.
+           ADD LINE-SPACEING               TO LINE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE SPACE                      TO PRINT-LINE.
