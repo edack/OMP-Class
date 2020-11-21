@@ -14,7 +14,7 @@
     "parse": "node ./scripts/lib/parse",
     "parseus": "node ./scripts/lib/parseus",
     "parsest": "node ./scripts/lib/parsest",
-    "allocate:input": "zowe files cre ps \"Z80843.NCOV19.GLBFILE\" --rl 130 --bs 19500 --zosmf-p OpenCOBOL",
+    "allocate:input": "zowe files cre ps \"Z00070.NCOV19.GLBFILE\" --rl 130 --bs 19500 --zosmf-p MTM2020",
     "allocate:usinput": "zowe files cre ps \"Z80843.NCOV19.USAFILE\" --rl 225 --bs 27900 --zosmf-p OpenCOBOL",
     "allocate:stinput": "zowe files cre ps \"Z00070.NCOV19.STATEFL\" --rl 285 --bs 27930 --zosmf-p MTM2020",
     "append": "node ./scripts/lib/append",
