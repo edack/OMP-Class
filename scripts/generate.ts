@@ -30,6 +30,7 @@ console.log("Generated custom cbl upload BAT to ./build/uploadcbl.bat");
 /* Render Compiler.JCL including BAT file*/
 const clbat = fs.readFileSync("./src/templates/compile_template.txt").toString();
 const rendered_clbat = mustache.render(clbat, config);
+
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/compiler.bat", rendered_clbat);
 
@@ -52,8 +53,6 @@ const rendered_runjob = mustache.render(runjob, config);
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/runjob.jcl", rendered_runjob);
-
-
 console.log("Generated custom JCL to ./build/runjob.jcl");
 
 /* Render Source Program Part 1
