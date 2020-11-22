@@ -63,7 +63,11 @@
                    15  HL1-DAY-OUT    PIC XX.
                    15  FILLER         PIC X     VALUE '/'.
                    15  HL1-YEAR-OUT   PIC XX.
-               10  FILLER             PIC X(80) VALUE SPACE.
+               10  FILLER             PIC X(30) VALUE SPACE.
+               10  FILLER             PIC X(11) VALUE 'FOR STATE: '.
+               10  HL1-STATE          PIC X(02).
+               10  FILLER             PIC X(08) VALUE SPACE.
+               10  FILLER             PIC X(30) VALUE SPACE.
                10  HL1-PAGE-COUNT-AREA.
                    15  FILLER         PIC X(04) VALUE SPACE.
                    15  FILLER         PIC X(05) VALUE 'PAGE:'.
@@ -238,6 +242,7 @@
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
            MOVE PAGE-COUNT             TO HL1-PAGE-NUM.
+           MOVE STR-STATE              TO HL1-STATE.
            MOVE HEADING-LINE-1         TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
            MOVE 2                      TO LINE-SPACEING.
