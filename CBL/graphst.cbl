@@ -141,7 +141,7 @@
            MOVE STR-YEAR                   TO PR-YEAR.
            MOVE ALL SPACES                 TO STR-GRAPH.
            IF  STR-CASE-POSITIVE > ZERO
-      *         COMPUTE WS-PERCENT = (STR-DEATH / 331000000)
+      *         COMPUTE WS-PERCENT = (STR-DEATH / 12700000)
       *         MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
                DIVIDE STR-DEATH     BY STR-CASE-POSITIVE
                   GIVING WS-PERCENT
