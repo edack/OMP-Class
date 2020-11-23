@@ -3,15 +3,15 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT USA-HIST-FILE ASSIGN TO STATEFL.
+           SELECT  ST-HIST-FILE ASSIGN TO STATEFL.
            SELECT PRINT-FILE    ASSIGN TO UT-S-PRTFILE.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
        FILE SECTION.
-       FD  USA-HIST-FILE
+       FD  ST-HIST-FILE
                RECORDING MODE F.
-       01  USA-HIST-RECORD            PIC X(285).
+       01  ST-HIST-RECORD            PIC X(285).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -120,22 +120,22 @@
        0000-MAIN-PROCESSING.
       *---------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
-           PERFORM 8000-READ-USA-HIST-FILE.
-           PERFORM 2000-PROCESS-USA-HIST-FILE
+           PERFORM 8000-READ-ST-HIST-FILE.
+           PERFORM 2000-PROCESS-ST-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 3000-CLOSE-FILES.
            GOBACK.
       *---------------------------------------------------------------*
        1000-OPEN-FILES.
       *---------------------------------------------------------------*
-           OPEN INPUT  USA-HIST-FILE
+           OPEN INPUT  ST-HIST-FILE
                 OUTPUT PRINT-FILE.
            MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
            MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
            MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
            MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
       *---------------------------------------------------------------*
-       2000-PROCESS-USA-HIST-FILE.
+       2000-PROCESS-ST-HIST-FILE.
       *---------------------------------------------------------------*
            MOVE STR-DAY                TO DL1-DAY.
            MOVE STR-MONTH              TO DL1-MONTH.
@@ -162,20 +162,20 @@
                                           DL1-CASE-PERCENT.
            MOVE DL1-RECORD             TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
-           PERFORM 8000-READ-USA-HIST-FILE.
+           PERFORM 8000-READ-ST-HIST-FILE.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
-           CLOSE USA-HIST-FILE
+           CLOSE ST-HIST-FILE
                  PRINT-FILE.
       *---------------------------------------------------------------*
-       8000-READ-USA-HIST-FILE.
+       8000-READ-ST-HIST-FILE.
       *---------------------------------------------------------------*
-           READ USA-HIST-FILE
+           READ ST-HIST-FILE
                AT END MOVE 'Y'         TO END-OF-FILE-SW
                       MOVE 'N'         TO VALID-RECORD-SW.
            IF VALID-RECORD
-               UNSTRING USA-HIST-RECORD DELIMITED BY ','
+               UNSTRING ST-HIST-RECORD DELIMITED BY ','
                INTO STR-DATE
                    STR-STATE
                    STR-CASE-POSITIVE
