@@ -197,10 +197,10 @@
                    UHR-TOTAL
                    UHR-POS-NEG
                    UHR-DEATH-INCREASE
-                   UHR-POSITIVE-INCREASE
-                   UHR-NEGATIVE-INCREASE
-                   UHR-TOT-TEST-INCREASE
                    UHR-HOSPITAL-INCREASE
+                   UHR-NEGATIVE-INCREASE
+                   UHR-POSITIVE-INCREASE
+                   UHR-TOT-TEST-INCREASE
                    UHR-HASH.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.

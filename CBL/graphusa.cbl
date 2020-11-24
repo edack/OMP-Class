@@ -98,8 +98,8 @@
                88  END-OF-FILE                        VALUE 'Y'.
            05  VALID-RECORD-SW             PIC X(01)  VALUE 'Y'.
                88  VALID-RECORD                       VALUE 'Y'.
-           05  WS-PERCENT                  PIC 99V9999999999.
-           05  WS-C-GRAPH-PNT              PIC 999V999999.
+           05  WS-PERCENT                  PIC 999V9999999999.
+           05  WS-C-GRAPH-PNT              PIC 999V9999999999.
            05  WS-D-GRAPH-PNT              PIC 999V9999999999.
            05  WS-GRAPH-PNT-X              PIC ZZ9.99999.
            05  WS-GRAPH-DATA               PIC 999.
@@ -114,9 +114,6 @@
       *----------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-USA-HIST-FILE.
-           IF  UHR-STATE NOT = WS-PREV-STATE
-               MOVE 999                    TO  LINE-COUNT
-               MOVE UHR-STATE              TO  WS-PREV-STATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 3000-CLOSE-FILES.
