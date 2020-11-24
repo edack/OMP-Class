@@ -1,1 +1,1 @@
- zowe files cre ps \"{{process.hlq1}}.{{process.hlq2}}.{{process.input_dd_name}}\" --rl 225 --bs 27900 --zosmf-p {{process.profile}}
+ zowe files cre ps \"{{process.hlq1}}.{{process.hlq2}}.{{process.input_dd_name}}\" --rl {{process.lrecl}} --bs {{process.blksize}} --zosmf-p {{process.profile}}
