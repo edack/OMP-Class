@@ -32,8 +32,8 @@
                    15  DL1-DAY        PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
                    15  DL1-YEAR       PIC X(04).
-               10  DL1-STATE          PIC X(01)  VALUE SPACE.
-               10  DL1-CASE-POSITIVE  PIC ZZ,ZZZ,ZZ9.
+               10  DL1-STATE          PIC X(02)  VALUE SPACE.
+               10  DL1-CASE-POSITIVE  PIC Z,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-CASE-NEGATIVE  PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(02)  VALUE SPACE.
@@ -62,7 +62,7 @@
                    15  FILLER         PIC X     VALUE '/'.
                    15  HL1-DAY-OUT    PIC XX.
                    15  FILLER         PIC X     VALUE '/'.
-                   15  HL1-YEAR-OUT   PIC XX.
+                   15  HL1-YEAR-OUT   PIC X(04).
                10  FILLER             PIC X(30) VALUE SPACE.
                10  FILLER             PIC X(11) VALUE 'FOR STATE: '.
                10  HL1-STATE          PIC X(02).
@@ -140,6 +140,7 @@
            MOVE STR-DAY                TO DL1-DAY.
            MOVE STR-MONTH              TO DL1-MONTH.
            MOVE STR-YEAR               TO DL1-YEAR.
+      *     MOVE STR-STATE              TO DL1-STATE.
            MOVE STR-CASE-POSITIVE      TO DL1-CASE-POSITIVE.
            MOVE STR-CASE-NEGATIVE      TO DL1-CASE-NEGATIVE.
            MOVE STR-CASE-PENDING       TO DL1-CASE-PENDING.
