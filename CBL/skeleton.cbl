@@ -19,11 +19,11 @@
       *---------------------------------------------------------------*
        FILE SECTION.
       *---------------------------------------------------------------*
-       FD  INPUT-FILE RECORDING MODE F.
+       FD  {{process.input_file_name}} RECORDING MODE F.
        01  INPUT-RECORD.
            05 FILLER                       PIC X(132).
       *
-       FD  PRINT-FILE RECORDING MODE F.
+       FD  {{process.output_file_name}} RECORDING MODE F.
        01  PRINT-RECORD.
       *    05 CC                           PIC X(01).
            05 PRINT-LINE                   PIC X(132).
@@ -61,7 +61,9 @@
        01  WS-SWITCHES-SUBSCRIPTS-MISC.
       *---------------------------------------------------------------*
            05  END-OF-FILE-SW              PIC X VALUE 'N'.
-               88  END-OF-FILE                   VALUE 'Y'.
+               88  END-OF-FILE                   VALUE 'Y'.  
+           05  {{process.input_file_name}}-STATUS    PIC X(02) VALUE '00'.
+           05  {{process.output_file_name}}-STATUS    PIC X(02) VALUE '00'.
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -77,8 +79,8 @@
       *---------------------------------------------------------------*
        1000-OPEN-FILES.
       *---------------------------------------------------------------*
-           OPEN    INPUT  INPUT-FILE
-                   OUTPUT PRINT-FILE.
+           OPEN    INPUT  {{process.input_file_name}}
+                   OUTPUT {{process.output_file_name}}.
            MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
            MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
            MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
@@ -92,12 +94,12 @@
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
-           CLOSE INPUT-FILE
-                 PRINT-FILE.
+           CLOSE {{process.input_file_name}}
+                 {{process.output_file_name}}.
       *---------------------------------------------------------------*
        8000-READ-ACCT-FILE.
       *---------------------------------------------------------------*
-           READ INPUT-FILE
+           READ {{process.input_file_name}}
                AT END MOVE 'Y' TO END-OF-FILE-SW.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
