@@ -55,8 +55,8 @@ if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/runjob.jcl", rendered_runjob);
 console.log("Generated custom JCL to ./build/runjob.jcl");
 
-/* Render Source Program Part 1
-const source = fs.readFileSync("./build/source.cbl").toString();
+/* Render Source Program Part 1  
+const source = fs.readFileSync("./cbl/skeleton.cbl").toString();
 const rendered_source = mustache.render(source, config);
 fs.writeFileSync("./build/source.cbl", rendered_source);
 

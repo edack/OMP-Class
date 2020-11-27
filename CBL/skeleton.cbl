@@ -1,14 +1,19 @@
       *===============================================================*
        IDENTIFICATION DIVISION.
-       PROGRAM-ID.    CBL0106A.
+       PROGRAM-ID.    {{process.program_name}}.
        AUTHOR.        EDWIN ACKERMAN.
        INSTALLATION.  MORONS LOSERS AND BIMBOS LP.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT INPUT-FILE  ASSIGN TO ACCTREC.
-           SELECT PRINT-FILE  ASSIGN TO PRTLINE.
+           {{#initialization.file_control.fc_input}}
+            {{.}}
+            {{/initialization.file_control.fc_input}}
+
+            {{#initialization.file_control.fc_output}}
+            {{.}}
+            {{/initialization.file_control.fc_output}}
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*

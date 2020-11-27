@@ -6,7 +6,7 @@ import * as fs from "fs";
 /* Append all 3 Cobol Parts into 1*/
 
 
-const template = fs.readFileSync("./src/templates/skeleton.cbl").toString();
+const template = fs.readFileSync("./cbl/skeleton.cbl").toString();
 
 if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/source.cbl", template);
