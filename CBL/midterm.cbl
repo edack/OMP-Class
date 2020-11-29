@@ -9,7 +9,7 @@
            SELECT CLAIMS-FILE
                ASSIGN TO CLAIMFL.
            SELECT PRINT-FILE
-               ASSIGN TO PRTLINE.
+               ASSIGN TO PRTFILE.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
