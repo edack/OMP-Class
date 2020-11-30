@@ -1,9 +1,9 @@
 {{#compiler.job_card2}}
 //{{{.}}}
 {{/compiler.job_card2}}
+// SET PGM='{{process.program_name}}'
 // SET HLQ1='{{process.hlq1}}'
 // SET HLQ2='{{process.hlq2}}'
-// SET PGM='{{process.program_name}}'
 // SET INDD='{{process.input_dd_name}}'
 // SET OUTDD='{{process.output_dd_name}}'
 //JOBLIB   DD DISP=SHR,DSN=&HLQ1..{{compiler.load_library}}
@@ -20,14 +20,14 @@
 //DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,
 //        UNIT=SYSDA,DISP=(NEW,CATLG,DELETE),
 //        SPACE=(TRK,(10,5),RLSE),
-//        DCB=(RECFM=FB,LRECL=131,BLKSIZE=0)
+//        DCB=(RECFM=FB,LRECL=131,BLKSIZE=27903)
 //*====================================================================
 //*   RUN THE REPORT
 //*====================================================================
 //STEPLIB DD DSN=&HLQ1..COPYLIB,DISP=SHR
 //COBOL   EXEC  PGM=&PGM.
 //{{process.input_dd_name}}  DD DSN=&HLQ1..&HLQ2..&INDD,DISP=SHR
-//*{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
-//{{process.output_dd_name}}  DD SYSOUT=*
+//{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
+//*{{process.output_dd_name}}  DD SYSOUT=*
 //SYSPRINT DD SYSOUT=*
 //SYSOUT  DD SYSOUT=*
