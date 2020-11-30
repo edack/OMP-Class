@@ -27,7 +27,7 @@
 //STEPLIB DD DSN=&HLQ1..COPYLIB,DISP=SHR
 //COBOL   EXEC  PGM=&PGM.
 //{{process.input_dd_name}}  DD DSN=&HLQ1..&HLQ2..&INDD,DISP=SHR
-//{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
-//*{{process.output_dd_name}}  DD SYSOUT=*
+//*{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
+//{{process.output_dd_name}}  DD SYSOUT=*
 //SYSPRINT DD SYSOUT=*
 //SYSOUT  DD SYSOUT=*
