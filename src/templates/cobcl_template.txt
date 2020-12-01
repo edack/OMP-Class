@@ -1,5 +1,6 @@
-//CBLCLG01 JOB 1, NOTIFY=&SYSUID,
-// MSGCLASS=H,MSGLEVEL=(1,1),TIME=(,4),REGION=144M,COND=(16,LT)
+{{#compiler.job_card}}
+//{{{.}}}
+{{/compiler.job_card}}
 //*
 // SET COBPGM='{{process.program_name}}'
 // SET COBSRC='{{compiler.source_library}}'
