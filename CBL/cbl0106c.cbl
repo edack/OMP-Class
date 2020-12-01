@@ -1,42 +1,42 @@
-      *==========================================================*
+      *===============================================================*
        IDENTIFICATION DIVISION.
        PROGRAM-ID.    CBL0106C.
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT PRINT-FILE ASSIGN TO UT-S-PRTLINE.
-      *==========================================================*
+      *===============================================================*
        DATA DIVISION.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        FILE SECTION.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        FD  PRINT-FILE RECORDING MODE F.
        01  PRINT-RECORD.
       *    05 CC                     PIC X(01).
            05 PRINT-LINE             PIC X(132).
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        01  PRINT-LINES.
            05  NEXT-REPORT-LINE      PIC X(132) VALUE SPACE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  STATE-COUNT-LINE.
                10 SCL-STATE-NAME     PIC X(19) VALUE SPACE.
                10 FILLER             PIC X(05) VALUE '   = '.
                10 SCL-STATE-COUNT    PIC ZZ9.
                10 FILLER             PIC X(59) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  OVERLIMIT-STATUS-COUNT.
                10 FILLER             PIC X(24) VALUE
                   'Account Overlimit Cnt = '.
                10 OSC-COUNT          PIC ZZ9.
                10 FILLER             PIC X(66) VALUE SPACE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  OVERLIMIT-STATUS-LINE.
                10 FILLER             PIC X(20) VALUE SPACE.
                10 OSL-MESSAGE        PIC X(30) VALUE SPACE.
                10 FILLER             PIC X(50) VALUE SPACE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  WS-PRINT-RECORD.
                10  WS-ACCT-NUM-O     PIC X(8).
                10  FILLER            PIC X(02) VALUE SPACES.
@@ -46,7 +46,7 @@
                10  FILLER            PIC X(03) VALUE SPACES.
                10  WS-ACCT-BALANCE-O PIC $$,$$$,$$9.99.
                10  FILLER            PIC X(02) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  OVERLIMIT-DETAIL.
                10  OD-ACCT-NUM       PIC X(8).
                10  FILLER            PIC X(02) VALUE SPACES.
@@ -56,9 +56,9 @@
                10  FILLER            PIC X(02) VALUE SPACES.
                10  OD-OVER-AMT       PIC $$,$$$,$$9.99.
                10  FILLER            PIC X(23) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        01  HEADING-LINES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  HEADING-LINE-1.
                10  FILLER      PIC X(20) VALUE 'Financial Report for'.
                10  FILLER      PIC X(38) VALUE SPACES.
@@ -66,7 +66,7 @@
                10  FILLER      PIC X(38) VALUE SPACES.
                10  FILLER      PIC X(10) VALUE 'PAGE NUM'.
                10  H1-PAGE-NUM PIC 999.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  HEADING-LINE-2.
                10  FILLER         PIC X(05) VALUE 'Year '.
                10  HDR-YR         PIC 9(04).
@@ -77,7 +77,7 @@
                10  FILLER         PIC X(04) VALUE 'Day '.
                10  HDR-DAY        PIC X(02).
                10  FILLER         PIC X(56) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  HEADING-LINE-3.
                10  FILLER         PIC X(08) VALUE 'Account '.
                10  FILLER         PIC X(02) VALUE SPACES.
@@ -87,7 +87,7 @@
                10  FILLER         PIC X(07) VALUE SPACES.
                10  FILLER         PIC X(08) VALUE 'Balance '.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  HEADING-LINE-4.
                10  FILLER         PIC X(08) VALUE '--------'.
                10  FILLER         PIC X(02) VALUE SPACES.
@@ -97,16 +97,16 @@
                10  FILLER         PIC X(03) VALUE SPACES.
                10  FILLER         PIC X(13) VALUE '-------------'.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        01  TRAILER-LINES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  TRAILER-1.
                10  FILLER         PIC X(31) VALUE SPACES.
                10  FILLER         PIC X(14) VALUE '--------------'.
                10  FILLER         PIC X(02) VALUE SPACES.
                10  FILLER         PIC X(14) VALUE '--------------'.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  TRAILER-2.
                10  FILLER         PIC X(22) VALUE SPACES.
                10  FILLER         PIC X(08) VALUE 'Totals ='.
@@ -115,14 +115,14 @@
                10  FILLER         PIC X(02) VALUE SPACES.
                10  TBALANCE-O     PIC $$$,$$$,$$9.99.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  STATE-TRAILER-1.
                10  FILLER  PIC X(20) VALUE '         Listing of '.
                10  FILLER  PIC X(20) VALUE 'States and Count of '.
                10  FILLER  PIC X(20) VALUE 'Presidents          '.
                10  FILLER  PIC X(20) VALUE '                    '.
                10  FILLER  PIC X(20) VALUE '                    '.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  TRAILER-LINE-1.
                10  FILLER         PIC X(08) VALUE 'Account '.
                10  FILLER         PIC X(02) VALUE SPACES.
@@ -132,7 +132,7 @@
                10  FILLER         PIC X(06) VALUE SPACES.
                10  FILLER         PIC X(13) VALUE 'Amt Overlimit'.
                10  FILLER         PIC X(40) VALUE SPACES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            05  TRAILER-LINE-2.
                10  FILLER         PIC X(08) VALUE '--------'.
                10  FILLER         PIC X(02) VALUE SPACES.
@@ -143,56 +143,36 @@
                10  FILLER         PIC X(13) VALUE '-------------'.
                10  FILLER         PIC X(40) VALUE SPACES.
 
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
       * SQL INCLUDE FOR SQLCA
-      *----------------------------------------------------------*
-                EXEC SQL INCLUDE SQLCA  END-EXEC.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
+           EXEC SQL INCLUDE SQLCA  END-EXEC.
+      *---------------------------------------------------------------*
       * SQL DECLARATION FOR VIEW ACCOUNTS
-      *----------------------------------------------------------*
-                EXEC SQL DECLARE Z80843T TABLE
-                        (ACCTNO     CHAR(8)  NOT NULL,
-                         LIMIT      DECIMAL(9,2)     ,
-                         BALANCE    DECIMAL(9,2)     ,
-                         SURNAME    CHAR(20) NOT NULL,
-                         FIRSTN     CHAR(15) NOT NULL,
-                         ADDRESS1   CHAR(25) NOT NULL,
-                         ADDRESS2   CHAR(20) NOT NULL,
-                         ADDRESS3   CHAR(15) NOT NULL,
-                         RESERVED   CHAR(7)  NOT NULL,
-                         COMMENTS   CHAR(50) NOT NULL)
-                         END-EXEC.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
+           EXEC SQL DECLARE Z80843T TABLE
+                   (ACCTNO     CHAR(8)  NOT NULL,
+                    LIMIT      DECIMAL(9,2)     ,
+                    BALANCE    DECIMAL(9,2)     ,
+                    SURNAME    CHAR(20) NOT NULL,
+                    FIRSTN     CHAR(15) NOT NULL,
+                    ADDRESS1   CHAR(25) NOT NULL,
+                    ADDRESS2   CHAR(20) NOT NULL,
+                    ADDRESS3   CHAR(15) NOT NULL,
+                    RESERVED   CHAR(7)  NOT NULL,
+                    COMMENTS   CHAR(50) NOT NULL)
+                    END-EXEC.
+      *---------------------------------------------------------------*
       * SQL CURSORS
-      *----------------------------------------------------------*
-                EXEC SQL DECLARE CUR1  CURSOR FOR
-                         SELECT * FROM Z80843T
-                     END-EXEC.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
+           EXEC SQL DECLARE CUR1  CURSOR FOR
+                    SELECT * FROM Z80843T
+                END-EXEC.
+      *---------------------------------------------------------------*
        COPY ACCTREC.
-      *----------------------------------------------------------*
-       01 PRINTER-CONTROL-FIELDS.
-           05  LINE-SPACEING         PIC 9(02) VALUE 1.
-           05  LINE-COUNT            PIC 9(03) VALUE 999.
-           05  LINES-ON-PAGE         PIC 9(02) VALUE 60.
-           05  PAGE-COUNT            PIC 9(02) VALUE 1.
-           05  TOP-OF-PAGE           PIC X(02) VALUE '1'.
-           05  SINGLE-SPACE          PIC X(01) VALUE ' '.
-           05  DOUBLE-SPACE          PIC X(01) VALUE '0'.
-           05  TRIPLE-SPACE          PIC X(01) VALUE '-'.
-           05  OVERPRINT             PIC X(01) VALUE '+'.
-      *----------------------------------------------------------*
-       01  WS-CURRENT-DATE-DATA.
-           05  WS-CURRENT-DATE.
-               10  WS-CURRENT-YEAR         PIC 9(04).
-               10  WS-CURRENT-MONTH        PIC 9(02).
-               10  WS-CURRENT-DAY          PIC 9(02).
-           05  WS-CURRENT-TIME.
-               10  WS-CURRENT-HOURS        PIC 9(02).
-               10  WS-CURRENT-MINUTE       PIC 9(02).
-               10  WS-CURRENT-SECOND       PIC 9(02).
-               10  WS-CURRENT-MILLISECONDS PIC 9(02).
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
+       COPY PRINTCTL.
+      *---------------------------------------------------------------*
        01  WS-SWITCHES-SUBSCRIPTS.
            05  END-OF-FILE-SW              PIC X VALUE 'N'.
                88  END-OF-FILE                   VALUE 'Y'.
@@ -215,11 +195,11 @@
                10  OL-ACCT-BALANCE         PIC S9(7)V99 COMP-3.
                10  OL-LASTNAME             PIC X(20).
                10  OL-FIRSTNAME            PIC X(15).
-      *==========================================================*
+      *===============================================================*
        PROCEDURE DIVISION.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        0000-MAIN-PROCESSING.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-ACCT-FILE.
            PERFORM 2000-PROCESS-ACCT-FILE
@@ -227,18 +207,18 @@
            PERFORM 3000-PRINT-TRAILER-LINES.
            PERFORM 4000-CLOSE-FILES.
            GOBACK.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        1000-OPEN-FILES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            EXEC SQL OPEN CUR1  END-EXEC.
            OPEN OUTPUT PRINT-FILE.
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
            MOVE WS-CURRENT-YEAR  TO HDR-YR.
            MOVE WS-CURRENT-MONTH TO HDR-MO.
            MOVE WS-CURRENT-DAY   TO HDR-DAY.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            MOVE ACCT-NO          TO WS-ACCT-NUM-O.
            MOVE ACCT-LIMIT       TO WS-ACCT-LIMIT-O.
            MOVE ACCT-BALANCE     TO WS-ACCT-BALANCE-O.
@@ -257,9 +237,9 @@
            MOVE WS-PRINT-RECORD  TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-ACCT-FILE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        2100-ACCUMULATE-STATE-TOTALS.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            SET STATE-INDEX TO 1.
            SEARCH STATE-COUNT-TABLE
                AT END
@@ -269,9 +249,9 @@
                WHEN STATE-NAME(STATE-INDEX) = SPACE
                    MOVE USA-STATE   TO STATE-NAME(STATE-INDEX)
                    ADD 1            TO STATE-COUNT(STATE-INDEX).
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        3000-PRINT-TRAILER-LINES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            MOVE TLIMIT   TO TLIMIT-O.
            MOVE TBALANCE TO TBALANCE-O.
            MOVE TRAILER-1                  TO NEXT-REPORT-LINE.
@@ -309,16 +289,16 @@
                PERFORM 3200-PRINT-OVERLIMIT-DETAIL
                    VARYING INDEX-1 FROM 1 BY 1
                    UNTIL INDEX-1 > OVERLIMIT-COUNT.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        3100-PRINT-STATE-TOTALS.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            MOVE  STATE-NAME(STATE-INDEX)  TO  SCL-STATE-NAME.
            MOVE  STATE-COUNT(STATE-INDEX) TO  SCL-STATE-COUNT.
            MOVE  STATE-COUNT-LINE         TO  NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        3200-PRINT-OVERLIMIT-DETAIL.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            SUBTRACT OL-ACCT-LIMIT(INDEX-1)
                FROM OL-ACCT-BALANCE(INDEX-1)
                GIVING OD-OVER-AMT.
@@ -327,29 +307,29 @@
            MOVE OL-FIRSTNAME(INDEX-1)     TO OD-FIRST-NAME.
            MOVE OVERLIMIT-DETAIL       TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        4000-CLOSE-FILES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            EXEC SQL CLOSE CUR1  END-EXEC.
            CLOSE PRINT-FILE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        8000-READ-ACCT-FILE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            EXEC SQL FETCH CUR1
                INTO :ACCT-RECORD
            END-EXEC.
            IF  SQLCODE IS NOT EQUAL TO ZERO
                MOVE "Y" TO END-OF-FILE-SW.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
                PERFORM 9100-PRINT-HEADING-LINES.
            MOVE NEXT-REPORT-LINE TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        9100-PRINT-HEADING-LINES.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            MOVE PAGE-COUNT           TO H1-PAGE-NUM.
            MOVE HEADING-LINE-1       TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
@@ -364,20 +344,20 @@
            ADD  1                    TO PAGE-COUNT.
            MOVE 1                    TO LINE-SPACEING.
            MOVE 5                    TO LINE-COUNT.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        9110-WRITE-TOP-OF-PAGE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING PAGE.
            MOVE SPACE                TO PRINT-LINE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
        9120-WRITE-PRINT-LINE.
-      *----------------------------------------------------------*
+      *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING LINE-SPACEING.
            MOVE SPACE                TO PRINT-LINE.
            ADD  1                    TO LINE-COUNT.
            MOVE 1                    TO LINE-SPACEING.
-      *---------------------------------------------------------*
+      *--------------------------------------------------------------*
        9900-TABLE-ERROR.
-      *---------------------------------------------------------*
+      *--------------------------------------------------------------*
