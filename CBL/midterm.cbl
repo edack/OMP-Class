@@ -46,7 +46,7 @@
                10  FILLER  PIC X(20) VALUE ' ACCOUNT FIRST     L'.
                10  FILLER  PIC X(20) VALUE 'AST             RENE'.
                10  FILLER  PIC X(20) VALUE 'WAL      POLICY     '.
-               10  FILLER  PIC X(20) VALUE 'DED  DED         CLA'.
+               10  FILLER  PIC X(20) VALUE 'DED   DED        CLA'.
                10  FILLER  PIC X(20) VALUE 'IM      AMOUNT      '.
                10  FILLER  PIC X(12) VALUE '            '.
       *---------------------------------------------------------------*
@@ -55,7 +55,7 @@
                10  FILLER  PIC X(20) VALUE ' NUMBER  NAME      N'.
                10  FILLER  PIC X(20) VALUE 'AME              DAT'.
                10  FILLER  PIC X(20) VALUE 'E        AMOUNT     '.
-               10  FILLER  PIC X(20) VALUE 'AMT  PCT         AMO'.
+               10  FILLER  PIC X(20) VALUE 'PD    PCT        AMO'.
                10  FILLER  PIC X(20) VALUE 'UNT      PAID       '.
                10  FILLER  PIC X(12) VALUE '            '.
       *---------------------------------------------------------------*
@@ -71,13 +71,13 @@
                10  FILLER                   PIC X(01)  VALUE ' '.
                10  DL1-POLICY-F-NAME        PIC X(10).
                10  DL1-POLICY-L-NAME        PIC X(15).
-               10  FILLER                   PIC X(01)  VALUE ' '.
+      *         10  FILLER                   PIC X(01)  VALUE ' '.
                10  DL1-POLICY-YEAR          PIC 9(04).
                10  FILLER                   PIC X(01)  VALUE '/'.
                10  DL1-POLICY-MONTH         PIC X(02).
                10  FILLER                   PIC X(01)  VALUE '/'.
                10  DL1-POLICY-DAY           PIC X(02).
-               10  FILLER                   PIC X(01)  VALUE ' '.
+               10  FILLER                   PIC X(02)  VALUE ' '.
                10  DL1-POLICY-AMOUNT        PIC $$,$$$,$$9.99.
                10  FILLER                   PIC X(01)  VALUE ' '.
                10  DL1-POLICY-DED-PAID      PIC $$$9.
@@ -106,6 +106,11 @@
                88  END-OF-FILE                          VALUE 'Y'.
            05  VALID-CLAIM-SW               PIC X(01)   VALUE 'N'.
                88  VALID-CLAIM                          VALUE 'Y'.
+           05  DEDUCTABLE-MET-SW            PIC X(01)   VALUE 'N'.
+               88  DEDUCTABLE-MET                       VALUE 'Y'.
+               88  DEDUCTABLE-NOT-MET                   VALUE 'N'.
+           05 PAY-THE-CLAIM-SW              PIC X(1)    VALUE 'N'.
+               88 PAY-THE-CLAIM                         VALUE 'Y'.
            05  WS-CURRENT-DATE-DATA.
                10  WS-CURRENT-DATE.
                    15  WS-CURRENT-YY        PIC 9(04).
@@ -157,28 +162,23 @@
            MOVE POLICY-MONTH               TO DL1-POLICY-MONTH.
            MOVE POLICY-DAY                 TO DL1-POLICY-DAY.
            MOVE POLICY-AMOUNT              TO DL1-POLICY-AMOUNT.
-           MOVE CLAIM-AMOUNT               TO DL1-CLAIM-MOUNT.
+           MOVE POLICY-DEDUCTIBLE-PAID     TO DL1-POLICY-DED-PAID.
            DIVIDE POLICY-COINSURANCE       BY 100
                GIVING WS-POLICY-COINSURANCE-NUM.
            MOVE WS-POLICY-COINSURANCE-NUM  TO DL1-POLICY-COINS-PCT.
-           MOVE POLICY-DEDUCTIBLE-PAID     TO DL1-POLICY-DED-PAID.
            PERFORM 2100-VALIDATE-CLAIM.
-           IF  VALID-CLAIM
-               MOVE WS-CLAIM-AMT-PAID      TO DL1-CLAIM-AMT-PAID
+           IF  PAY-THE-CLAIM 
                MOVE CLAIM-AMOUNT           TO DL1-CLAIM-MOUNT
+               MOVE WS-CLAIM-AMT-PAID      TO DL1-CLAIM-AMT-PAID
                MOVE DETAIL-LINE-1          TO NEXT-REPORT-LINE
                PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-ACCT-FILE.
       *---------------------------------------------------------------*
        2100-VALIDATE-CLAIM.
       *---------------------------------------------------------------*
-           MOVE 'N'                            TO VALID-CLAIM-SW.
-           IF  CLAIM-AMOUNT <= POLICY-AMOUNT
-               MOVE 'Y'                        TO VALID-CLAIM-SW
-               COMPUTE WS-DEDUCTABLE-AMT       =
-                   POLICY-AMOUNT               *
-                   WS-DEDUCTABLE-PCT
-               IF  WS-DEDUCTABLE-AMT       > POLICY-DEDUCTIBLE-PAID
+           PERFORM 2110-COMPUTE-DEDUCTABLE.
+           IF  DEDUCTABLE-MET 
+               IF  WS-DEDUCTABLE-AMT       <  POLICY-DEDUCTIBLE-PAID
                    MOVE  CLAIM-AMOUNT          TO WS-CLAIM-AMT-PAID
                ELSE
                    COMPUTE WS-CLAIM-AMT-PAID   =
@@ -186,8 +186,25 @@
                            WS-DEDUCTABLE-AMT   -
                            (WS-POLICY-COINSURANCE-NUM  *
                             CLAIM-AMOUNT)
-               END-IF
+               END-IF 
+           ELSE 
+               COMPUTE WS-CLAIM-AMT-PAID   =
+                   CLAIM-AMOUNT            - WS-DEDUCTABLE-AMT
            END-IF.
+           IF  POLICY-AMOUNT > ZERO 
+               MOVE 'Y'                TO  PAY-THE-CLAIM-SW
+           ELSE 
+               MOVE 'N'                TO  PAY-THE-CLAIM-SW.
+      *---------------------------------------------------------------*
+       2110-COMPUTE-DEDUCTABLE.
+      *---------------------------------------------------------------*
+           COMPUTE WS-DEDUCTABLE-AMT       =
+               POLICY-AMOUNT               *
+               WS-DEDUCTABLE-PCT.
+           IF  POLICY-DEDUCTIBLE-PAID  <   WS-DEDUCTABLE-AMT 
+               MOVE 'Y'                    TO  DEDUCTABLE-MET-SW
+           ELSE
+               MOVE 'N'                    TO  DEDUCTABLE-MET-SW.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*

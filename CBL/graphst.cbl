@@ -11,7 +11,7 @@
        FILE SECTION.
        FD  ST-HIST-FILE
                RECORDING MODE IS F.
-       01  STR-RECORD                  PIC X(285).
+       01  STR-RECORD                  PIC X(300).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE F.

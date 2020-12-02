@@ -17,7 +17,7 @@
     "allocate:data": "c:/Users/edack/git/\"OMP Class\"/build/allocdata.bat",
     "allocate:input": "zowe files cre ps \"Z80843.NCOV19.GLBFILE\" --rl 130 --bs 27950 --zosmf-p OpenCOBOL",
     "allocate:usinput": "zowe files cre ps \"Z80843.NCOV19.USAFILE\" --rl 225 --bs 27900 --zosmf-p OpenCOBOL",
-    "allocate:stinput": "zowe files cre ps \"Z80843.NCOV19.STATEFL\" --rl 285 --bs 27930 --zosmf-p OpenCOBOL",
+    "allocate:stinput": "zowe files cre ps \"Z80843.NCOV19.STATEFL\" --rl 300 --bs 27930 --zosmf-p OpenCOBOL",
     "append": "node ./scripts/lib/append",
     "run:jobts": "zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL",
     "compile:cobolts": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p OpenCOBOL"
