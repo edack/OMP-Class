@@ -189,12 +189,12 @@
                END-IF 
            ELSE 
                COMPUTE WS-CLAIM-AMT-PAID   =
-                   CLAIM-AMOUNT            - WS-DEDUCTABLE-AMT
+                   CLAIM-AMOUNT            -  WS-DEDUCTABLE-AMT
            END-IF.
            IF  POLICY-AMOUNT > ZERO 
-               MOVE 'Y'                TO  PAY-THE-CLAIM-SW
+               MOVE 'Y'                    TO  PAY-THE-CLAIM-SW
            ELSE 
-               MOVE 'N'                TO  PAY-THE-CLAIM-SW.
+               MOVE 'N'                    TO  PAY-THE-CLAIM-SW.
       *---------------------------------------------------------------*
        2110-COMPUTE-DEDUCTABLE.
       *---------------------------------------------------------------*
