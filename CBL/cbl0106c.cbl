@@ -4,7 +4,7 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT PRINT-FILE ASSIGN TO UT-S-PRTLINE.
+           SELECT PRINT-FILE ASSIGN TO UT-S-PRTFILE.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
