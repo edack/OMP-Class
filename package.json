@@ -3,7 +3,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run compile:scripts",
     "generate": "node ./scripts/lib/generate",
     "build": "node ./scripts/lib/generate && npm run upload:cbl && npm run compile:cobol && npm run run:job",
     "upload:cbl": "c:/Users/edack/git/\"OMP Class\"/build/uploadcbl.bat",
@@ -15,6 +14,7 @@
     "parse:state": "node ./scripts/lib/parsest",
     "parse:wrld": "node ./scripts/lib/parse",
     "allocate:data": "c:/Users/edack/git/\"OMP Class\"/build/allocdata.bat",
+    "postinstall": "npm run compile:scripts",
     "BreakLine": "echo",
     "append": "node ./scripts/lib/append",
     "allocate:input": "zowe files cre ps \"Z80843.NCOV19.GLBFILE\" --rl 130 --bs 27950 --zosmf-p OpenCOBOL",
