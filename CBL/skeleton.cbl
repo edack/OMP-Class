@@ -20,8 +20,7 @@
        FILE SECTION.
       *---------------------------------------------------------------*
        FD  {{process.input_file_name}} RECORDING MODE F.
-       01  INPUT-RECORD.
-           05 FILLER                       PIC X(132).
+       COPY {{process.input_dd_name}}.
       *
        FD  {{process.output_file_name}} RECORDING MODE F.
        01  PRINT-RECORD.

@@ -90,7 +90,7 @@
                10  FILLER    PIC X(20) VALUE 'ST BE LESS THAN 11% '.
                10  FILLER    PIC X(20) VALUE ' ***                '.
                10  FILLER    PIC X(13) VALUE '             '.
-       COPY UHRECORD.
+       COPY USAFILE.
       *---------------------------------------------------------------*
        01  SWITCHES-INDEX-COUNTER-FIELDS.
       *---------------------------------------------------------------*
