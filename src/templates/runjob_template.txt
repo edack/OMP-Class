@@ -10,17 +10,17 @@
 //* ------------------------------------------------
 //* STEP 1 - DELETE FILES
 //* ------------------------------------------------
-//DEL1    EXEC PGM=IEFBR14
-//DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=(MOD,DELETE),
-//        SPACE=(TRK,0)
+//*DEL1    EXEC PGM=IEFBR14
+//*DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=(MOD,DELETE),
+//*        SPACE=(TRK,0)
 //* ------------------------------------------------
 //* STEP 2 - DEFINE FILES
 //* ------------------------------------------------
-//DEF1    EXEC PGM=IEFBR14
-//DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,
-//        UNIT=SYSDA,DISP=(NEW,CATLG,DELETE),
-//        SPACE=(TRK,(10,5),RLSE),
-//        DCB=(RECFM=FB,LRECL=131,BLKSIZE=27903)
+//*DEF1    EXEC PGM=IEFBR14
+//*DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,
+//*        UNIT=SYSDA,DISP=(NEW,CATLG,DELETE),
+//*        SPACE=(TRK,(10,5),RLSE),
+//*        DCB=(RECFM=FB,LRECL=131,BLKSIZE=27903)
 //*====================================================================
 //*   RUN THE REPORT
 //*====================================================================
