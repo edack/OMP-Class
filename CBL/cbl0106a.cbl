@@ -12,7 +12,7 @@
        FILE SECTION.
       *---------------------------------------------------------------*
        FD  ACCT-FILE.
-       COPY ACCTREC.
+       COPY ACCTFILE.
       *---------------------------------------------------------------*
        FD  PRINT-FILE RECORDING MODE F.
        01  PRINT-RECORD.
