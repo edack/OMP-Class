@@ -179,7 +179,7 @@
       *---------------------------------------------------------------*
        2100-FORMAT-PERCENT.
       *---------------------------------------------------------------*
-           MOVE WS-C-GRAPH-PNT             TO WS-GRAPH-PNT-X.
+           MOVE WS-D-GRAPH-PNT             TO WS-GRAPH-PNT-X.
            MOVE WS-GRAPH-PNT-X(WS-PNT2:1)  TO UHR-GRAPH-DATA(WS-PNT1).
            ADD  1                          TO WS-PNT1.
            MOVE ' '                        TO UHR-GRAPH-DATA(WS-PNT1).
