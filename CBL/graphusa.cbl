@@ -149,7 +149,6 @@
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
                                               WS-D-GRAPH-PNT.
-           COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6.
            IF  WS-D-GRAPH-PNT GREATER THAN 110 OR
                WS-C-GRAPH-PNT GREATER THAN 11
                MOVE UHR-DAY                TO EL-DAY
@@ -165,6 +164,7 @@
       *         MOVE '   ERROR  '           TO EL-PERCENT
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
+               COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6
                MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
                COMPUTE WS-GRAPH-DATA = (WS-C-GRAPH-PNT * 10) + 6
                MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
@@ -173,7 +173,6 @@
                    VARYING WS-PNT2 FROM 1 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
                    MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE.
-
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
