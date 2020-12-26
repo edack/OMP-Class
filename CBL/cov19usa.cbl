@@ -40,10 +40,10 @@
                10  DL1-CASE-PENDING   PIC ZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-CASE-NEW       PIC Z,ZZZ,ZZ9.
-               10  DL1-HOSPITAL-TOT   PIC Z,ZZZ,ZZ9.
-               10  DL1-ICU-TOT        PIC Z,ZZZ,ZZ9.
+               10  DL1-HOSPITAL-CURR  PIC Z,ZZZ,ZZ9.
+               10  DL1-ICU-CURR       PIC Z,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-VENT-TOT       PIC ZZZ,ZZ9.
+               10  DL1-VENT-CURR      PIC ZZZ,ZZ9.
                10  FILLER             PIC X(02)  VALUE SPACE. 
                10  DL1-RECOVERED      PIC Z,ZZZ,ZZ9.
                10  DL1-DEATH          PIC ZZ,ZZZ,ZZ9.
@@ -145,9 +145,9 @@
            MOVE UHR-CASE-NEGATIVE          TO DL1-CASE-NEGATIVE.
            MOVE UHR-CASE-PENDING           TO DL1-CASE-PENDING.
            MOVE UHR-POSITIVE-INCREASE      TO DL1-CASE-NEW.
-           MOVE UHR-HOSPITAL-TOT           TO DL1-HOSPITAL-TOT.
-           MOVE UHR-ICU-TOT                TO DL1-ICU-TOT.
-           MOVE UHR-VENT-TOT               TO DL1-VENT-TOT.
+           MOVE UHR-HOSPITAL-CURR          TO DL1-HOSPITAL-CURR.
+           MOVE UHR-ICU-CURR               TO DL1-ICU-CURR.
+           MOVE UHR-VENT-CURR              TO DL1-VENT-CURR.
            MOVE UHR-RECOVERED              TO DL1-RECOVERED.
            MOVE UHR-DEATH                  TO DL1-DEATH.
            MOVE UHR-DEATH-INCREASE         TO DL1-DEATH-NEW.
