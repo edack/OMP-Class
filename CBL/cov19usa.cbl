@@ -35,8 +35,8 @@
                10  DL1-STATE          PIC X(01)  VALUE SPACE.
                10  DL1-CASE-POSITIVE  PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-CASE-NEGATIVE  PIC ZZ,ZZZ,ZZ9.
-               10  FILLER             PIC X(02)  VALUE SPACE.
+               10  DL1-CASE-NEGATIVE  PIC ZZZ,ZZZ,ZZ9.
+               10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-CASE-PENDING   PIC ZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-CASE-NEW       PIC Z,ZZZ,ZZ9.
