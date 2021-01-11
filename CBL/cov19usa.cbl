@@ -80,7 +80,7 @@
                10  FILLER    PIC X(20) VALUE '  POSITIVE  NEGATIVE'.
                10  FILLER    PIC X(20) VALUE '    PEND     NEW +  '.
                10  FILLER    PIC X(20) VALUE 'HOSPITAL   ICU      '.
-               10  FILLER    PIC X(20) VALUE 'VENT                '.
+               10  FILLER    PIC X(20) VALUE 'VENT   HOSPITAL     '.
                10  FILLER    PIC X(20) VALUE 'TOTAL     NEW    DEA'.
                10  FILLER    PIC X(20) VALUE 'TH     N CASE       '.
       *---------------------------------------------------------------*
@@ -89,7 +89,7 @@
                10  FILLER    PIC X(20) VALUE '   TESTS      TESTS '.
                10  FILLER    PIC X(20) VALUE '   TESTS     TESTS  '.
                10  FILLER    PIC X(20) VALUE ' ADMITS   ADMITS    '.
-               10  FILLER    PIC X(20) VALUE 'ADMIT  RECOVER     D'.
+               10  FILLER    PIC X(20) VALUE 'ADMIT  INCREAS     D'.
                10  FILLER    PIC X(20) VALUE 'EATHS    DEATHS  PER'.
                10  FILLER    PIC X(20) VALUE 'CENT   PERCENT      '.
       *---------------------------------------------------------------*
@@ -148,7 +148,7 @@
            MOVE UHR-HOSPITAL-CURR          TO DL1-HOSPITAL-CURR.
            MOVE UHR-ICU-CURR               TO DL1-ICU-CURR.
            MOVE UHR-VENT-CURR              TO DL1-VENT-CURR.
-           MOVE UHR-RECOVERED              TO DL1-RECOVERED.
+           MOVE UHR-HOSPITAL-INCREASE      TO DL1-RECOVERED.
            MOVE UHR-DEATH                  TO DL1-DEATH.
            MOVE UHR-DEATH-INCREASE         TO DL1-DEATH-NEW.
            IF  UHR-CASE-POSITIVE > ZERO

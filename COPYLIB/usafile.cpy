@@ -15,12 +15,12 @@
            05 UHR-ICU-TOT                  PIC 9(07).
            05 UHR-VENT-CURR                PIC 9(07).
            05 UHR-VENT-TOT                 PIC 9(07).
-           05 UHR-RECOVERED                PIC 9(07).
            05 UHR-DATE-CHECKED             PIC X(20).
            05 UHR-DEATH                    PIC 9(06).
            05 UHR-HOSPTALIZED              PIC 9(07).
            05 UHR-TOT-TESTS                PIC 9(09).
            05 UHR-LAST-MODIFIED            PIC X(20).
+           05 UHR-RECOVERED                PIC 9(07).
            05 UHR-TOTAL                    PIC 9(07).
            05 UHR-POS-NEG                  PIC 9(07).
            05 UHR-DEATH-INCREASE           PIC 9(07).
