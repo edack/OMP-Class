@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:10.0.0
     working_directory: ~/
-        steps:
+    steps:
       - checkout:
       - run:
           name: "Check Versions"
@@ -27,7 +27,6 @@ jobs:
           name: "Create Zowe Profiles"
           command: |
             sudo zowe -V
-            sudo zowe profiles create zosmf zcobol --host $zcobolhost --port $zcobolport --user $zcoboluser --pass $zcobolpass --ru false
       - run:
           name: "Build and Test"
           command: |
