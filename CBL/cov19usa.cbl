@@ -79,8 +79,8 @@
                10  FILLER    PIC X(12) VALUE '  AS OF     '.
                10  FILLER    PIC X(20) VALUE '  POSITIVE  NEGATIVE'.
                10  FILLER    PIC X(20) VALUE '    PEND     NEW +  '.
-               10  FILLER    PIC X(20) VALUE 'HOSPITAL   ICU      '.
-               10  FILLER    PIC X(20) VALUE 'VENT   HOSPITAL     '.
+               10  FILLER    PIC X(20) VALUE 'HOSPITAL   ICU     V'.
+               10  FILLER    PIC X(20) VALUE 'ENT    HOSPITAL     '.
                10  FILLER    PIC X(20) VALUE 'TOTAL     NEW    DEA'.
                10  FILLER    PIC X(20) VALUE 'TH     N CASE       '.
       *---------------------------------------------------------------*
@@ -88,8 +88,8 @@
                10  FILLER    PIC X(12) VALUE '  DATE      '.
                10  FILLER    PIC X(20) VALUE '   TESTS      TESTS '.
                10  FILLER    PIC X(20) VALUE '   TESTS     TESTS  '.
-               10  FILLER    PIC X(20) VALUE ' ADMITS   ADMITS    '.
-               10  FILLER    PIC X(20) VALUE 'ADMIT  INCREAS     D'.
+               10  FILLER    PIC X(20) VALUE ' ADMITS   ADMITS   A'.
+               10  FILLER    PIC X(20) VALUE 'DMIT   INCREASE    D'.
                10  FILLER    PIC X(20) VALUE 'EATHS    DEATHS  PER'.
                10  FILLER    PIC X(20) VALUE 'CENT   PERCENT      '.
       *---------------------------------------------------------------*
@@ -97,9 +97,9 @@
                10  FILLER    PIC X(12) VALUE '  ----      '.
                10  FILLER    PIC X(20) VALUE '  -------  ---------'.
                10  FILLER    PIC X(20) VALUE '   -----     -----  '.
-               10  FILLER    PIC X(20) VALUE ' ------   ------    '.
-               10  FILLER    PIC X(20) VALUE '-----  -------     -'.
-               10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
+               10  FILLER    PIC X(20) VALUE ' ------   ------   -'.
+               10  FILLER    PIC X(20) VALUE '----   --------    -'.
+               10  FILLER    PIC X(20) VALUE '-----   -------  ---'.
                10  FILLER    PIC X(20) VALUE '----   -------      '.
        COPY USAFILE.
       *---------------------------------------------------------------*
