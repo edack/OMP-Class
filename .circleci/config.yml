@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.0.0
-    working_directory: "~/OPM Class"
+    working_directory: ~/$CIRCLE_WORKING_DIRECTORY
     steps:
       - checkout:
       - run:
