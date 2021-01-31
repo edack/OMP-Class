@@ -11,7 +11,7 @@
                    15  WS-CURRENT-MINUTES  PIC 9(02).
                    15  WS-CURRENT-SECONDS  PIC 9(02).
                    15  WS-CURRENT-MM-SEC   PIC 9(02).
-           05 PRINTER-CONTROL-FIELDS.
+           05  PRINTER-CONTROL-FIELDS.
                10  LINE-SPACEING           PIC 9(02) VALUE 1.
                10  LINE-COUNT              PIC 9(03) VALUE 999.
                10  LINES-ON-PAGE           PIC 9(02) VALUE 60.
