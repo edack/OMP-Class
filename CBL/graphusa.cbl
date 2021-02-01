@@ -25,7 +25,7 @@
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE        PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
-           05      UHR-PRINT-RECORD.
+           05      UHR-PRINT-RECORD. 
                10  UHR-TIMESTAMP.
                    15  PR-MONTH        PIC X(02).
                    15  FILLER          PIC X(01)  VALUE '/'.
@@ -149,12 +149,12 @@
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
                                               WS-D-GRAPH-PNT.
-           IF  WS-D-GRAPH-PNT GREATER THAN 110 OR
+           IF  WS-D-GRAPH-PNT GREATER THAN 11 OR
                WS-C-GRAPH-PNT GREATER THAN 11
                MOVE UHR-DAY                TO EL-DAY
                MOVE UHR-MONTH              TO EL-MONTH
                MOVE UHR-YEAR               TO EL-YEAR
-               IF  WS-D-GRAPH-PNT GREATER THAN 110
+               IF  WS-D-GRAPH-PNT GREATER THAN 11
                    MOVE WS-D-GRAPH-PNT     TO EL-GRAPH-POINT
                    MOVE 'DEATH'            TO EL-CAUSE
                ELSE
@@ -168,12 +168,13 @@
                MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
                COMPUTE WS-GRAPH-DATA = (WS-C-GRAPH-PNT * 10) + 6
                MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
-               MOVE 3                TO WS-PNT1
+               MOVE 1                TO WS-PNT1
                PERFORM  2100-FORMAT-PERCENT
-                   VARYING WS-PNT2 FROM 1 BY 1
+                   VARYING WS-PNT2 FROM 3 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
                    MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
+           MOVE ALL SPACES                 TO  UHR-GRAPH.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
        2100-FORMAT-PERCENT.
