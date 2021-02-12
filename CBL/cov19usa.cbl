@@ -188,12 +188,12 @@
                    UHR-ICU-TOT
                    UHR-VENT-CURR
                    UHR-VENT-TOT
-                   UHR-RECOVERED 
                    UHR-DATE-CHECKED
                    UHR-DEATH
                    UHR-HOSPTALIZED
                    UHR-TOT-TESTS
                    UHR-LAST-MODIFIED 
+                   UHR-RECOVERED 
                    UHR-TOTAL
                    UHR-POS-NEG
                    UHR-DEATH-INCREASE
