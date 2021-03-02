@@ -55,14 +55,15 @@ if (!fs.existsSync("./build")) fs.mkdirSync("./build");
 fs.writeFileSync("./build/runjob.jcl", rendered_runjob);
 console.log("Generated custom JCL to ./build/runjob.jcl");
 
-/* Render Source Program Part 1  
+/* Render Source Program first part */
 const source = fs.readFileSync("./cbl/skeleton.cbl").toString();
 const rendered_source = mustache.render(source, config);
 fs.writeFileSync("./build/source.cbl", rendered_source);
 
+/* Render Source Program second part */
 const source2 = fs.readFileSync("./build/source.cbl").toString();
 const rendered_cobol = mustache.render(source2, config);
 fs.writeFileSync("./build/source.cbl", rendered_cobol);
 
 console.log("Generated COBOL program to ./build/source.cbl");
-*/
+/* */
