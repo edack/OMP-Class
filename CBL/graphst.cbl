@@ -152,7 +152,6 @@
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
                                               WS-D-GRAPH-PNT.
-           COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6.
            IF  WS-D-GRAPH-PNT GREATER THAN 110 OR
                WS-C-GRAPH-PNT GREATER THAN 11
                MOVE STR-DAY                TO EL-DAY
@@ -168,15 +167,15 @@
       *         MOVE '   ERROR  '           TO EL-PERCENT
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
+               COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6
                MOVE '+'              TO STR-GRAPH-DATA(WS-GRAPH-DATA)
                COMPUTE WS-GRAPH-DATA = (WS-C-GRAPH-PNT * 10) + 6
                MOVE '*'              TO STR-GRAPH-DATA(WS-GRAPH-DATA)
-               MOVE 3                TO WS-PNT1
+               MOVE 1                TO WS-PNT1
                PERFORM  2100-FORMAT-PERCENT
-                   VARYING WS-PNT2 FROM 1 BY 1
+                   VARYING WS-PNT2 FROM 3 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
                    MOVE STR-PRINT-RECORD   TO NEXT-REPORT-LINE.
-
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-ST-HIST-FILE.
       *---------------------------------------------------------------*
@@ -214,12 +213,12 @@
                    STR-VENT-CURR
                    STR-VENT-TOT
                    STR-RECOVERED
-                   STR-DATA-GRADE
                    STR-DATE-UPDATED
                    STR-DATE-MODIFIED
                    STR-CHECK-TIME
                    STR-DEATH
                    STR-HOSPTALIZED
+                   STR-DISCHARGED
                    STR-CHECK-DATE
                    STR-TOT-TESTS-VIRAL
                    STR-POS-TESTS-VIRAL
@@ -245,6 +244,7 @@
                    STR-TOTAL
                    STR-TOT-TEST-INCREASE
                    STR-POS-NEG
+                   STR-DATA-GRADE
                    STR-DEATH-INCREASE
                    STR-HOSPITAL-INCREASE
                    STR-HASH

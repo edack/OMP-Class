@@ -19,12 +19,12 @@
            05 STR-VENT-CURR                PIC 9(07).
            05 STR-VENT-TOT                 PIC 9(07).
            05 STR-RECOVERED                PIC 9(07).
-           05 STR-DATA-GRADE               PIC X(02).
            05 STR-DATE-UPDATED             PIC X(20).
            05 STR-DATE-MODIFIED            PIC X(20).
            05 STR-CHECK-TIME               PIC X(20).
            05 STR-DEATH                    PIC 9(07).
            05 STR-HOSPTALIZED              PIC 9(07).
+           05 STR-DISCHARGED               PIC 9(05).
            05 STR-CHECK-DATE               PIC X(20).
            05 STR-TOT-TESTS-VIRAL          PIC 9(06).
            05 STR-POS-TESTS-VIRAL          PIC 9(06).
@@ -50,6 +50,7 @@
            05 STR-TOTAL                    PIC 9(06).
            05 STR-TOT-TEST-INCREASE        PIC 9(09).
            05 STR-POS-NEG                  PIC 9(09).
+           05 STR-DATA-GRADE               PIC X(02).
            05 STR-DEATH-INCREASE           PIC 9(07).
            05 STR-HOSPITAL-INCREASE        PIC 9(07).
            05 STR-HASH                     PIC X(35).
