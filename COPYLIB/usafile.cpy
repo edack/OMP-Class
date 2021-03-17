@@ -1,31 +1,24 @@
       *---------------------------------------------------------------*
        01  UHR-RECORD-IN.
       *---------------------------------------------------------------*
-           05 UHR-DATE.
+           05  UHR-DATE.
                10 UHR-YEAR                 PIC X(04).
+               10 FILLER                   PIC X(01).
                10 UHR-MONTH                PIC X(02).
+               10 FILLER                   PIC X(01).
                10 UHR-DAY                  PIC X(02).
-           05 UHR-STATE                    PIC X(02).
-           05 UHR-CASE-POSITIVE            PIC 9(09).
-           05 UHR-CASE-NEGATIVE            PIC 9(09).
-           05 UHR-CASE-PENDING             PIC 9(08).
-           05 UHR-HOSPITAL-CURR            PIC 9(07).
-           05 UHR-HOSPITAL-TOT             PIC 9(07).
-           05 UHR-ICU-CURR                 PIC 9(07).
-           05 UHR-ICU-TOT                  PIC 9(07).
-           05 UHR-VENT-CURR                PIC 9(07).
-           05 UHR-VENT-TOT                 PIC 9(07).
-           05 UHR-DATE-CHECKED             PIC X(20).
-           05 UHR-DEATH                    PIC 9(06).
-           05 UHR-HOSPTALIZED              PIC 9(07).
-           05 UHR-TOT-TESTS                PIC 9(09).
-           05 UHR-LAST-MODIFIED            PIC X(20).
-           05 UHR-RECOVERED                PIC 9(07).
-           05 UHR-TOTAL                    PIC 9(07).
-           05 UHR-POS-NEG                  PIC 9(07).
-           05 UHR-DEATH-INCREASE           PIC 9(07).
-           05 UHR-HOSPITAL-INCREASE        PIC 9(06).
-           05 UHR-NEGATIVE-INCREASE        PIC 9(06).
-           05 UHR-POSITIVE-INCREASE        PIC 9(06).
-           05 UHR-TOT-TEST-INCREASE        PIC 9(06).
-           05 UHR-HASH                     PIC X(35).
+               10 FILLER                   PIC X(13).
+           05  UHR-STATE                   PIC X(02).
+           05  UHR-CASE-TOTAL              PIC 9(09).
+           05  UHR-CASE-CONF               PIC 9(09).
+           05  UHR-CASE-PROPABLE           PIC 9(09).
+           05  UHR-CASE-NEW                PIC X(09).
+           05  UHR-CASE-NEW-PROB           PIC 9(09).
+           05  UHR-DEATH-TOTAL             PIC 9(09).
+           05  UHR-DEATH-CONF              PIC X(09).
+           05  UHR-DEATH-PROPABLE          PIC 9(09).
+           05  UHR-DEATH-NEW               PIC X(09).
+           05  UHR-DEATH-NEW-PROB          PIC 9(09).
+           05  UHR-CREATED-AT              PIC X(23).
+           05  UHR-CONSENT-CASE            PIC X(09).
+           05  UHR-CONSENT-DEATH           PIC X(09).

@@ -7,26 +7,28 @@
 // SET INDD='{{process.input_dd_name}}'
 // SET OUTDD='{{process.output_dd_name}}'
 //JOBLIB   DD DISP=SHR,DSN=&HLQ1..{{compiler.load_library}}
-//* ------------------------------------------------
-//* STEP 1 - DELETE FILES
-//* ------------------------------------------------
-//DEL1    EXEC PGM=IEFBR14
-//DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=(MOD,DELETE),
-//        SPACE=(TRK,0)
-//* ------------------------------------------------
-//* STEP 2 - DEFINE FILES
-//* ------------------------------------------------
-//DEF1    EXEC PGM=IEFBR14
-//DDOUT   DD DSN=&HLQ1..&HLQ2..&OUTDD,
-//        UNIT=SYSDA,DISP=(NEW,CATLG,DELETE),
-//        SPACE=(TRK,(10,5),RLSE),
-//        DCB=(RECFM=FB,LRECL=131,BLKSIZE=27903)
-//*====================================================================
-//*   RUN THE REPORT
-//*====================================================================
+//* ------------------------------------------------------------------
+//* STEP 1 - SORT FILES
+//* ------------------------------------------------------------------
+//SRTSTP  EXEC PGM=SORT
+//SYSOUT    DD SYSOUT=*
+//SORTIN    DD DSN=&HLQ1..&HLQ2..&INDD,DISP=SHR
+//SORTOUT   DD DSN=&&TEMPFL1,
+//             DISP=(NEW,PASS,DELETE),
+//             DCB=(LRECL=130,BLKSIZE=27950,RECFM=FB)
+//SORTOUT   DD SYSOUT=*
+//SYSIN     DD *
+  SORT FORMAT=CH,
+       FIELDS=(1,23,D)
+/*       
+//* ------------------------------------------------------------------
+//* STEP 2 - RUN THE REPORT
+//* ------------------------------------------------------------------
 //STEPLIB DD DSN=&HLQ1..COPYLIB,DISP=SHR
-//COBOL   EXEC  PGM=&PGM.
-//{{process.input_dd_name}}  DD DSN=&HLQ1..&HLQ2..&INDD,DISP=SHR
+//COBOL   EXEC  PGM=&PGM
+//{{process.input_dd_name}}    DD DSN=&&TEMPFL1,
+//             DISP=(OLD,DELETE,DELETE),
+//             DCB=(LRECL=130,BLKSIZE=27950,RECFM=FB)
 //*{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
 //{{process.output_dd_name}}  DD SYSOUT=*
 //SYSPRINT DD SYSOUT=*
