@@ -130,8 +130,7 @@
            PERFORM 8000-READ-USA-HIST-FILE.
            MOVE  UHR-DATE                  TO  WS-PREV-DATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
-               25 TIMES.
-      *         UNTIL END-OF-FILE.
+               UNTIL END-OF-FILE.
            PERFORM 3000-CLOSE-FILES.
            GOBACK.
       *---------------------------------------------------------------*
@@ -156,8 +155,6 @@
                MOVE  ZERO                  TO  WS-DEATH-INCREASE
                MOVE  ZERO                  TO  WS-DEATH-PENDING
                MOVE  UHR-DATE              TO  WS-PREV-DATE.
-           MOVE UHR-RECORD                 TO  NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
