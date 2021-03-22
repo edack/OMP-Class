@@ -238,12 +238,12 @@
                     UHR-STATE
                     UHR-CASE-TOTAL
                     UHR-CASE-CONF
-                    UHR-CASE-PROPABLE
+                    UHR-CASE-PROBABLE
                     UHR-CASE-NEW
                     UHR-CASE-NEW-PROB
                     UHR-DEATH-TOTAL
                     UHR-DEATH-CONF
-                    UHR-DEATH-PROPABLE
+                    UHR-DEATH-PROBABLE
                     UHR-DEATH-NEW
                     UHR-DEATH-NEW-PROB
                     UHR-CREATED-AT
