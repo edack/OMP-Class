@@ -25,7 +25,7 @@
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE        PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
-           05  UHR-PRINT-RECORD. 
+           05  UHR-PRINT-RECORD.
                10  UHR-TIMESTAMP.
                    15  PR-MONTH        PIC X(02).
                    15  FILLER          PIC X(01)  VALUE '/'.
@@ -98,6 +98,7 @@
                88  END-OF-FILE                        VALUE 'Y'.
            05  VALID-RECORD-SW             PIC X(01)  VALUE 'Y'.
                88  VALID-RECORD                       VALUE 'Y'.
+           05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
            05  WS-CASE-POSITIVE            PIC 9(09).
            05  WS-CASE-NEW                 PIC 9(09).
            05  WS-CASE-NEW-2               PIC 9(09).
@@ -106,9 +107,9 @@
            05  WS-DEATH-INCREASE           PIC 9(09).
            05  WS-DEATH-INCR-2             PIC 9(09).
            05  WS-DEATH-PENDING            PIC 9(09).
-           05  WS-PERCENT                  PIC 999V9999999999.
-           05  WS-C-GRAPH-PNT              PIC 999V9999999999.
-           05  WS-D-GRAPH-PNT              PIC 999V9999999999.
+           05  WS-PERCENT                  PIC 999V9(10).
+           05  WS-C-GRAPH-PNT              PIC 999V9(10).
+           05  WS-D-GRAPH-PNT              PIC 999V9(10).
            05  WS-GRAPH-PNT-X              PIC ZZ9.99999.
            05  WS-GRAPH-DATA               PIC 999.
            05  WS-PNT1                     PIC 99.
@@ -171,7 +172,7 @@
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
       *---------------------------------------------------------------*
-           MOVE WS-DAY                     TO PR-DAY. 
+           MOVE WS-DAY                     TO PR-DAY.
            MOVE WS-MONTH                   TO PR-MONTH.
            MOVE WS-YEAR                    TO PR-YEAR.
            MOVE ALL SPACES                 TO UHR-GRAPH.
@@ -181,7 +182,7 @@
                DIVIDE WS-DEATH     BY WS-CASE-POSITIVE
                   GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
-               COMPUTE WS-CASE-NEW = WS-CASE-NEW + WS-CASE-PENDING 
+               COMPUTE WS-CASE-NEW = WS-CASE-NEW + WS-CASE-PENDING
                DIVIDE WS-CASE-NEW  BY WS-CASE-POSITIVE
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
@@ -233,22 +234,35 @@
                AT END MOVE 'Y' TO END-OF-FILE-SW
                       MOVE 'N' TO VALID-RECORD-SW.
            IF VALID-RECORD
-               UNSTRING UHR-RECORD DELIMITED BY ','
-               INTO UHR-DATE
-                    UHR-STATE
-                    UHR-CASE-TOTAL
-                    UHR-CASE-CONF
-                    UHR-CASE-PROBABLE
-                    UHR-CASE-NEW
-                    UHR-CASE-NEW-PROB
-                    UHR-DEATH-TOTAL
-                    UHR-DEATH-CONF
-                    UHR-DEATH-PROBABLE
-                    UHR-DEATH-NEW
-                    UHR-DEATH-NEW-PROB
-                    UHR-CREATED-AT
-           ELSE
-               MOVE 'Y' TO END-OF-FILE-SW.
+               MOVE 0 to WS-COUNTER
+               INSPECT UHR-RECORD TALLYING WS-COUNTER FOR ALL "Agree".
+               IF WS-COUNTER NOT = 0
+                   UNSTRING UHR-RECORD DELIMITED BY ','
+                   INTO UHR-DATE
+                       UHR-STATE
+                       UHR-CASE-TOTAL
+                       UHR-CASE-CONF
+                       UHR-CASE-PROBABLE
+                       UHR-CASE-NEW
+                       UHR-CASE-NEW-PROB
+                       UHR-DEATH-TOTAL
+                       UHR-DEATH-CONF
+                       UHR-DEATH-PROBABLE
+                       UHR-DEATH-NEW
+                       UHR-DEATH-NEW-PROB
+                       UHR-CREATED-AT
+               ELSE
+                   UNSTRING UHR-RECORD DELIMITED BY ','
+                   INTO UHR-DATE
+                       UHR-STATE
+                       UHR-CASE-TOTAL
+                       UHR-CASE-NEW
+                       UHR-CASE-NEW-PROB
+                       UHR-DEATH-TOTAL
+                       UHR-DEATH-NEW
+                       UHR-DEATH-NEW-PROB
+                       UHR-CREATED-AT.
+      *         MOVE 'Y' TO END-OF-FILE-SW.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*

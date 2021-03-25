@@ -188,29 +188,29 @@
       *---------------------------------------------------------------*
            OPEN INPUT  ACCT-FILE
                 OUTPUT PRINT-FILE.
-           MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
-           MOVE WS-CURRENT-YEAR  TO HDR-YEAR.
-           MOVE WS-CURRENT-MONTH TO HDR-MONTH.
-           MOVE WS-CURRENT-DAY   TO HDR-DAY.
+           MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR            TO HDR-YEAR.
+           MOVE WS-CURRENT-MONTH           TO HDR-MONTH.
+           MOVE WS-CURRENT-DAY             TO HDR-DAY.
       *---------------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
       *---------------------------------------------------------------*
-           MOVE ACCT-NO          TO WS-ACCT-NUM-O.
-           MOVE ACCT-LIMIT       TO WS-ACCT-LIMIT-O.
-           MOVE ACCT-BALANCE     TO WS-ACCT-BALANCE-O.
-           MOVE LAST-NAME        TO WS-LAST-NAME-O.
+           MOVE ACCT-NO                    TO WS-ACCT-NUM-O.
+           MOVE ACCT-LIMIT                 TO WS-ACCT-LIMIT-O.
+           MOVE ACCT-BALANCE               TO WS-ACCT-BALANCE-O.
+           MOVE LAST-NAME                  TO WS-LAST-NAME-O.
            COMPUTE TLIMIT   = TLIMIT   + ACCT-LIMIT.
            COMPUTE TBALANCE = TBALANCE + ACCT-BALANCE.
            IF ACCT-LIMIT < ACCT-BALANCE THEN
-               MOVE ACCT-NO      TO OL-ACCT-NO(INDEX-1)
-               MOVE ACCT-LIMIT   TO OL-ACCT-LIMIT(INDEX-1)
-               MOVE ACCT-BALANCE TO OL-ACCT-BALANCE(INDEX-1)
-               MOVE LAST-NAME    TO OL-LASTNAME(INDEX-1)
-               MOVE FIRST-NAME   TO OL-FIRSTNAME(INDEX-1)
+               MOVE ACCT-NO                TO OL-ACCT-NO(INDEX-1)
+               MOVE ACCT-LIMIT             TO OL-ACCT-LIMIT(INDEX-1)
+               MOVE ACCT-BALANCE           TO OL-ACCT-BALANCE(INDEX-1)
+               MOVE LAST-NAME              TO OL-LASTNAME(INDEX-1)
+               MOVE FIRST-NAME             TO OL-FIRSTNAME(INDEX-1)
                ADD 1 TO INDEX-1
                ADD 1 TO OVERLIMIT-COUNT.
            PERFORM 2100-ACCUMULATE-STATE-TOTALS.
-           MOVE WS-PRINT-RECORD  TO NEXT-REPORT-LINE.
+           MOVE WS-PRINT-RECORD            TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
            PERFORM 8000-READ-ACCT-FILE.
       *---------------------------------------------------------------*
@@ -221,10 +221,10 @@
                AT END
                    PERFORM 9900-TABLE-ERROR
                WHEN STATE-NAME(STATE-INDEX) = USA-STATE
-                   ADD 1            TO STATE-COUNT(STATE-INDEX)
+                   ADD 1                   TO STATE-COUNT(STATE-INDEX)
                WHEN STATE-NAME(STATE-INDEX) = SPACE
-                   MOVE USA-STATE   TO STATE-NAME(STATE-INDEX)
-                   ADD 1            TO STATE-COUNT(STATE-INDEX).
+                   MOVE USA-STATE          TO STATE-NAME(STATE-INDEX)
+                   ADD 1                   TO STATE-COUNT(STATE-INDEX).
       *---------------------------------------------------------------*
        3000-PRINT-TRAILER-LINES.
       *---------------------------------------------------------------*
@@ -268,9 +268,9 @@
       *---------------------------------------------------------------*
        3100-PRINT-STATE-TOTALS.
       *---------------------------------------------------------------*
-           MOVE  STATE-NAME(STATE-INDEX)  TO  SCL-STATE-NAME.
-           MOVE  STATE-COUNT(STATE-INDEX) TO  SCL-STATE-COUNT.
-           MOVE  STATE-COUNT-LINE         TO  NEXT-REPORT-LINE.
+           MOVE  STATE-NAME(STATE-INDEX)   TO  SCL-STATE-NAME.
+           MOVE  STATE-COUNT(STATE-INDEX)  TO  SCL-STATE-COUNT.
+           MOVE  STATE-COUNT-LINE          TO  NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
        3200-PRINT-OVERLIMIT-DETAIL.
@@ -278,10 +278,10 @@
            SUBTRACT OL-ACCT-LIMIT(INDEX-1)
                FROM OL-ACCT-BALANCE(INDEX-1)
                GIVING OD-OVER-AMT.
-           MOVE OL-ACCT-NO(INDEX-1)       TO OD-ACCT-NUM.
-           MOVE OL-LASTNAME(INDEX-1)      TO OD-LAST-NAME.
-           MOVE OL-FIRSTNAME(INDEX-1)     TO OD-FIRST-NAME.
-           MOVE OVERLIMIT-DETAIL       TO NEXT-REPORT-LINE.
+           MOVE OL-ACCT-NO(INDEX-1)        TO OD-ACCT-NUM.
+           MOVE OL-LASTNAME(INDEX-1)       TO OD-LAST-NAME.
+           MOVE OL-FIRSTNAME(INDEX-1)      TO OD-FIRST-NAME.
+           MOVE OVERLIMIT-DETAIL           TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
        4000-CLOSE-FILES.
@@ -292,45 +292,45 @@
        8000-READ-ACCT-FILE.
       *---------------------------------------------------------------*
            READ ACCT-FILE
-               AT END MOVE 'Y' TO END-OF-FILE-SW.
+               AT END MOVE 'Y'             TO END-OF-FILE-SW.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
                PERFORM 9100-PRINT-HEADING-LINES.
-           MOVE NEXT-REPORT-LINE TO PRINT-LINE.
+           MOVE NEXT-REPORT-LINE           TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
-           MOVE PAGE-COUNT           TO H1-PAGE-NUM.
-           MOVE HEADING-LINE-1       TO PRINT-LINE.
+           MOVE PAGE-COUNT                 TO H1-PAGE-NUM.
+           MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
-           MOVE 2                    TO LINE-SPACEING.
-           MOVE HEADING-LINE-2       TO PRINT-LINE.
+           MOVE 2                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-2             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE 1                    TO LINE-SPACEING.
-           MOVE HEADING-LINE-3       TO PRINT-LINE.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE HEADING-LINE-3             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           MOVE HEADING-LINE-4       TO PRINT-LINE.
+           MOVE HEADING-LINE-4             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
-           ADD  1                    TO PAGE-COUNT.
-           MOVE 1                    TO LINE-SPACEING.
-           MOVE 5                    TO LINE-COUNT.
+           ADD  1                          TO PAGE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
+           MOVE 5                          TO LINE-COUNT.
       *---------------------------------------------------------------*
        9110-WRITE-TOP-OF-PAGE.
       *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING PAGE.
-           MOVE SPACE                TO PRINT-LINE.
+           MOVE SPACE                      TO PRINT-LINE.
       *---------------------------------------------------------------*
        9120-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING LINE-SPACEING.
-           MOVE SPACE                TO PRINT-LINE.
-           ADD  1                    TO LINE-COUNT.
-           MOVE 1                    TO LINE-SPACEING.
+           MOVE SPACE                      TO PRINT-LINE.
+           ADD  1                          TO LINE-COUNT.
+           MOVE 1                          TO LINE-SPACEING.
       *--------------------------------------------------------------*
        9900-TABLE-ERROR.
       *--------------------------------------------------------------*

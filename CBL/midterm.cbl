@@ -31,7 +31,13 @@
        01  HEADING-LINES.
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
-               10  FILLER  PIC X(20) VALUE '                    '.
+               10 HL1-DATE.
+                   15  FILLER          PIC X(12) VALUE 'TODAYS DATE:'.
+                   15  HL1-MONTH-OUT   PIC XX.
+                   15  FILLER          PIC X     VALUE '/'.
+                   15  HL1-DAY-OUT     PIC XX.
+                   15  FILLER          PIC X     VALUE '/'.
+                   15  HL1-YEAR-OUT    PIC XX.
                10  FILLER  PIC X(20) VALUE '                    '.
                10  FILLER  PIC X(20) VALUE '  INSURANCE CLAIM RE'.
                10  FILLER  PIC X(20) VALUE 'PORT                '.
@@ -111,16 +117,6 @@
                88  DEDUCTABLE-NOT-MET                   VALUE 'N'.
            05 PAY-THE-CLAIM-SW              PIC X(1)    VALUE 'N'.
                88 PAY-THE-CLAIM                         VALUE 'Y'.
-           05  WS-CURRENT-DATE-DATA.
-               10  WS-CURRENT-DATE.
-                   15  WS-CURRENT-YY        PIC 9(04).
-                   15  WS-CURRENT-MM        PIC 9(02).
-                   15  WS-CURRENT-DD        PIC 9(02).
-               10  WS-CURRENT-TIME.
-                   15  WS-CURRENT-HH        PIC 9(02).
-                   15  WS-CURRENT-MM        PIC 9(02).
-                   15  WS-CURRENT-SS        PIC 9(02).
-                   15  WS-CURRENT-MS        PIC 9(02).
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -138,6 +134,11 @@
       *---------------------------------------------------------------*
            OPEN    INPUT  CLAIMS-FILE
                    OUTPUT PRINT-FILE.
+           MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR  TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY   TO HL1-DAY-OUT.
+
       *---------------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
       *---------------------------------------------------------------*
@@ -167,7 +168,7 @@
                GIVING WS-POLICY-COINSURANCE-NUM.
            MOVE WS-POLICY-COINSURANCE-NUM  TO DL1-POLICY-COINS-PCT.
            PERFORM 2100-VALIDATE-CLAIM.
-           IF  PAY-THE-CLAIM 
+           IF  PAY-THE-CLAIM
                MOVE CLAIM-AMOUNT           TO DL1-CLAIM-MOUNT
                MOVE WS-CLAIM-AMT-PAID      TO DL1-CLAIM-AMT-PAID
                MOVE DETAIL-LINE-1          TO NEXT-REPORT-LINE
@@ -177,7 +178,7 @@
        2100-VALIDATE-CLAIM.
       *---------------------------------------------------------------*
            PERFORM 2110-COMPUTE-DEDUCTABLE.
-           IF  DEDUCTABLE-MET 
+           IF  DEDUCTABLE-MET
                IF  WS-DEDUCTABLE-AMT       <  POLICY-DEDUCTIBLE-PAID
                    MOVE  CLAIM-AMOUNT          TO WS-CLAIM-AMT-PAID
                ELSE
@@ -186,22 +187,22 @@
                            WS-DEDUCTABLE-AMT   -
                            (WS-POLICY-COINSURANCE-NUM  *
                             CLAIM-AMOUNT)
-               END-IF 
-           ELSE 
+               END-IF
+           ELSE
                COMPUTE WS-CLAIM-AMT-PAID   =
-                   CLAIM-AMOUNT            -  WS-DEDUCTABLE-AMT
+                   CLAIM-AMOUNT            - WS-DEDUCTABLE-AMT
            END-IF.
-           IF  POLICY-AMOUNT > ZERO 
-               MOVE 'Y'                    TO  PAY-THE-CLAIM-SW
-           ELSE 
-               MOVE 'N'                    TO  PAY-THE-CLAIM-SW.
+           IF  POLICY-AMOUNT > ZERO
+               MOVE 'Y'                TO  PAY-THE-CLAIM-SW
+           ELSE
+               MOVE 'N'                TO  PAY-THE-CLAIM-SW.
       *---------------------------------------------------------------*
        2110-COMPUTE-DEDUCTABLE.
       *---------------------------------------------------------------*
            COMPUTE WS-DEDUCTABLE-AMT       =
                POLICY-AMOUNT               *
                WS-DEDUCTABLE-PCT.
-           IF  POLICY-DEDUCTIBLE-PAID  <   WS-DEDUCTABLE-AMT 
+           IF  POLICY-DEDUCTIBLE-PAID < WS-DEDUCTABLE-AMT
                MOVE 'Y'                    TO  DEDUCTABLE-MET-SW
            ELSE
                MOVE 'N'                    TO  DEDUCTABLE-MET-SW.

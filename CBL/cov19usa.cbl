@@ -44,7 +44,7 @@
                10  DL1-ICU-CURR       PIC Z,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-VENT-CURR      PIC ZZZ,ZZ9.
-               10  FILLER             PIC X(02)  VALUE SPACE. 
+               10  FILLER             PIC X(02)  VALUE SPACE.
                10  DL1-RECOVERED      PIC Z,ZZZ,ZZ9.
                10  DL1-DEATH          PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
@@ -159,7 +159,7 @@
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
-               MOVE ZERO                   TO DL1-DEATH-PERCENT 
+               MOVE ZERO                   TO DL1-DEATH-PERCENT
                                               DL1-CASE-PERCENT.
            MOVE DL1-RECORD                 TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
@@ -192,8 +192,8 @@
                    UHR-DEATH
                    UHR-HOSPTALIZED
                    UHR-TOT-TESTS
-                   UHR-LAST-MODIFIED 
-                   UHR-RECOVERED 
+                   UHR-LAST-MODIFIED
+                   UHR-RECOVERED
                    UHR-TOTAL
                    UHR-POS-NEG
                    UHR-DEATH-INCREASE

@@ -1,36 +1,31 @@
       *===============================================================*
        IDENTIFICATION DIVISION.
-       PROGRAM-ID.    {{process.program_name}}.
+       PROGRAM-ID.    SKELETON.
        AUTHOR.        EDWIN ACKERMAN.
        INSTALLATION.  MORONS LOSERS AND BIMBOS LP.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           {{#initialization.file_control.fc_input}}
-            {{.}}
-            {{/initialization.file_control.fc_input}}
-
-            {{#initialization.file_control.fc_output}}
-            {{.}}
-            {{/initialization.file_control.fc_output}}
+           SELECT PRINT-FILE
+               ASSIGN TO PRTLINE.
+           SELECT INPUT-FILE
+               ASSIGN TO ACCTREC.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
        FILE SECTION.
       *---------------------------------------------------------------*
-       FD  {{process.input_file_name}} RECORDING MODE F.
-       COPY {{process.input_dd_name}}.
-      *
-       FD  {{process.output_file_name}} RECORDING MODE F.
+       FD  PRINT-FILE RECORDING MODE F.
        01  PRINT-RECORD.
       *    05 CC                           PIC X(01).
            05 PRINT-LINE                   PIC X(132).
+      *
+       FD  INPUT-FILE RECORDING MODE F.
+       01  INPUT-RECORD.
+           05 FILLER                       PIC X(132).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
-      *---------------------------------------------------------------*
-       01  PRINT-LINES.
-           05  NEXT-REPORT-LINE            PIC X(132) VALUE SPACE.
       *---------------------------------------------------------------*
        01  HEADING-LINES.
       *---------------------------------------------------------------*
@@ -52,7 +47,9 @@
                10  HL1-PAGE-COUNT          PIC ZZ9.
                10  FILLER                  PIC X(03) VALUE SPACE.
       *---------------------------------------------------------------*
-       01 DETAIL-LINES.
+       01  PRINT-LINES.
+      *---------------------------------------------------------------*
+           05  NEXT-REPORT-LINE            PIC X(132) VALUE SPACE.
       *---------------------------------------------------------------*
            05  DETAIL-LINE-1.
                10  FILLER  PIC X(132).
@@ -60,9 +57,7 @@
        01  WS-SWITCHES-SUBSCRIPTS-MISC.
       *---------------------------------------------------------------*
            05  END-OF-FILE-SW              PIC X VALUE 'N'.
-               88  END-OF-FILE                   VALUE 'Y'.  
-           05  {{process.input_file_name}}-STATUS    PIC X(02) VALUE '00'.
-           05  {{process.output_file_name}}-STATUS    PIC X(02) VALUE '00'.
+               88  END-OF-FILE                   VALUE 'Y'.
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -78,12 +73,12 @@
       *---------------------------------------------------------------*
        1000-OPEN-FILES.
       *---------------------------------------------------------------*
-           OPEN    INPUT  {{process.input_file_name}}
-                   OUTPUT {{process.output_file_name}}.
-           MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
-           MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
-           MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
-           MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
+           OPEN    INPUT  INPUT-FILE
+                   OUTPUT PRINT-FILE.
+           MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR  TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY   TO HL1-DAY-OUT.
       *---------------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
       *---------------------------------------------------------------*
@@ -93,12 +88,12 @@
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
-           CLOSE {{process.input_file_name}}
-                 {{process.output_file_name}}.
+           CLOSE INPUT-FILE
+                 PRINT-FILE.
       *---------------------------------------------------------------*
        8000-READ-ACCT-FILE.
       *---------------------------------------------------------------*
-           READ {{process.input_file_name}}
+           READ INPUT-FILE
                AT END MOVE 'Y' TO END-OF-FILE-SW.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.

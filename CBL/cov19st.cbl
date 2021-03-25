@@ -11,7 +11,7 @@
        FILE SECTION.
        FD  ST-HIST-FILE
                RECORDING MODE F.
-       01  ST-HIST-RECORD            PIC X(300).
+       01  ST-HIST-RECORD            PIC X(310).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -100,7 +100,7 @@
                10  FILLER    PIC X(20) VALUE '-----  -------     -'.
                10  FILLER    PIC X(20) VALUE '-----    ------  ---'.
                10  FILLER    PIC X(20) VALUE '----   -------      '.
-       COPY STATEFL.
+       COPY STATEREC.
       *---------------------------------------------------------------*
        01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
@@ -159,7 +159,7 @@
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
-               MOVE ZERO               TO DL1-DEATH-PERCENT 
+               MOVE ZERO               TO DL1-DEATH-PERCENT
                                           DL1-CASE-PERCENT.
            MOVE DL1-RECORD             TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.

@@ -177,13 +177,13 @@
       *---------------------------------------------------------------*
        8100-BREAKOUT-HACKER-RECORD.
       *---------------------------------------------------------------*
-           INSPECT HACKER-NEWS-RECORD-IN 
+           INSPECT HACKER-NEWS-RECORD-IN
                REPLACING ALL '"' BY '#'
                AFTER INITIAL '"'.
-           INSPECT HACKER-NEWS-RECORD-IN 
+           INSPECT HACKER-NEWS-RECORD-IN
                REPLACING ALL ',' BY ' '
                AFTER QUOTE BEFORE '#'.
-           INSPECT HACKER-NEWS-RECORD-IN 
+           INSPECT HACKER-NEWS-RECORD-IN
                REPLACING ALL '#' BY '"'
                AFTER INITIAL '"'.
            UNSTRING HACKER-NEWS-RECORD-IN  DELIMITED BY ','
