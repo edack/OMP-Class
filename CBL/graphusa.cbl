@@ -235,7 +235,7 @@
                       MOVE 'N' TO VALID-RECORD-SW.
            IF VALID-RECORD
                MOVE 0 to WS-COUNTER
-               INSPECT UHR-RECORD TALLYING WS-COUNTER FOR ALL "Agree".
+               INSPECT UHR-RECORD TALLYING WS-COUNTER FOR ALL "Agree"
                IF WS-COUNTER NOT = 0
                    UNSTRING UHR-RECORD DELIMITED BY ','
                    INTO UHR-DATE
@@ -262,7 +262,6 @@
                        UHR-DEATH-NEW
                        UHR-DEATH-NEW-PROB
                        UHR-CREATED-AT.
-      *         MOVE 'Y' TO END-OF-FILE-SW.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
