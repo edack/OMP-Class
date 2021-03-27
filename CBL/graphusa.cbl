@@ -162,12 +162,16 @@
        2100-ACCUMULATE-DATE-TOTALS.
       *---------------------------------------------------------------*
            ADD  UHR-CASE-TOTAL             TO  WS-CASE-POSITIVE.
-           COMPUTE WS-CASE-NEW-2 = FUNCTION NUMVAL-C(UHR-CASE-NEW).
-           ADD  WS-CASE-NEW-2              TO  WS-CASE-NEW.
+           IF  UHR-CASE-NEW GREATER THAN SPACE
+               COMPUTE WS-CASE-NEW-2 
+                   = FUNCTION NUMVAL-C(UHR-CASE-NEW)
+               ADD  WS-CASE-NEW-2          TO  WS-CASE-NEW.
            ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PENDING.
            ADD  UHR-DEATH-TOTAL            TO  WS-DEATH.
-           COMPUTE WS-DEATH-INCR-2 = FUNCTION NUMVAL-C(UHR-DEATH-NEW).
-           ADD  WS-DEATH-INCR-2            TO  WS-DEATH-INCREASE.
+           IF  UHR-DEATH-NEW GREATER THAN SPACE
+               COMPUTE WS-DEATH-INCR-2 
+                   = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
+               ADD  WS-DEATH-INCR-2        TO  WS-DEATH-INCREASE.
            ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PENDING.
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
@@ -234,8 +238,9 @@
                AT END MOVE 'Y' TO END-OF-FILE-SW
                       MOVE 'N' TO VALID-RECORD-SW.
            IF VALID-RECORD
-               MOVE 0 to WS-COUNTER
-               INSPECT UHR-RECORD TALLYING WS-COUNTER FOR ALL "Agree"
+               MOVE ZERO                   TO WS-COUNTER
+               INSPECT FUNCTION UPPER-CASE(UHR-RECORD)
+                   TALLYING WS-COUNTER FOR ALL "XX:XX:XX" 
                IF WS-COUNTER NOT = 0
                    UNSTRING UHR-RECORD DELIMITED BY ','
                    INTO UHR-DATE

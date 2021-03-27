@@ -10,7 +10,7 @@
                10 FILLER                   PIC X(13).
            05  UHR-STATE                   PIC X(02).
            05  UHR-CASE-TOTAL              PIC 9(09).
-           05  UHR-CASE-CONF               PIC 9(09).
+           05  UHR-CASE-CONF               PIC X(09).
            05  UHR-CASE-PROBABLE           PIC 9(09).
            05  UHR-CASE-NEW                PIC X(09).
            05  UHR-CASE-NEW-PROB           PIC 9(09).
