@@ -11,7 +11,7 @@
        FILE SECTION.
        FD  COUNTRY-FILE
                RECORDING MODE F.
-       01  COUNTRY-RECORD                  PIC X(130).
+       01  COUNTRY-RECORD                  PIC X(310).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE F.
@@ -102,7 +102,7 @@
                10 FILLER                   PIC X(01) VALUE SPACE.
                10 DL-CASE-NEW              PIC Z,ZZZ,ZZ9.
                10 FILLER                   PIC X(01) VALUE SPACE.
-               10 DL-CASE-TOTAL            PIC ZZ,ZZZ,ZZ9.
+               10 DL-CASE-TOTAL            PIC ZZZ,ZZZ,ZZ9.
                10 FILLER                   PIC X(03) VALUE SPACE.
                10 DL-DEATH-NEW             PIC ZZZZ,ZZ9.
                10 FILLER                   PIC X(03) VALUE SPACE.
@@ -126,6 +126,7 @@
        01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
            05  HOLD-AREA.
+               10  WS-ID-CHUNK             PIC X(36).
                10  WS-COUNTRY              PIC X(44).
                10  WS-CODE                 PIC X(02).
                10  WS-SLUG                 PIC X(44).
@@ -236,17 +237,18 @@
                       MOVE 'N'             TO VALID-RECORD-SW.
            IF VALID-RECORD
                UNSTRING COUNTRY-RECORD DELIMITED BY ','
-               INTO WS-COUNTRY
-                    WS-CODE
-                    WS-SLUG
-                    WS-CASE-NEW
-                    WS-CASE-TOT
-                    WS-DEATH-NEW
-                    WS-DEATH-TOT
-                    WS-RECVD-NEW
-                    WS-RECVD-TOT
-                    WS-TIMESTAMP
-                    WS-PERCENT.
+                      INTO WS-ID-CHUNK
+                           WS-COUNTRY
+                           WS-CODE
+                           WS-SLUG
+                           WS-CASE-NEW
+                           WS-CASE-TOT
+                           WS-DEATH-NEW
+                           WS-DEATH-TOT
+                           WS-RECVD-NEW
+                           WS-RECVD-TOT
+                           WS-TIMESTAMP
+                           WS-PERCENT.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
