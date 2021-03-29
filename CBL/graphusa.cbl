@@ -1,6 +1,13 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. GRPHUSA.
+       AUTHOR.        ED ACKERMAN.
+       INSTALLATION.  MORONS, LOSERS AND BIMBOES.
+       DATE-WRITTEN.  11/28/2020.
+       DATE-COMPILED.
        ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION. 
+       SOURCE-COMPUTER.  IBM-3096.
+       OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT USA-HIST-FILE ASSIGN TO USAFILE.
@@ -16,80 +23,80 @@
        FD  PRINT-FILE
                RECORDING MODE F.
        01  PRINT-RECORD.
-      *    05  CC                      PIC X(01).
-           05  PRINT-LINE              PIC X(130).
+      *     05  CC                          PIC X(01).
+           05  PRINT-LINE                  PIC X(130).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
        01   REPORT-LINES.
       *---------------------------------------------------------------*
-           05  NEXT-REPORT-LINE        PIC X(132)  VALUE SPACE.
+           05  NEXT-REPORT-LINE            PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
            05  UHR-PRINT-RECORD.
                10  UHR-TIMESTAMP.
-                   15  PR-MONTH        PIC X(02).
-                   15  FILLER          PIC X(01)  VALUE '/'.
-                   15  PR-DAY          PIC X(02).
-                   15  FILLER          PIC X(01)  VALUE '/'.
-                   15  PR-YEAR         PIC X(04).
-               10  FILLER              PIC X(02)  VALUE SPACE.
-               10  FILLER              PIC X(02)  VALUE ' |'.
+                   15  PR-MONTH            PIC X(02).
+                   15  FILLER              PIC X(01)  VALUE '/'.
+                   15  PR-DAY              PIC X(02).
+                   15  FILLER              PIC X(01)  VALUE '/'.
+                   15  PR-YEAR             PIC X(04).
+               10  FILLER                  PIC X(02)  VALUE SPACE.
+               10  FILLER                  PIC X(02)  VALUE ' |'.
                10  UHR-GRAPH.
-                   15  UHR-GRAPH-DATA  PIC X(01) OCCURS 110 TIMES.
-               10  FILLER              PIC X(05)  VALUE SPACE.
+                   15  UHR-GRAPH-DATA      PIC X(01) OCCURS 110 TIMES.
+               10  FILLER                  PIC X(05)  VALUE SPACE.
       *---------------------------------------------------------------*
            05  HEADING-LINE-1.
                10 HL1-DATE.
-                   15  FILLER          PIC X(01) VALUE SPACE.
-                   15  FILLER          PIC X(12) VALUE 'TODAYS DATE:'.
-                   15  HL1-MONTH-OUT   PIC XX.
-                   15  FILLER          PIC X     VALUE '/'.
-                   15  HL1-DAY-OUT     PIC XX.
-                   15  FILLER          PIC X     VALUE '/'.
-                   15  HL1-YEAR-OUT    PIC XXXX.
-               10  FILLER    PIC X(20) VALUE '   REPORTING STATE: '.
-               10  HL1-REPORTING-STATE PIC X(03) VALUE SPACE.
-               10  FILLER              PIC X(05) VALUE SPACE.
-               10  FILLER    PIC X(20) VALUE '* = NEW, + = MORTALI'.
-               10  FILLER    PIC X(20) VALUE 'TY                  '.
-               10  FILLER              PIC X(10) VALUE SPACE.
+                   15  FILLER              PIC X(01) VALUE SPACE.
+                   15  FILLER  PIC X(12) VALUE 'TODAYS DATE:'.
+                   15  HL1-MONTH-OUT       PIC XX.
+                   15  FILLER              PIC X     VALUE '/'.
+                   15  HL1-DAY-OUT         PIC XX.
+                   15  FILLER              PIC X     VALUE '/'.
+                   15  HL1-YEAR-OUT        PIC XXXX.
+               10  FILLER      PIC X(20) VALUE '   REPORTING STATE: '.
+               10  HL1-REPORTING-STATE     PIC X(03) VALUE SPACE.
+               10  FILLER                  PIC X(05) VALUE SPACE.
+               10  FILLER      PIC X(20) VALUE '* = NEW, + = MORTALI'.
+               10  FILLER      PIC X(20) VALUE 'TY                  '.
+               10  FILLER                  PIC X(10) VALUE SPACE.
                10  HL1-PAGE-COUNT-AREA.
-                   15  FILLER          PIC X(04) VALUE SPACE.
-                   15  FILLER          PIC X(05) VALUE 'PAGE:'.
-                   15  HL1-PAGE-NUM    PIC ZZZZ9.
+                   15  FILLER              PIC X(04) VALUE SPACE.
+                   15  FILLER              PIC X(05) VALUE 'PAGE:'.
+                   15  HL1-PAGE-NUM        PIC ZZZZ9.
       *---------------------------------------------------------------*
            05  HEADING-LINE-2.
-               10  FILLER              PIC X(51) VALUE SPACE.
-               10  FILLER    PIC X(20) VALUE '  CASE %     % /100K'.
-               10  FILLER              PIC X(47) VALUE SPACE.
+               10  FILLER      PIC X(51) VALUE SPACE.
+               10  FILLER      PIC X(20) VALUE '  CASE %     % /100K'.
+               10  FILLER      PIC X(47) VALUE SPACE.
       *---------------------------------------------------------------*
            05  HEADING-LINE-3.
-               10  FILLER    PIC X(20) VALUE '             |  %  0'.
-               10  FILLER    PIC X(20) VALUE '----+----1----+----2'.
-               10  FILLER    PIC X(20) VALUE '----+----3----+----4'.
-               10  FILLER    PIC X(20) VALUE '----+----5----+----6'.
-               10  FILLER    PIC X(20) VALUE '----+----7----+----8'.
-               10  FILLER    PIC X(20) VALUE '----+----9----+----0'.
-               10  FILLER    PIC X(10) VALUE '----+----1'.
+               10  FILLER      PIC X(20) VALUE '             |  %  0'.
+               10  FILLER      PIC X(20) VALUE '----+----1----+----2'.
+               10  FILLER      PIC X(20) VALUE '----+----3----+----4'.
+               10  FILLER      PIC X(20) VALUE '----+----5----+----6'.
+               10  FILLER      PIC X(20) VALUE '----+----7----+----8'.
+               10  FILLER      PIC X(20) VALUE '----+----9----+----0'.
+               10  FILLER      PIC X(10) VALUE '----+----1'.
       *---------------------------------------------------------------*
            05  ERROR-LINE-1.
                10  EL-TIMESTAMP.
-                   15  EL-MONTH        PIC X(02).
-                   15  FILLER          PIC X(01)  VALUE '/'.
-                   15  EL-DAY          PIC X(02).
-                   15  FILLER          PIC X(01)  VALUE '/'.
-                   15  EL-YEAR         PIC X(04).
-               10  FILLER    PIC X(06) VALUE '   |  '.
+                   15  EL-MONTH            PIC X(02).
+                   15  FILLER              PIC X(01)  VALUE '/'.
+                   15  EL-DAY              PIC X(02).
+                   15  FILLER              PIC X(01)  VALUE '/'.
+                   15  EL-YEAR             PIC X(04).
+               10  FILLER                  PIC X(06) VALUE '   |  '.
                10  EL-PERCENT.
-                   15  EL-GRAPH-POINT  PIC ZZ9.999.
-                   15  FILLER          PIC X(04) VALUE '%   '.
-               10  FILLER    PIC X(11) VALUE '      ***  '.
-               10  EL-CAUSE  PIC X(05).
-               10  FILLER    PIC X(10) VALUE ' VALUE IS '.
-               10  FILLER    PIC X(20) VALUE 'TO LARGE TO GRAPH MU'.
-               10  FILLER    PIC X(20) VALUE 'ST BE LESS THAN 11% '.
-               10  FILLER    PIC X(20) VALUE ' ***                '.
-               10  FILLER    PIC X(13) VALUE '             '.
+                   15  EL-GRAPH-POINT      PIC ZZ9.999.
+                   15  FILLER              PIC X(04) VALUE '%   '.
+               10  FILLER      PIC X(11) VALUE '      ***  '.
+               10  EL-CAUSE                PIC X(05).
+               10  FILLER      PIC X(10) VALUE ' VALUE IS '.
+               10  FILLER      PIC X(20) VALUE 'TO LARGE TO GRAPH MU'.
+               10  FILLER      PIC X(20) VALUE 'ST BE LESS THAN 11% '.
+               10  FILLER      PIC X(20) VALUE ' ***                '.
+               10  FILLER      PIC X(13) VALUE '             '.
        COPY USAFILE.
       *---------------------------------------------------------------*
        01  SWITCHES-INDEX-COUNTER-FIELDS.
@@ -104,8 +111,8 @@
            05  WS-CASE-NEW-2               PIC 9(09).
            05  WS-CASE-PENDING             PIC 9(09).
            05  WS-DEATH                    PIC 9(09).
-           05  WS-DEATH-INCREASE           PIC 9(09).
-           05  WS-DEATH-INCR-2             PIC 9(09).
+           05  WS-DEATH-NEW                PIC 9(09).
+           05  WS-DEATH-NEW-2              PIC 9(09).
            05  WS-DEATH-PENDING            PIC 9(09).
            05  WS-PERCENT                  PIC 999V9(10).
            05  WS-C-GRAPH-PNT              PIC 999V9(10).
@@ -153,7 +160,7 @@
                MOVE  ZERO                  TO  WS-CASE-NEW
                MOVE  ZERO                  TO  WS-CASE-PENDING
                MOVE  ZERO                  TO  WS-DEATH
-               MOVE  ZERO                  TO  WS-DEATH-INCREASE
+               MOVE  ZERO                  TO  WS-DEATH-NEW
                MOVE  ZERO                  TO  WS-DEATH-PENDING
                MOVE  UHR-DATE              TO  WS-PREV-DATE.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
@@ -169,9 +176,9 @@
            ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PENDING.
            ADD  UHR-DEATH-TOTAL            TO  WS-DEATH.
            IF  UHR-DEATH-NEW GREATER THAN SPACE
-               COMPUTE WS-DEATH-INCR-2 
+               COMPUTE WS-DEATH-NEW-2 
                    = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
-               ADD  WS-DEATH-INCR-2        TO  WS-DEATH-INCREASE.
+               ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
            ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PENDING.
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
@@ -235,8 +242,8 @@
        8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
            READ USA-HIST-FILE
-               AT END MOVE 'Y' TO END-OF-FILE-SW
-                      MOVE 'N' TO VALID-RECORD-SW.
+               AT END MOVE 'Y'             TO END-OF-FILE-SW
+                      MOVE 'N'             TO VALID-RECORD-SW.
            IF VALID-RECORD
                MOVE ZERO                   TO WS-COUNTER
                INSPECT FUNCTION UPPER-CASE(UHR-RECORD)
