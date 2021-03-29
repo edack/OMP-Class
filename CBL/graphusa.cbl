@@ -1,5 +1,5 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. GRPHUSA.
+       PROGRAM-ID.    GRPHUSA.
        AUTHOR.        ED ACKERMAN.
        INSTALLATION.  MORONS, LOSERS AND BIMBOES.
        DATE-WRITTEN.  11/28/2020.
@@ -33,6 +33,7 @@
            05  NEXT-REPORT-LINE            PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
            05  UHR-PRINT-RECORD.
+      *---------------------------------------------------------------*
                10  UHR-TIMESTAMP.
                    15  PR-MONTH            PIC X(02).
                    15  FILLER              PIC X(01)  VALUE '/'.
@@ -45,7 +46,10 @@
                    15  UHR-GRAPH-DATA      PIC X(01) OCCURS 110 TIMES.
                10  FILLER                  PIC X(05)  VALUE SPACE.
       *---------------------------------------------------------------*
+       01  HEADING-LINES.
+      *---------------------------------------------------------------*
            05  HEADING-LINE-1.
+      *---------------------------------------------------------------*
                10 HL1-DATE.
                    15  FILLER              PIC X(01) VALUE SPACE.
                    15  FILLER  PIC X(12) VALUE 'TODAYS DATE:'.
@@ -66,11 +70,13 @@
                    15  HL1-PAGE-NUM        PIC ZZZZ9.
       *---------------------------------------------------------------*
            05  HEADING-LINE-2.
+      *---------------------------------------------------------------*
                10  FILLER      PIC X(51) VALUE SPACE.
                10  FILLER      PIC X(20) VALUE '  CASE %     % /100K'.
                10  FILLER      PIC X(47) VALUE SPACE.
       *---------------------------------------------------------------*
            05  HEADING-LINE-3.
+      *---------------------------------------------------------------*
                10  FILLER      PIC X(20) VALUE '             |  %  0'.
                10  FILLER      PIC X(20) VALUE '----+----1----+----2'.
                10  FILLER      PIC X(20) VALUE '----+----3----+----4'.
@@ -80,6 +86,7 @@
                10  FILLER      PIC X(10) VALUE '----+----1'.
       *---------------------------------------------------------------*
            05  ERROR-LINE-1.
+      *---------------------------------------------------------------*
                10  EL-TIMESTAMP.
                    15  EL-MONTH            PIC X(02).
                    15  FILLER              PIC X(01)  VALUE '/'.
