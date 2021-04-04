@@ -26,8 +26,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zowe/cli": "^6.24.2",
-    "@zowe/imperative": "file:../ZoweSDK/imperative.tgz",
+    "@zowe/cli": "^6.0.0",
+    "@zowe/imperative": "^4.0.0",
     "@zowe/provisioning-for-zowe-sdk": "file:../ZoweSDK/provisioning-for-zowe-sdk.tgz",
     "@zowe/zos-console-for-zowe-sdk": "file:../ZoweSDK/zos-console-for-zowe-sdk.tgz",
     "@zowe/zos-files-for-zowe-sdk": "file:../ZoweSDK/zos-files-for-zowe-sdk.tgz",
