@@ -102,7 +102,7 @@
                10 FILLER                   PIC X(01) VALUE SPACE.
                10 DL-CASE-NEW              PIC Z,ZZZ,ZZ9.
                10 FILLER                   PIC X(01) VALUE SPACE.
-               10 DL-CASE-TOTAL            PIC ZZZ,ZZZ,ZZ9.
+               10 DL-CASE-TOTAL            PIC ZZ,ZZZ,ZZ9.
                10 FILLER                   PIC X(03) VALUE SPACE.
                10 DL-DEATH-NEW             PIC ZZZZ,ZZ9.
                10 FILLER                   PIC X(03) VALUE SPACE.
@@ -115,10 +115,10 @@
                10 FILLER                   PIC X(02) VALUE ' %'.
       *---------------------------------------------------------------*
            05  TOTAL-LINE.
-               10 FILLER                   PIC X(31) VALUE SPACE.
-               10 TL-CASE-TOTAL            PIC ZZ,ZZZ,ZZ9.
-               10 FILLER                   PIC X(12) VALUE SPACE.
-               10 TL-DEATH-TOTAL           PIC ZZ,ZZZ,ZZ9.
+               10 FILLER                   PIC X(28) VALUE SPACE.
+               10 TL-CASE-TOTAL            PIC Z,ZZZ,ZZZ,ZZ9.
+               10 FILLER                   PIC X(11) VALUE SPACE.
+               10 TL-DEATH-TOTAL           PIC ZZZ,ZZZ,ZZ9.
                10 FILLER                   PIC X(05) VALUE SPACE.
                10 TL-PERCENT               PIC ZZ9.9999.
                10 FILLER                   PIC X(02) VALUE '% '.
@@ -146,8 +146,8 @@
                10  WS-PERCENT              PIC 99V999999.
       *---------------------------------------------------------------*
            05  TOTAL-ACCUMULATORS.
-               10  TA-CASE-TOT        PIC 9(08).
-               10  TA-DEATH-TOT       PIC 9(08).
+               10  TA-CASE-TOT        PIC 9(10).
+               10  TA-DEATH-TOT       PIC 9(09).
            05  VALID-RECORD-SW        PIC X(01)   VALUE 'Y'.
                88  VALID-RECORD                   VALUE 'Y'.
            05  END-OF-FILE-SW         PIC X(01)   VALUE 'N'.
