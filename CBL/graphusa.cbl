@@ -172,8 +172,10 @@
            MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
            MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
            MOVE SPACE                      TO WS-PREV-DATE.
+           INITIALIZE STATE-ACCUMULATION-FIELDS
+               REPLACING   NUMERIC DATA BY 0
+                           ALPHANUMERIC DATA BY SPACE.
            ACCEPT REPORT-STATE-SW.
-           DISPLAY REPORT-STATE-SW.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
@@ -187,6 +189,7 @@
                MOVE  ZERO                  TO  WS-DEATH-PEND
                INITIALIZE STATE-ACCUMULATION-FIELDS
                    REPLACING NUMERIC DATA BY 0
+                             ALPHANUMERIC DATA BY SPACE
                MOVE  UHR-DATE              TO  WS-PREV-DATE.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
            PERFORM 8000-READ-USA-HIST-FILE.
@@ -262,7 +265,6 @@
                    MOVE WS-C-GRAPH-PNT     TO EL-GRAPH-POINT
                    MOVE 'CASES'            TO EL-CAUSE
                END-IF
-      *         MOVE '   ERROR  '           TO EL-PERCENT
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
                COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6
@@ -279,18 +281,20 @@
       *---------------------------------------------------------------*
        2210-SETUP-STATE.
       *---------------------------------------------------------------*
+      *     DISPLAY REPORT-STATE-SW.
+           SET STATE-INDEX  TO 1.
            SEARCH STATE-TABLE
                WHEN ST-STATE(STATE-INDEX) = REPORT-STATE-SW
-               MOVE ST-CASES(STATE-INDEX)      TO WS-CASES
-               MOVE ST-CASE-NEW(STATE-INDEX)   TO WS-CASE-NEW
-               MOVE ST-CASE-PEND(STATE-INDEX)  TO WS-CASE-PEND
-               MOVE ST-DEATH(STATE-INDEX)      TO WS-DEATH
-               MOVE ST-DEATH-NEW(STATE-INDEX)  TO WS-DEATH-NEW
-               MOVE ST-DEATH-PEND(STATE-INDEX) TO WS-DEATH-PEND.
+                   MOVE ST-CASES(STATE-INDEX)      TO WS-CASES
+                   MOVE ST-CASE-NEW(STATE-INDEX)   TO WS-CASE-NEW
+                   MOVE ST-CASE-PEND(STATE-INDEX)  TO WS-CASE-PEND
+                   MOVE ST-DEATH(STATE-INDEX)      TO WS-DEATH
+                   MOVE ST-DEATH-NEW(STATE-INDEX)  TO WS-DEATH-NEW
+                   MOVE ST-DEATH-PEND(STATE-INDEX) TO WS-DEATH-PEND.
       *---------------------------------------------------------------*
        2220-FORMAT-PERCENT.
       *---------------------------------------------------------------*
-           MOVE WS-D-GRAPH-PNT             TO WS-GRAPH-PNT-X.
+           MOVE WS-C-GRAPH-PNT             TO WS-GRAPH-PNT-X.
            MOVE WS-GRAPH-PNT-X(WS-PNT2:1)  TO UHR-GRAPH-DATA(WS-PNT1).
            ADD  1                          TO WS-PNT1.
            MOVE ' '                        TO UHR-GRAPH-DATA(WS-PNT1).

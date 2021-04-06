@@ -10,12 +10,13 @@
 //* ------------------------------------------------------------------
 //* STEP 1 - SORT FILES
 //* ------------------------------------------------------------------
-//SRTSTP  EXEC PGM=SORT
+//SRTSTP    EXEC  PGM=SORT
 //SYSOUT    DD SYSOUT=*
 //SORTIN    DD DSN=&HLQ1..&HLQ2..&INDD,DISP=SHR
 //SORTOUT   DD DSN=&&TEMPFL1,
-//             DISP=(NEW,PASS,DELETE),
-//             DCB=(LRECL=130,BLKSIZE=27950,RECFM=FB)
+//             DCB=(LRECL=130,RECFM=FB),
+//             SPACE=(TRK,(75,10),RLSE),
+//             DISP=(NEW,PASS,DELETE)
 //SORTOUT   DD SYSOUT=*
 //SYSIN     DD *
   SORT FORMAT=CH,
@@ -27,17 +28,14 @@
 //STEPLIB DD DSN=&HLQ1..COPYLIB,DISP=SHR
 //COBOL   EXEC  PGM=&PGM
 //{{process.input_dd_name}}    DD DSN=&&TEMPFL1,
-//             DISP=(OLD,DELETE,DELETE),
-//             DCB=(LRECL=130,BLKSIZE=27950,RECFM=FB)
+//             DISP=(OLD,DELETE,DELETE)
 //*{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
-//RPTTYPE   DD *
-  ALL
-/*
 //{{process.output_dd_name}}  DD SYSOUT=*
 //SYSPRINT DD SYSOUT=*
 //SYSOUT  DD SYSOUT=*
-//***************************************************/
-//*** Parameters: N=NEW, U=UPDATE *******************/
-U
+//* ------------------------------------------------------------------
+//* STEP 2.1 - SELECTION PARAMETER FOR THE REPORT ALL/STATE
+//* ------------------------------------------------------------------
+{{process.report_type}}
 /*
 
