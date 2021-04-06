@@ -1,13 +1,10 @@
+      *===============================================================*
        IDENTIFICATION DIVISION.
        PROGRAM-ID.    SKELETON.
        AUTHOR.        EDWIN ACKERMAN.
        INSTALLATION.  MORONS LOSERS AND BIMBOS LP.
-       DATE-WRITTEN.  11/28/2020.
-       DATE-COMPILED.
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
-       SOURCE-COMPUTER.  IBM-3096.
-       OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT PRINT-FILE

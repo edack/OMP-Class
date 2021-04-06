@@ -1,12 +1,11 @@
-{{#compiler.job_card2}}
-//{{{.}}}
-{{/compiler.job_card2}}
-// SET PGM='{{process.program_name}}'
-// SET HLQ1='{{process.hlq1}}'
-// SET HLQ2='{{process.hlq2}}'
-// SET INDD='{{process.input_dd_name}}'
-// SET OUTDD='{{process.output_dd_name}}'
-//JOBLIB   DD DISP=SHR,DSN=&HLQ1..{{compiler.load_library}}
+//RUNJOBTM  JOB ('RUNJOBTM'),'RUNJCL',MSGCLASS=X,
+//          CLASS=A,NOTIFY=&SYSUID
+// SET PGM='GRAPHUSA'
+// SET HLQ1='Z80843'
+// SET HLQ2='NCOV19'
+// SET INDD='USAFILE'
+// SET OUTDD='PRTFILE'
+//JOBLIB   DD DSN=&HLQ1..LOAD,DISP=SHR
 //* ------------------------------------------------------------------
 //* STEP 1 - SORT FILES
 //* ------------------------------------------------------------------
@@ -20,24 +19,25 @@
 //SYSIN     DD *
   SORT FORMAT=CH,
        FIELDS=(1,23,D)
-/*       
+/*
 //* ------------------------------------------------------------------
 //* STEP 2 - RUN THE REPORT
 //* ------------------------------------------------------------------
 //STEPLIB DD DSN=&HLQ1..COPYLIB,DISP=SHR
 //COBOL   EXEC  PGM=&PGM
-//{{process.input_dd_name}}    DD DSN=&&TEMPFL1,
+//USAFILE    DD DSN=&&TEMPFL1,
 //             DISP=(OLD,DELETE,DELETE),
 //             DCB=(LRECL=130,BLKSIZE=27950,RECFM=FB)
-//*{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
-//RPTTYPE   DD *
-  ALL
-/*
-//{{process.output_dd_name}}  DD SYSOUT=*
+//*PRTFILE  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
+//*RPTTYPE   DD *
+//*ALL
+//*/*
+//PRTFILE  DD SYSOUT=*
 //SYSPRINT DD SYSOUT=*
-//SYSOUT  DD SYSOUT=*
-//***************************************************/
-//*** Parameters: N=NEW, U=UPDATE *******************/
-U
+//SYSOUT   DD SYSOUT=*
+//* ------------------------------------------------------------------
+//* STEP 2.1 - SELECTION PARAMETER FOR THE ALL REPORT
+//* ------------------------------------------------------------------
+ALL
 /*
 

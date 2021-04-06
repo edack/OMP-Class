@@ -3,6 +3,7 @@
 //************************************************************/
 //COBRUN  EXEC IGYWCL
 //COBOL.SYSIN  DD DSN=&SYSUID..CBL(HACKNWS),DISP=SHR
+//COBOL.SYSLIB DD DSN=&SYSUID..COPYLIB,DISP=SHR
 //LKED.SYSLMOD DD DSN=&SYSUID..LOAD(HACKNWS),DISP=SHR
 //************************************************************/
 // IF RC = 0 THEN

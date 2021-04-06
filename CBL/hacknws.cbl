@@ -187,12 +187,12 @@
                REPLACING ALL '#' BY '"'
                AFTER INITIAL '"'.
            UNSTRING HACKER-NEWS-RECORD-IN  DELIMITED BY ','
-               INTO HNR-KEY
-                    HNR-TITLE
-                    HNR-VOTES
-                    HNR-COMMENT-CNT
-                    HNR-AUTHOR
-                    HNR-CREATED-DATE.
+                INTO HNR-KEY
+                     HNR-TITLE
+                     HNR-VOTES
+                     HNR-COMMENT-CNT
+                     HNR-AUTHOR
+                     HNR-CREATED-DATE.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
