@@ -149,7 +149,7 @@
                10  ST-DEATH                PIC 9(09).
                10  ST-DEATH-NEW            PIC 9(09).
                10  ST-DEATH-PEND           PIC 9(09).
-           COPY PRINTCTL.
+       COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
       *---------------------------------------------------------------*
