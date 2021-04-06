@@ -197,13 +197,13 @@
        2100-ACCUMULATE-DATE-TOTALS.
       *---------------------------------------------------------------*
            ADD  UHR-CASE                   TO  WS-CASES.
-           IF  UHR-CASE-CONF GREATER THAN SPACE
+           IF  UHR-CASE-NEW GREATER THAN SPACE
                COMPUTE WS-CASE-NEW-2
                    = FUNCTION NUMVAL-C(UHR-CASE-NEW)
                ADD  WS-CASE-NEW-2          TO  WS-CASE-NEW.
            ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
            ADD  UHR-DEATH                  TO  WS-DEATH.
-           IF  UHR-DEATH-CONF GREATER THAN SPACE
+           IF  UHR-DEATH-NEW GREATER THAN SPACE
                COMPUTE WS-DEATH-NEW-2
                    = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
                ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
