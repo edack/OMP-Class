@@ -1,6 +1,13 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. COV19USA.
+       AUTHOR.        ED ACKERMAN.
+       INSTALLATION.  MORONS, LOSERS AND BIMBOES.
+       DATE-WRITTEN.  11/28/2020.
+       DATE-COMPILED.
        ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION. 
+       SOURCE-COMPUTER.  IBM-3096.
+       OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT USA-HIST-FILE ASSIGN TO USAFILE.
@@ -36,10 +43,10 @@
                10  DL1-CASE-POSITIVE  PIC ZZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(02)  VALUE SPACE.
                10  DL1-CASE-NEW       PIC ZZZ,ZZ9.
-               10  FILLER             PIC X(01)  VALUE SPACE.
+               10  FILLER             PIC X(02)  VALUE SPACE.
                10  DL1-CASE-PENDING   PIC ZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-DEATH          PIC ZZ,ZZZ,ZZ9.
+               10  DL1-DEATH          PIC Z,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-DEATH-NEW      PIC ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
@@ -71,7 +78,7 @@
            05  HEADING-LINE-2.
                10  FILLER    PIC X(12) VALUE '  AS OF     '.
                10  FILLER    PIC X(20) VALUE '     TOTAL       NEW'.
-               10  FILLER    PIC X(20) VALUE '   PEND      DEATH  '.
+               10  FILLER    PIC X(20) VALUE '     PEND    DEATH  '.
                10  FILLER    PIC X(20) VALUE '   NEW    DEATH    N'.
                10  FILLER    PIC X(20) VALUE ' CASE               '.
                10  FILLER    PIC X(20) VALUE '                    '.
@@ -80,7 +87,7 @@
            05  HEADING-LINE-3.
                10  FILLER    PIC X(12) VALUE '  DATE      '.
                10  FILLER    PIC X(20) VALUE '     CASES      CASE'.
-               10  FILLER    PIC X(20) VALUE 'S  CASES     TOTAL  '.
+               10  FILLER    PIC X(20) VALUE 'S   CASES    TOTAL  '.
                10  FILLER    PIC X(20) VALUE ' DEATHS    % AGE    '.
                10  FILLER    PIC X(20) VALUE '% AGE               '.
                10  FILLER    PIC X(20) VALUE '                    '.
@@ -89,7 +96,7 @@
            05  HEADING-LINE-4.
                10  FILLER    PIC X(12) VALUE '  ----      '.
                10  FILLER    PIC X(20) VALUE '     -----      ----'.
-               10  FILLER    PIC X(20) VALUE '-  -----     -----  '.
+               10  FILLER    PIC X(20) VALUE '-   -----    -----  '.
                10  FILLER    PIC X(20) VALUE ' ------   ------    '.
                10  FILLER    PIC X(20) VALUE '-----               '.
                10  FILLER    PIC X(20) VALUE '                    '.
@@ -231,15 +238,12 @@
            MOVE WS-CASE-PEND               TO DL1-CASE-PENDING.
            MOVE WS-DEATH                   TO DL1-DEATH.
            MOVE WS-DEATH-NEW               TO DL1-DEATH-NEW.
-           IF  UHR-CASE > ZERO
-               DIVIDE UHR-DEATH  BY UHR-CASE
+           IF  WS-CASES > ZERO
+               DIVIDE WS-DEATH  BY WS-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-DEATH-PERCENT
-               IF  UHR-CASE-NEW GREATER THAN SPACE
-                   COMPUTE WS-CASE-NEW-2
-                      = FUNCTION NUMVAL-C(UHR-CASE-NEW)
-               END-IF
-               DIVIDE WS-CASE-NEW-2   BY UHR-CASE
+               COMPUTE WS-CASE-NEW-2 = WS-CASE-NEW + WS-CASE-PEND 
+               DIVIDE WS-CASE-NEW-2   BY WS-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
