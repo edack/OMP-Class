@@ -8,7 +8,7 @@
 // SET OUTDD='{{process.output_dd_name}}'
 //JOBLIB   DD DISP=SHR,DSN=&HLQ1..{{compiler.load_library}}
 //* ------------------------------------------------------------------
-//* STEP 1 - SORT FILES
+//* STEP 1 - SORT INPUT FILE BY DATE SINCE THE DATA COMES UNSORTED
 //* ------------------------------------------------------------------
 //SRTSTP    EXEC  PGM=SORT
 //SYSOUT    DD SYSOUT=*
@@ -32,7 +32,7 @@
 //*{{process.output_dd_name}}  DD DSN=&HLQ1..&HLQ2..&OUTDD,DISP=SHR
 //{{process.output_dd_name}}  DD SYSOUT=*
 //SYSPRINT DD SYSOUT=*
-//SYSOUT  DD SYSOUT=*
+//SYSOUT   DD SYSOUT=*
 //* ------------------------------------------------------------------
 //* STEP 2.1 - SELECTION PARAMETER FOR THE REPORT ALL/STATE
 //* ------------------------------------------------------------------
