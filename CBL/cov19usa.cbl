@@ -11,7 +11,7 @@
        FILE SECTION.
        FD  USA-HIST-FILE
                RECORDING MODE F.
-       01  USA-HIST-RECORD            PIC X(225).
+       01  USA-HIST-RECORD            PIC X(130).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -25,30 +25,23 @@
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE       PIC X(132).
       *---------------------------------------------------------------*
-           05  DL1-RECORD.
+           05  DETAIL-LINE-1.
                10  DL1-TIMESTAMP.
                    15  DL1-MONTH      PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
                    15  DL1-DAY        PIC X(02).
                    15  FILLER         PIC X(01)  VALUE '/'.
                    15   DL1-YEAR      PIC X(04).
-               10  DL1-STATE          PIC X(01)  VALUE SPACE.
-               10  DL1-CASE-POSITIVE  PIC ZZ,ZZZ,ZZ9.
-               10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-CASE-NEGATIVE  PIC ZZZ,ZZZ,ZZ9.
+               10  FILLER             PIC X(03)  VALUE SPACE.
+               10  DL1-CASE-POSITIVE  PIC ZZZ,ZZZ,ZZ9.
+               10  FILLER             PIC X(02)  VALUE SPACE.
+               10  DL1-CASE-NEW       PIC ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-CASE-PENDING   PIC ZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-CASE-NEW       PIC Z,ZZZ,ZZ9.
-               10  DL1-HOSPITAL-CURR  PIC Z,ZZZ,ZZ9.
-               10  DL1-ICU-CURR       PIC Z,ZZZ,ZZ9.
-               10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-VENT-CURR      PIC ZZZ,ZZ9.
-               10  FILLER             PIC X(02)  VALUE SPACE.
-               10  DL1-RECOVERED      PIC Z,ZZZ,ZZ9.
                10  DL1-DEATH          PIC ZZ,ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
-               10  DL1-DEATH-NEW      PIC Z,ZZZ,ZZ9.
+               10  DL1-DEATH-NEW      PIC ZZZ,ZZ9.
                10  FILLER             PIC X(01)  VALUE SPACE.
                10  DL1-DEATH-PERCENT  PIC Z9.9999.
                10  FILLER             PIC X(03)  VALUE '%  '.
@@ -64,56 +57,71 @@
                    15  HL1-DAY-OUT    PIC XX.
                    15  FILLER         PIC X     VALUE '/'.
                    15  HL1-YEAR-OUT   PIC XX.
-               10  FILLER             PIC X(30) VALUE SPACE.
+               10  FILLER             PIC X(15) VALUE SPACE.
                10  FILLER             PIC X(11) VALUE 'FOR STATE: '.
                10  HL1-STATE          PIC X(03).
-               10  FILLER             PIC X(08) VALUE SPACE.
-               10  FILLER             PIC X(30) VALUE SPACE.
+               10  FILLER             PIC X(13) VALUE SPACE.
                10  HL1-PAGE-COUNT-AREA.
                    15  FILLER         PIC X(04) VALUE SPACE.
                    15  FILLER         PIC X(05) VALUE 'PAGE:'.
                    15  HL1-PAGE-NUM   PIC ZZZZ9.
                    15  FILLER         PIC X(05) VALUE SPACE.
+               10  FILLER             PIC X(40) VALUE SPACE.
       *---------------------------------------------------------------*
            05  HEADING-LINE-2.
                10  FILLER    PIC X(12) VALUE '  AS OF     '.
-               10  FILLER    PIC X(20) VALUE '  POSITIVE  NEGATIVE'.
-               10  FILLER    PIC X(20) VALUE '    PEND     NEW +  '.
-               10  FILLER    PIC X(20) VALUE 'HOSPITAL   ICU     V'.
-               10  FILLER    PIC X(20) VALUE 'ENT    HOSPITAL     '.
-               10  FILLER    PIC X(20) VALUE 'TOTAL     NEW    DEA'.
-               10  FILLER    PIC X(20) VALUE 'TH     N CASE       '.
+               10  FILLER    PIC X(20) VALUE '     TOTAL       NEW'.
+               10  FILLER    PIC X(20) VALUE '   PEND      DEATH  '.
+               10  FILLER    PIC X(20) VALUE '   NEW    DEATH    N'.
+               10  FILLER    PIC X(20) VALUE ' CASE               '.
+               10  FILLER    PIC X(20) VALUE '                    '.
+               10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05  HEADING-LINE-3.
                10  FILLER    PIC X(12) VALUE '  DATE      '.
-               10  FILLER    PIC X(20) VALUE '   TESTS      TESTS '.
-               10  FILLER    PIC X(20) VALUE '   TESTS     TESTS  '.
-               10  FILLER    PIC X(20) VALUE ' ADMITS   ADMITS   A'.
-               10  FILLER    PIC X(20) VALUE 'DMIT   INCREASE    D'.
-               10  FILLER    PIC X(20) VALUE 'EATHS    DEATHS  PER'.
-               10  FILLER    PIC X(20) VALUE 'CENT   PERCENT      '.
+               10  FILLER    PIC X(20) VALUE '     CASES      CASE'.
+               10  FILLER    PIC X(20) VALUE 'S  CASES     TOTAL  '.
+               10  FILLER    PIC X(20) VALUE ' DEATHS    % AGE    '.
+               10  FILLER    PIC X(20) VALUE '% AGE               '.
+               10  FILLER    PIC X(20) VALUE '                    '.
+               10  FILLER    PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
            05  HEADING-LINE-4.
                10  FILLER    PIC X(12) VALUE '  ----      '.
-               10  FILLER    PIC X(20) VALUE '  -------  ---------'.
-               10  FILLER    PIC X(20) VALUE '   -----     -----  '.
-               10  FILLER    PIC X(20) VALUE ' ------   ------   -'.
-               10  FILLER    PIC X(20) VALUE '----   --------    -'.
-               10  FILLER    PIC X(20) VALUE '-----   -------  ---'.
-               10  FILLER    PIC X(20) VALUE '----   -------      '.
+               10  FILLER    PIC X(20) VALUE '     -----      ----'.
+               10  FILLER    PIC X(20) VALUE '-  -----     -----  '.
+               10  FILLER    PIC X(20) VALUE ' ------   ------    '.
+               10  FILLER    PIC X(20) VALUE '-----               '.
+               10  FILLER    PIC X(20) VALUE '                    '.
+               10  FILLER    PIC X(20) VALUE '                    '.
        COPY USAFILE.
       *---------------------------------------------------------------*
        01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
-           05  WS-PERCENT                  PIC 99V999999.
-           05  TOTAL-ACCUMULATORS.
-               10  TA-CASE-TOT             PIC 9(08).
-               10  TA-DEATH-TOT            PIC 9(08).
            05  FILE-STATUS                 PIC X(02).
            05  END-OF-FILE-SW              PIC X(01)   VALUE 'N'.
                88  END-OF-FILE                         VALUE 'Y'.
            05  VALID-RECORD-SW             PIC X(01)   VALUE 'Y'.
                88  VALID-RECORD                        VALUE 'Y'.
+           05  WS-PERCENT                  PIC 99V999999.
+           05  TOTAL-ACCUMULATORS.
+               10  TA-CASE-TOT             PIC 9(08).
+               10  TA-DEATH-TOT            PIC 9(08).
+           05  WS-PREV-DATE.
+               10 WS-YEAR                  PIC X(04).
+               10 FILLER                   PIC X(01).
+               10 WS-MONTH                 PIC X(02).
+               10 FILLER                   PIC X(01).
+               10 WS-DAY                   PIC X(02).
+               10 FILLER                   PIC X(13).
+           05  WS-CASES                    PIC 9(09).
+           05  WS-CASE-NEW                 PIC 9(09).
+           05  WS-CASE-NEW-2               PIC 9(09).
+           05  WS-CASE-PEND                PIC 9(09).
+           05  WS-DEATH                    PIC 9(09).
+           05  WS-DEATH-NEW                PIC 9(09).
+           05  WS-DEATH-NEW-2              PIC 9(09).
+           05  WS-DEATH-PEND               PIC 9(09).
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -122,6 +130,7 @@
       *---------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-USA-HIST-FILE.
+           MOVE UHR-DATE                   TO  WS-PREV-DATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 3000-CLOSE-FILES.
@@ -135,35 +144,66 @@
            MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
            MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
            MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
+           MOVE SPACE                      TO WS-PREV-DATE.
+           INITIALIZE DETAIL-LINE-1
+               REPLACING NUMERIC DATA BY 0
+                         ALPHANUMERIC DATA BY SPACE.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           MOVE UHR-DAY                    TO DL1-DAY.
-           MOVE UHR-MONTH                  TO DL1-MONTH.
-           MOVE UHR-YEAR                   TO DL1-YEAR.
-           MOVE UHR-CASE-POSITIVE          TO DL1-CASE-POSITIVE.
-           MOVE UHR-CASE-NEGATIVE          TO DL1-CASE-NEGATIVE.
-           MOVE UHR-CASE-PENDING           TO DL1-CASE-PENDING.
-           MOVE UHR-POSITIVE-INCREASE      TO DL1-CASE-NEW.
-           MOVE UHR-HOSPITAL-CURR          TO DL1-HOSPITAL-CURR.
-           MOVE UHR-ICU-CURR               TO DL1-ICU-CURR.
-           MOVE UHR-VENT-CURR              TO DL1-VENT-CURR.
-           MOVE UHR-HOSPITAL-INCREASE      TO DL1-RECOVERED.
-           MOVE UHR-DEATH                  TO DL1-DEATH.
-           MOVE UHR-DEATH-INCREASE         TO DL1-DEATH-NEW.
-           IF  UHR-CASE-POSITIVE > ZERO
-               DIVIDE UHR-DEATH  BY UHR-CASE-POSITIVE
+           IF  UHR-DATE NOT = WS-PREV-DATE
+               PERFORM 2200-PRINT-DATE-TOTALS
+               MOVE  ZERO                  TO  WS-CASES
+               MOVE  ZERO                  TO  WS-CASE-NEW
+               MOVE  ZERO                  TO  WS-CASE-PEND
+               MOVE  ZERO                  TO  WS-DEATH
+               MOVE  ZERO                  TO  WS-DEATH-NEW
+               MOVE  ZERO                  TO  WS-DEATH-PEND
+               MOVE  UHR-DATE              TO  WS-PREV-DATE.
+           PERFORM 2100-ACCUMULATE-DATE-TOTALS.
+           PERFORM 8000-READ-USA-HIST-FILE.
+      *---------------------------------------------------------------*
+       2100-ACCUMULATE-DATE-TOTALS.
+      *---------------------------------------------------------------*
+           ADD  UHR-CASE                   TO  WS-CASES.
+           IF  UHR-CASE-NEW GREATER THAN SPACE
+               COMPUTE WS-CASE-NEW-2
+                   = FUNCTION NUMVAL-C(UHR-CASE-NEW)
+               ADD  WS-CASE-NEW-2          TO  WS-CASE-NEW.
+           ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
+           ADD  UHR-DEATH                  TO  WS-DEATH.
+           IF  UHR-DEATH-NEW GREATER THAN SPACE
+               COMPUTE WS-DEATH-NEW-2
+                   = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
+               ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
+           ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
+      *---------------------------------------------------------------*
+       2200-PRINT-DATE-TOTALS.
+      *---------------------------------------------------------------*
+           MOVE WS-DAY                     TO DL1-DAY.
+           MOVE WS-MONTH                   TO DL1-MONTH.
+           MOVE WS-YEAR                    TO DL1-YEAR.
+           MOVE WS-CASES                   TO DL1-CASE-POSITIVE.
+           MOVE WS-CASE-NEW                TO DL1-CASE-NEW.
+           MOVE WS-CASE-PEND               TO DL1-CASE-PENDING.
+           MOVE WS-DEATH                   TO DL1-DEATH.
+           MOVE WS-DEATH-NEW               TO DL1-DEATH-NEW.
+           IF  UHR-CASE > ZERO
+               DIVIDE UHR-DEATH  BY UHR-CASE
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-DEATH-PERCENT
-               DIVIDE UHR-POSITIVE-INCREASE   BY UHR-CASE-POSITIVE
+               IF  UHR-CASE-NEW GREATER THAN SPACE
+                   COMPUTE WS-CASE-NEW-2
+                      = FUNCTION NUMVAL-C(UHR-CASE-NEW)
+               END-IF
+               DIVIDE WS-CASE-NEW-2   BY UHR-CASE
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
                MOVE ZERO                   TO DL1-DEATH-PERCENT
                                               DL1-CASE-PERCENT.
-           MOVE DL1-RECORD                 TO NEXT-REPORT-LINE.
+           MOVE DETAIL-LINE-1              TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
-           PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
@@ -179,29 +219,16 @@
                UNSTRING USA-HIST-RECORD DELIMITED BY ','
                INTO UHR-DATE
                    UHR-STATE
-                   UHR-CASE-POSITIVE
-                   UHR-CASE-NEGATIVE
-                   UHR-CASE-PENDING
-                   UHR-HOSPITAL-CURR
-                   UHR-HOSPITAL-TOT
-                   UHR-ICU-CURR
-                   UHR-ICU-TOT
-                   UHR-VENT-CURR
-                   UHR-VENT-TOT
-                   UHR-DATE-CHECKED
+                   UHR-CASE
+                   UHR-CASE-CONF
+                   UHR-CASE-PROB
+                   UHR-CASE-NEW
+                   UHR-CASE-NEW-PROB
                    UHR-DEATH
-                   UHR-HOSPTALIZED
-                   UHR-TOT-TESTS
-                   UHR-LAST-MODIFIED
-                   UHR-RECOVERED
-                   UHR-TOTAL
-                   UHR-POS-NEG
-                   UHR-DEATH-INCREASE
-                   UHR-HOSPITAL-INCREASE
-                   UHR-NEGATIVE-INCREASE
-                   UHR-POSITIVE-INCREASE
-                   UHR-TOT-TEST-INCREASE
-                   UHR-HASH.
+                   UHR-DEATH-CONF
+                   UHR-DEATH-PROB
+                   UHR-DEATH-NEW
+                   UHR-DEATH-NEW-PROB.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
@@ -213,7 +240,7 @@
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
            MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
-           MOVE UHR-STATE                  TO HL1-STATE.
+           MOVE "ALL"                      TO HL1-STATE.
            MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
            MOVE 2                          TO LINE-SPACEING.
