@@ -103,17 +103,11 @@
                88  END-OF-FILE                         VALUE 'Y'.
            05  VALID-RECORD-SW             PIC X(01)   VALUE 'Y'.
                88  VALID-RECORD                        VALUE 'Y'.
-           05  WS-PERCENT                  PIC 99V999999.
+           05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
+               88  ALL-STATE-REPORT                   VALUE 'ALL'.
            05  TOTAL-ACCUMULATORS.
                10  TA-CASE-TOT             PIC 9(08).
                10  TA-DEATH-TOT            PIC 9(08).
-           05  WS-PREV-DATE.
-               10 WS-YEAR                  PIC X(04).
-               10 FILLER                   PIC X(01).
-               10 WS-MONTH                 PIC X(02).
-               10 FILLER                   PIC X(01).
-               10 WS-DAY                   PIC X(02).
-               10 FILLER                   PIC X(13).
            05  WS-CASES                    PIC 9(09).
            05  WS-CASE-NEW                 PIC 9(09).
            05  WS-CASE-NEW-2               PIC 9(09).
@@ -122,6 +116,26 @@
            05  WS-DEATH-NEW                PIC 9(09).
            05  WS-DEATH-NEW-2              PIC 9(09).
            05  WS-DEATH-PEND               PIC 9(09).
+           05  WS-PERCENT                  PIC 99V999999.
+           05  WS-PREV-DATE.
+               10 WS-YEAR                  PIC X(04).
+               10 FILLER                   PIC X(01).
+               10 WS-MONTH                 PIC X(02).
+               10 FILLER                   PIC X(01).
+               10 WS-DAY                   PIC X(02).
+               10 FILLER                   PIC X(13).
+      *---------------------------------------------------------------*
+       01  STATE-ACCUMULATION-FIELDS.
+      *---------------------------------------------------------------*
+           05  STATE-TABLE OCCURS 60 TIMES
+                           INDEXED BY STATE-INDEX.
+               10  ST-STATE                PIC X(03).
+               10  ST-CASES                PIC 9(09).
+               10  ST-CASE-NEW             PIC 9(09).
+               10  ST-CASE-PEND            PIC 9(09).
+               10  ST-DEATH                PIC 9(09).
+               10  ST-DEATH-NEW            PIC 9(09).
+               10  ST-DEATH-PEND           PIC 9(09).
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -145,9 +159,10 @@
            MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
            MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
            MOVE SPACE                      TO WS-PREV-DATE.
-           INITIALIZE DETAIL-LINE-1
-               REPLACING NUMERIC DATA BY 0
-                         ALPHANUMERIC DATA BY SPACE.
+           INITIALIZE STATE-ACCUMULATION-FIELDS
+               REPLACING   NUMERIC DATA BY 0
+                           ALPHANUMERIC DATA BY SPACE.
+           ACCEPT REPORT-STATE-SW.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
@@ -159,6 +174,9 @@
                MOVE  ZERO                  TO  WS-DEATH
                MOVE  ZERO                  TO  WS-DEATH-NEW
                MOVE  ZERO                  TO  WS-DEATH-PEND
+               INITIALIZE STATE-ACCUMULATION-FIELDS
+                   REPLACING NUMERIC DATA BY 0
+                             ALPHANUMERIC DATA BY SPACE
                MOVE  UHR-DATE              TO  WS-PREV-DATE.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
            PERFORM 8000-READ-USA-HIST-FILE.
@@ -177,12 +195,37 @@
                    = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
                ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
            ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
+           PERFORM  2110-ACCUMULATE-STATE-TOTALS.
+      *---------------------------------------------------------------*
+       2110-ACCUMULATE-STATE-TOTALS.
+      *---------------------------------------------------------------*
+           SET STATE-INDEX TO 1.
+           SEARCH STATE-TABLE
+               AT END
+                   PERFORM 9900-TABLE-ERROR
+               WHEN ST-STATE(STATE-INDEX) = UHR-STATE
+                   ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
+                   ADD WS-CASE-NEW-2      TO ST-CASE-NEW(STATE-INDEX)
+                   ADD UHR-CASE-NEW-PROB  TO ST-CASE-PEND(STATE-INDEX)
+                   ADD UHR-DEATH          TO ST-DEATH(STATE-INDEX)
+                   ADD WS-DEATH-NEW-2     TO ST-DEATH-NEW(STATE-INDEX)
+                   ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX)
+               WHEN ST-STATE(STATE-INDEX) = SPACE
+                   MOVE UHR-STATE         TO ST-STATE(STATE-INDEX)
+                   ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
+                   ADD WS-CASE-NEW-2      TO ST-CASE-NEW(STATE-INDEX)
+                   ADD UHR-CASE-NEW-PROB  TO ST-CASE-PEND(STATE-INDEX)
+                   ADD UHR-DEATH          TO ST-DEATH(STATE-INDEX)
+                   ADD WS-DEATH-NEW-2     TO ST-DEATH-NEW(STATE-INDEX)
+                   ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX).
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
       *---------------------------------------------------------------*
            MOVE WS-DAY                     TO DL1-DAY.
            MOVE WS-MONTH                   TO DL1-MONTH.
            MOVE WS-YEAR                    TO DL1-YEAR.
+           IF  NOT ALL-STATE-REPORT
+               PERFORM 2210-SETUP-STATE.
            MOVE WS-CASES                   TO DL1-CASE-POSITIVE.
            MOVE WS-CASE-NEW                TO DL1-CASE-NEW.
            MOVE WS-CASE-PEND               TO DL1-CASE-PENDING.
@@ -204,6 +247,19 @@
                                               DL1-CASE-PERCENT.
            MOVE DETAIL-LINE-1              TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
+      *---------------------------------------------------------------*
+       2210-SETUP-STATE.
+      *---------------------------------------------------------------*
+      *     DISPLAY REPORT-STATE-SW.
+           SET STATE-INDEX  TO 1.
+           SEARCH STATE-TABLE
+               WHEN ST-STATE(STATE-INDEX) = REPORT-STATE-SW
+                   MOVE ST-CASES(STATE-INDEX)      TO WS-CASES
+                   MOVE ST-CASE-NEW(STATE-INDEX)   TO WS-CASE-NEW
+                   MOVE ST-CASE-PEND(STATE-INDEX)  TO WS-CASE-PEND
+                   MOVE ST-DEATH(STATE-INDEX)      TO WS-DEATH
+                   MOVE ST-DEATH-NEW(STATE-INDEX)  TO WS-DEATH-NEW
+                   MOVE ST-DEATH-PEND(STATE-INDEX) TO WS-DEATH-PEND.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
@@ -240,7 +296,7 @@
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
            MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
-           MOVE "ALL"                      TO HL1-STATE.
+           MOVE REPORT-STATE-SW            TO HL1-STATE.
            MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
            MOVE 2                          TO LINE-SPACEING.
@@ -251,6 +307,7 @@
            PERFORM 9120-WRITE-PRINT-LINE.
            MOVE HEADING-LINE-4             TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
+           MOVE 1                          TO LINE-SPACEING.
            ADD 1                           TO PAGE-COUNT.
            MOVE 6                          TO LINE-COUNT.
       *---------------------------------------------------------------*
@@ -258,6 +315,7 @@
       *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING PAGE.
+           MOVE SPACE                      TO PRINT-LINE.
       *---------------------------------------------------------------*
        9120-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
@@ -266,3 +324,6 @@
            ADD LINE-SPACEING               TO LINE-COUNT.
            MOVE 1                          TO LINE-SPACEING.
            MOVE SPACE                      TO PRINT-LINE.
+      *---------------------------------------------------------------*
+       9900-TABLE-ERROR.
+      *---------------------------------------------------------------*
