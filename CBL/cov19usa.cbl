@@ -115,6 +115,7 @@
            05  TOTAL-ACCUMULATORS.
                10  TA-CASE-TOT             PIC 9(08).
                10  TA-DEATH-TOT            PIC 9(08).
+           05  WS-COUNTER                  PIC 9(02).
            05  WS-CASES                    PIC 9(09).
            05  WS-CASE-NEW                 PIC 9(09).
            05  WS-CASE-NEW-2               PIC 9(09).
@@ -276,19 +277,35 @@
                AT END MOVE 'Y'             TO END-OF-FILE-SW
                       MOVE 'N'             TO VALID-RECORD-SW.
            IF VALID-RECORD
-               UNSTRING USA-HIST-RECORD DELIMITED BY ','
-               INTO UHR-DATE
-                   UHR-STATE
-                   UHR-CASE
-                   UHR-CASE-CONF
-                   UHR-CASE-PROB
-                   UHR-CASE-NEW
-                   UHR-CASE-NEW-PROB
-                   UHR-DEATH
-                   UHR-DEATH-CONF
-                   UHR-DEATH-PROB
-                   UHR-DEATH-NEW
-                   UHR-DEATH-NEW-PROB.
+               MOVE ZERO                   TO WS-COUNTER
+               INSPECT FUNCTION UPPER-CASE(USA-HIST-RECORD)
+                   TALLYING WS-COUNTER FOR ALL "XX:XX:XX"
+               IF  WS-COUNTER NOT = 0
+                   UNSTRING USA-HIST-RECORD DELIMITED BY ','
+                   INTO UHR-DATE
+                       UHR-STATE
+                       UHR-CASE
+                       UHR-CASE-CONF
+                       UHR-CASE-PROB
+                       UHR-CASE-NEW
+                       UHR-CASE-NEW-PROB
+                       UHR-DEATH
+                       UHR-DEATH-CONF
+                       UHR-DEATH-PROB
+                       UHR-DEATH-NEW
+                       UHR-DEATH-NEW-PROB
+                       UHR-CREATED-AT 
+               ELSE
+                   UNSTRING USA-HIST-RECORD DELIMITED BY ','
+                   INTO UHR-DATE
+                       UHR-STATE
+                       UHR-CASE
+                       UHR-CASE-NEW
+                       UHR-CASE-NEW-PROB
+                       UHR-DEATH
+                       UHR-DEATH-NEW
+                       UHR-DEATH-NEW-PROB
+                       UHR-CREATED-AT.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
