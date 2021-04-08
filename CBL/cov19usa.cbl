@@ -155,6 +155,7 @@
            MOVE UHR-DATE                   TO  WS-PREV-DATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
+           PERFORM 2200-PRINT-DATE-TOTALS.
            PERFORM 3000-CLOSE-FILES.
            GOBACK.
       *---------------------------------------------------------------*
