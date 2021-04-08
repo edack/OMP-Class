@@ -21,6 +21,7 @@
 //SYSIN     DD *
   SORT FORMAT=CH,
        FIELDS=(1,23,D)
+       INCLUDE COND=(1,10,CH,GT,C'{{process.from_date}}')
 /*       
 //* ------------------------------------------------------------------
 //* STEP 2 - RUN THE REPORT
