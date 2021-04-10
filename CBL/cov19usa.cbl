@@ -125,6 +125,7 @@
            05  WS-DEATH-NEW-2              PIC 9(09).
            05  WS-DEATH-PEND               PIC 9(09).
            05  WS-PERCENT                  PIC 99V999999.
+           05  WS-REPORT-STATE             PIC X(03).
            05  WS-PREV-DATE.
                10 WS-YEAR                  PIC X(04).
                10 FILLER                   PIC X(01).
@@ -172,6 +173,7 @@
                REPLACING   NUMERIC DATA BY 0
                            ALPHANUMERIC DATA BY SPACE.
            ACCEPT REPORT-STATE-SW.
+           DISPLAY  REPORT-STATE-SW.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
@@ -233,7 +235,9 @@
            MOVE WS-DAY                     TO DL1-DAY.
            MOVE WS-MONTH                   TO DL1-MONTH.
            MOVE WS-YEAR                    TO DL1-YEAR.
-           IF  NOT ALL-STATE-REPORT
+           IF  ALL-STATE-REPORT
+               CONTINUE 
+           ELSE
                PERFORM 2210-SETUP-STATE.
            MOVE WS-CASES                   TO DL1-CASE-POSITIVE.
            MOVE WS-CASE-NEW                TO DL1-CASE-NEW.
@@ -260,6 +264,7 @@
            SET STATE-INDEX  TO 1.
            SEARCH STATE-TABLE
                WHEN ST-STATE(STATE-INDEX) = REPORT-STATE-SW
+      *             DISPLAY REPORT-STATE-SW
                    MOVE ST-CASES(STATE-INDEX)      TO WS-CASES
                    MOVE ST-CASE-NEW(STATE-INDEX)   TO WS-CASE-NEW
                    MOVE ST-CASE-PEND(STATE-INDEX)  TO WS-CASE-PEND
