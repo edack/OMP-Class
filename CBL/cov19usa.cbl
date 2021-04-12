@@ -136,7 +136,7 @@
       *---------------------------------------------------------------*
        01  STATE-ACCUMULATION-FIELDS.
       *---------------------------------------------------------------*
-           05  STATE-TABLE OCCURS 60 TIMES
+           05  STATE-TABLE OCCURS 70 TIMES
                            INDEXED BY STATE-INDEX.
                10  ST-STATE                PIC X(03).
                10  ST-CASES                PIC 9(09).
@@ -213,7 +213,7 @@
            SET STATE-INDEX TO 1.
            SEARCH STATE-TABLE
                AT END
-                   PERFORM 9900-TABLE-ERROR
+                   PERFORM 9901-LOAD-TABLE-ERROR
                WHEN ST-STATE(STATE-INDEX) = UHR-STATE
                    ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
                    ADD WS-CASE-NEW-2      TO ST-CASE-NEW(STATE-INDEX)
@@ -263,6 +263,8 @@
       *     DISPLAY REPORT-STATE-SW.
            SET STATE-INDEX  TO 1.
            SEARCH STATE-TABLE
+               AT END
+                   PERFORM 9902-SEARCH-TABLE-ERROR
                WHEN ST-STATE(STATE-INDEX) = REPORT-STATE-SW
       *             DISPLAY REPORT-STATE-SW
                    MOVE ST-CASES(STATE-INDEX)      TO WS-CASES
@@ -352,5 +354,14 @@
            MOVE 1                          TO LINE-SPACEING.
            MOVE SPACE                      TO PRINT-LINE.
       *---------------------------------------------------------------*
-       9900-TABLE-ERROR.
+       9901-LOAD-TABLE-ERROR.
       *---------------------------------------------------------------*
+           DISPLAY "*** LOAD STATE TABLE ERROR ***".
+           DISPLAY REPORT-STATE-SW.
+           DISPLAY UHR-STATE.
+      *---------------------------------------------------------------*
+       9902-SEARCH-TABLE-ERROR.
+      *---------------------------------------------------------------*
+           DISPLAY "*** SEARCH STATE TABLE ERROR ***".
+           DISPLAY REPORT-STATE-SW.
+           DISPLAY UHR-STATE.

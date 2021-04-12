@@ -8,7 +8,7 @@
                10 FILLER                   PIC X(01).
                10 UHR-DAY                  PIC X(02).
                10 FILLER                   PIC X(13).
-           05  UHR-STATE                   PIC X(02).
+           05  UHR-STATE                   PIC X(03).
            05  UHR-CASE                    PIC 9(09).
            05  UHR-CASE-CONF               PIC X(09).
            05  UHR-CASE-PROB               PIC 9(09).
