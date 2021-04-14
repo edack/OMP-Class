@@ -1,11 +1,11 @@
       *****************************************************************
-      * Program name:    UNEM
-      * Original author: DAVID QUINTERO
+      * PROGRAM NAME:    UNEM
+      * ORIGINAL AUTHOR: DAVID QUINTERO
       *
-      * Maintenence Log
-      * Date      Author        Maintenance Requirement
+      * MAINTENENCE LOG
+      * DATE      AUTHOR        MAINTENANCE REQUIREMENT
       * --------- ------------  ---------------------------------------
-      * 05/05/20 DAVID QUINTERO  Created for COBOL class
+      * 05/05/20 DAVID QUINTERO  CREATED FOR COBOL CLASS
       *
       *****************************************************************
        IDENTIFICATION DIVISION.
@@ -23,432 +23,432 @@
        OBJECT-COMPUTER. IBM-3081.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT CSV-Age ASSIGN TO CSVAGE
+           SELECT CSV-AGE ASSIGN TO CSVAGE
              ORGANIZATION IS SEQUENTIAL
              ACCESS MODE  IS SEQUENTIAL
-             FILE STATUS  IS CSV-Age-Status.
+             FILE STATUS  IS CSV-AGE-STATUS.
       *
-           SELECT CSV-Ethnicity ASSIGN TO CSVETH
+           SELECT CSV-ETHNICITY ASSIGN TO CSVETH
              ORGANIZATION IS SEQUENTIAL
              ACCESS MODE  IS SEQUENTIAL
-             FILE STATUS  IS CSV-Ethnicity-Status.
+             FILE STATUS  IS CSV-ETHNICITY-STATUS.
       *
-           SELECT CSV-Industry ASSIGN TO CSVIND
+           SELECT CSV-INDUSTRY ASSIGN TO CSVIND
              ORGANIZATION IS SEQUENTIAL
              ACCESS MODE  IS SEQUENTIAL
-             FILE STATUS  IS CSV-Industry-Status.
+             FILE STATUS  IS CSV-INDUSTRY-STATUS.
       *
-           SELECT CSV-Race ASSIGN TO CSVRAC
+           SELECT CSV-RACE ASSIGN TO CSVRAC
              ORGANIZATION IS SEQUENTIAL
              ACCESS MODE  IS SEQUENTIAL
-             FILE STATUS  IS CSV-Race-Status.
+             FILE STATUS  IS CSV-RACE-STATUS.
       *
-           SELECT CSV-Gender ASSIGN TO CSVGEN
+           SELECT CSV-GENDER ASSIGN TO CSVGEN
              ORGANIZATION IS SEQUENTIAL
              ACCESS MODE  IS SEQUENTIAL
-             FILE STATUS  IS CSV-Gender-Status.
+             FILE STATUS  IS CSV-GENDER-STATUS.
       *
-           SELECT Unemployment-Claims-File ASSIGN TO UNDD
+           SELECT UNEMPLOYMENT-CLAIMS-FILE ASSIGN TO UNDD
              ORGANIZATION IS INDEXED
              ACCESS MODE  IS DYNAMIC
-             RECORD KEY   IS Record-ID
-             FILE STATUS  IS Unemployment-File-Status.
+             RECORD KEY   IS RECORD-ID
+             FILE STATUS  IS UNEMPLOYMENT-FILE-STATUS.
       *****************************************************************
       *****************************************************************
        DATA DIVISION.
        FILE SECTION.
-       FD  CSV-Age
+       FD  CSV-AGE
            RECORDING MODE IS F
            LABEL RECORDS ARE STANDARD
-           DATA RECORD IS CSV-Age-Line
+           DATA RECORD IS CSV-AGE-LINE
            RECORD CONTAINS 3000 CHARACTERS
            BLOCK CONTAINS 0 RECORDS.
-       01  CSV-Age-Line    PIC X(3000).
+       01  CSV-AGE-LINE    PIC X(3000).
       *
-       FD  CSV-Ethnicity
+       FD  CSV-ETHNICITY
            RECORDING MODE IS F
            LABEL RECORDS ARE STANDARD
-           DATA RECORD IS CSV-Ethnicity-Line
+           DATA RECORD IS CSV-ETHNICITY-LINE
            RECORD CONTAINS 3000 CHARACTERS
            BLOCK CONTAINS 0 RECORDS.
-       01  CSV-Ethnicity-Line    PIC X(3000).
+       01  CSV-ETHNICITY-LINE    PIC X(3000).
       *
-       FD  CSV-Industry
+       FD  CSV-INDUSTRY
            RECORDING MODE IS F
            LABEL RECORDS ARE STANDARD
-           DATA RECORD IS CSV-Industry-Line
+           DATA RECORD IS CSV-INDUSTRY-LINE
            RECORD CONTAINS 3000 CHARACTERS
            BLOCK CONTAINS 0 RECORDS.
-       01  CSV-Industry-Line    PIC X(3000).
+       01  CSV-INDUSTRY-LINE    PIC X(3000).
       *
-       FD  CSV-Race
+       FD  CSV-RACE
            RECORDING MODE IS F
            LABEL RECORDS ARE STANDARD
-           DATA RECORD IS CSV-Race-Line
+           DATA RECORD IS CSV-RACE-LINE
            RECORD CONTAINS 3000 CHARACTERS
            BLOCK CONTAINS 0 RECORDS.
-       01  CSV-Race-Line    PIC X(3000).
+       01  CSV-RACE-LINE    PIC X(3000).
       *
-       FD  CSV-Gender
+       FD  CSV-GENDER
            RECORDING MODE IS F
            LABEL RECORDS ARE STANDARD
-           DATA RECORD IS CSV-Gender-Line
+           DATA RECORD IS CSV-GENDER-LINE
            RECORD CONTAINS 3000 CHARACTERS
            BLOCK CONTAINS 0 RECORDS.
-       01  CSV-Gender-Line    PIC X(3000).
+       01  CSV-GENDER-LINE    PIC X(3000).
       *
-       FD  Unemployment-Claims-File
-            DATA RECORD IS Unemployment-Claim.
+       FD  UNEMPLOYMENT-CLAIMS-FILE
+            DATA RECORD IS UNEMPLOYMENT-CLAIM.
       *****************************************************************
-      *          Each unemployment claim is 268 characters long
+      *          EACH UNEMPLOYMENT CLAIM IS 268 CHARACTERS LONG
       *****************************************************************
            COPY UNEMC.
       **
       **
        WORKING-STORAGE SECTION.
       *
-       01  CSV-Age-Status           PIC 99.
-           88  CSV-Age-Ok           VALUE 00.
-           88  CSV-Age-EOF          VALUE 01.
-       01  CSV-Ethnicity-Status     PIC 99.
-           88  CSV-Ethnicity-Ok     VALUE 00.
-           88  CSV-Ethnicity-EOF    VALUE 01.
-       01  CSV-Industry-Status      PIC 99.
-           88  CSV-Industry-Ok      VALUE 00.
-           88  CSV-Industry-EOF     VALUE 01.
-       01  CSV-Race-Status          PIC 99.
-           88  CSV-Race-Ok          VALUE 00.
-           88  CSV-Race-EOF         VALUE 01.
-       01  CSV-Gender-Status        PIC 99.
-           88  CSV-Gender-Ok        VALUE 00.
-           88  CSV-Gender-EOF       VALUE 01.
+       01  CSV-AGE-STATUS           PIC 99.
+           88  CSV-AGE-OK           VALUE 00.
+           88  CSV-AGE-EOF          VALUE 01.
+       01  CSV-ETHNICITY-STATUS     PIC 99.
+           88  CSV-ETHNICITY-OK     VALUE 00.
+           88  CSV-ETHNICITY-EOF    VALUE 01.
+       01  CSV-INDUSTRY-STATUS      PIC 99.
+           88  CSV-INDUSTRY-OK      VALUE 00.
+           88  CSV-INDUSTRY-EOF     VALUE 01.
+       01  CSV-RACE-STATUS          PIC 99.
+           88  CSV-RACE-OK          VALUE 00.
+           88  CSV-RACE-EOF         VALUE 01.
+       01  CSV-GENDER-STATUS        PIC 99.
+           88  CSV-GENDER-OK        VALUE 00.
+           88  CSV-GENDER-EOF       VALUE 01.
       *
-       01  Unemployment-File-Status PIC 99.
-           88 Unemployment-File-Ok               VALUE 00.
-           88 Unemployment-File-May-Exist        VALUE 35.
+       01  UNEMPLOYMENT-FILE-STATUS PIC 99.
+           88 UNEMPLOYMENT-FILE-OK               VALUE 00.
+           88 UNEMPLOYMENT-FILE-MAY-EXIST        VALUE 35.
       *****************************************************************
       *****************************************************************
        PROCEDURE DIVISION.
       *****************************************************************
-      *                          Main Section
+      *                          MAIN SECTION
       *****************************************************************
-       Main SECTION.
+       MAIN SECTION.
       **
       **
-       Main-Paragraph.
-           PERFORM File-Management
-           PERFORM Writing-VSAM UNTIL CSV-Gender-EOF.
+       MAIN-PARAGRAPH.
+           PERFORM FILE-MANAGEMENT
+           PERFORM WRITING-VSAM UNTIL CSV-GENDER-EOF.
       *
       *
-       Program-End.
-           CLOSE CSV-Age, CSV-Ethnicity, CSV-Gender, CSV-Industry,
-               CSV-Race
-           CLOSE Unemployment-Claims-File
+       PROGRAM-END.
+           CLOSE CSV-AGE, CSV-ETHNICITY, CSV-GENDER, CSV-INDUSTRY,
+               CSV-RACE
+           CLOSE UNEMPLOYMENT-CLAIMS-FILE
            GOBACK.
       **
       **
       *****************************************************************
-      *                    File Management Section
+      *                    FILE MANAGEMENT SECTION
       *****************************************************************
-       File-Management SECTION.
+       FILE-MANAGEMENT SECTION.
       **
       **
-       Open-CSV-Files.
-           OPEN INPUT CSV-Age, CSV-Ethnicity, CSV-Gender, CSV-Industry,
-               CSV-Race
+       OPEN-CSV-FILES.
+           OPEN INPUT CSV-AGE, CSV-ETHNICITY, CSV-GENDER, CSV-INDUSTRY,
+               CSV-RACE
       *
-           IF NOT CSV-Age-Ok
-               DISPLAY 'CSV Age File: ', CSV-Age-Status
-               GO TO Program-End
+           IF NOT CSV-AGE-OK
+               DISPLAY 'CSV AGE FILE: ', CSV-AGE-STATUS
+               GO TO PROGRAM-END
            END-IF
       *
-           IF NOT CSV-Ethnicity-Ok
-               DISPLAY 'CSV Ethnicity File: ', CSV-Ethnicity-Status
-               GO TO Program-End
+           IF NOT CSV-ETHNICITY-OK
+               DISPLAY 'CSV ETHNICITY FILE: ', CSV-ETHNICITY-STATUS
+               GO TO PROGRAM-END
            END-IF
       *
-           IF NOT CSV-Industry-Ok
-               DISPLAY 'CSV Industry File: ', CSV-Industry-Status
-               GO TO Program-End
+           IF NOT CSV-INDUSTRY-OK
+               DISPLAY 'CSV INDUSTRY FILE: ', CSV-INDUSTRY-STATUS
+               GO TO PROGRAM-END
            END-IF
       *
-           IF NOT CSV-Race-Ok
-               DISPLAY 'CSV Race File: ', CSV-Race-Status
-               GO TO Program-End
+           IF NOT CSV-RACE-OK
+               DISPLAY 'CSV RACE FILE: ', CSV-RACE-STATUS
+               GO TO PROGRAM-END
            END-IF
       *
-           IF NOT CSV-Gender-Ok
-               DISPLAY 'CSV Age File Error: ', CSV-Gender-Status
-               GO TO Program-End
+           IF NOT CSV-GENDER-OK
+               DISPLAY 'CSV AGE FILE ERROR: ', CSV-GENDER-STATUS
+               GO TO PROGRAM-END
            END-IF.
       *
       *
-       Open-Unemployment-Claims-File.
-           OPEN I-O Unemployment-Claims-File
+       OPEN-UNEMPLOYMENT-CLAIMS-FILE.
+           OPEN I-O UNEMPLOYMENT-CLAIMS-FILE
       *
-           EVALUATE Unemployment-File-Status
+           EVALUATE UNEMPLOYMENT-FILE-STATUS
              WHEN 00
                DISPLAY 'FILE OK'
       *
              WHEN 35
-               CLOSE Unemployment-Claims-File
+               CLOSE UNEMPLOYMENT-CLAIMS-FILE
       *
-               OPEN OUTPUT Unemployment-Claims-File
+               OPEN OUTPUT UNEMPLOYMENT-CLAIMS-FILE
       *
-               IF NOT Unemployment-File-Ok THEN
-                  DISPLAY 'Unemployment file status code: ',
-                    Unemployment-File-Status
+               IF NOT UNEMPLOYMENT-FILE-OK THEN
+                  DISPLAY 'UNEMPLOYMENT FILE STATUS CODE: ',
+                    UNEMPLOYMENT-FILE-STATUS
       *
-                  GO TO Program-End
+                  GO TO PROGRAM-END
       *
                ELSE
-                  CLOSE Unemployment-Claims-File
-                  OPEN I-O Unemployment-Claims-File
+                  CLOSE UNEMPLOYMENT-CLAIMS-FILE
+                  OPEN I-O UNEMPLOYMENT-CLAIMS-FILE
                END-IF
       *
              WHEN OTHER
-                DISPLAY 'Unemployment file status code: ',
-                    Unemployment-File-Status
+                DISPLAY 'UNEMPLOYMENT FILE STATUS CODE: ',
+                    UNEMPLOYMENT-FILE-STATUS
       *
-                GO TO Program-End
+                GO TO PROGRAM-END
            END-EVALUATE.
       *
       *
-       Read-Headers.
-           READ CSV-Age
+       READ-HEADERS.
+           READ CSV-AGE
            END-READ
-           READ CSV-Ethnicity
+           READ CSV-ETHNICITY
            END-READ
-           READ CSV-Industry
+           READ CSV-INDUSTRY
            END-READ
-           READ CSV-Gender
+           READ CSV-GENDER
            END-READ
-           READ CSV-Race
+           READ CSV-RACE
            END-READ.
       **
       **
       *****************************************************************
-      *                    Writing-VSAM Section
+      *                    WRITING-VSAM SECTION
       *****************************************************************
-       Writing-VSAM SECTION.
+       WRITING-VSAM SECTION.
       **
       **
-       Clean-Record.
-           MOVE ZEROES TO Unemployment-Claim
-           MOVE "N/A" TO Exist OF Record-Age, Exist OF Record-Ethnicity
-               Exist OF Record-Gender, Exist OF Record-Race,
-               Exist OF Record-Race.
+       CLEAN-RECORD.
+           MOVE ZEROES TO UNEMPLOYMENT-CLAIM
+           MOVE "N/A" TO EXIST OF RECORD-AGE, EXIST OF RECORD-ETHNICITY
+               EXIST OF RECORD-GENDER, EXIST OF RECORD-RACE,
+               EXIST OF RECORD-RACE.
       *
       *
-       Write-Age-Record.
-           READ CSV-Age
+       WRITE-AGE-RECORD.
+           READ CSV-AGE
                AT END
-                 SET CSV-Age-EOF TO TRUE
+                 SET CSV-AGE-EOF TO TRUE
       *
                NOT AT END
       *
-                 UNSTRING CSV-Age-Line DELIMITED BY "," INTO Record-ID
+                 UNSTRING CSV-AGE-LINE DELIMITED BY "," INTO RECORD-ID
                  END-UNSTRING
-                 READ Unemployment-Claims-File
+                 READ UNEMPLOYMENT-CLAIMS-FILE
                    INVALID KEY
       *
-                    PERFORM Parse-CSV-Age
-                    WRITE Unemployment-Claim END-WRITE
+                    PERFORM PARSE-CSV-AGE
+                    WRITE UNEMPLOYMENT-CLAIM END-WRITE
       *
                    NOT INVALID KEY
       *
-                    PERFORM Parse-CSV-Age
-                    REWRITE Unemployment-Claim END-REWRITE
+                    PERFORM PARSE-CSV-AGE
+                    REWRITE UNEMPLOYMENT-CLAIM END-REWRITE
       *
                  END-READ
       *
            END-READ.
       *
       *
-       Write-Ethnic-Record.
-           PERFORM Clean-Record
+       WRITE-ETHNIC-RECORD.
+           PERFORM CLEAN-RECORD
       *
-           READ CSV-Ethnicity
+           READ CSV-ETHNICITY
                AT END
-                 SET CSV-Ethnicity-EOF TO TRUE
+                 SET CSV-ETHNICITY-EOF TO TRUE
       *
                NOT AT END
       *
-                 UNSTRING CSV-Ethnicity-Line
-                   DELIMITED BY "," INTO Record-ID
+                 UNSTRING CSV-ETHNICITY-LINE
+                   DELIMITED BY "," INTO RECORD-ID
                  END-UNSTRING
       *
-                READ Unemployment-Claims-File
+                READ UNEMPLOYMENT-CLAIMS-FILE
                    INVALID KEY
       *
-                    PERFORM Parse-CSV-Ethnicity
-                    WRITE Unemployment-Claim END-WRITE
+                    PERFORM PARSE-CSV-ETHNICITY
+                    WRITE UNEMPLOYMENT-CLAIM END-WRITE
       *
                    NOT INVALID KEY
       *
-                    PERFORM Parse-CSV-Ethnicity
-                    REWRITE Unemployment-Claim END-REWRITE
+                    PERFORM PARSE-CSV-ETHNICITY
+                    REWRITE UNEMPLOYMENT-CLAIM END-REWRITE
       *
                  END-READ
       *
            END-READ.
       **
       **
-       Write-Industry-Record.
-           PERFORM Clean-Record
+       WRITE-INDUSTRY-RECORD.
+           PERFORM CLEAN-RECORD
       *
-           READ CSV-Industry
+           READ CSV-INDUSTRY
               AT END
-                 SET CSV-Industry-EOF TO TRUE
+                 SET CSV-INDUSTRY-EOF TO TRUE
       *
                NOT AT END
       *
-                 UNSTRING CSV-Industry-Line
-                       DELIMITED BY "," INTO Record-ID
+                 UNSTRING CSV-INDUSTRY-LINE
+                       DELIMITED BY "," INTO RECORD-ID
                  END-UNSTRING
       *
-                 READ Unemployment-Claims-File
+                 READ UNEMPLOYMENT-CLAIMS-FILE
                    INVALID KEY
       *
-                     PERFORM Parse-CSV-Industry
-                     WRITE Unemployment-Claim END-WRITE
+                     PERFORM PARSE-CSV-INDUSTRY
+                     WRITE UNEMPLOYMENT-CLAIM END-WRITE
       *
                    NOT INVALID KEY
       *
-                     PERFORM Parse-CSV-Industry
-                     REWRITE Unemployment-Claim END-REWRITE
+                     PERFORM PARSE-CSV-INDUSTRY
+                     REWRITE UNEMPLOYMENT-CLAIM END-REWRITE
                  END-READ
       *
            END-READ.
       *
       *
-       Write-Race-Record.
-           PERFORM Clean-Record
-           READ CSV-Race
+       WRITE-RACE-RECORD.
+           PERFORM CLEAN-RECORD
+           READ CSV-RACE
                AT END
       *
-                 SET CSV-Race-EOF TO TRUE
+                 SET CSV-RACE-EOF TO TRUE
                NOT AT END
       *
-                 UNSTRING CSV-Race-Line
-                       DELIMITED BY "," INTO Record-ID
+                 UNSTRING CSV-RACE-LINE
+                       DELIMITED BY "," INTO RECORD-ID
                  END-UNSTRING
-                 READ Unemployment-Claims-File
+                 READ UNEMPLOYMENT-CLAIMS-FILE
                    INVALID KEY
       *
-                     PERFORM Parse-CSV-Race
-                     WRITE Unemployment-Claim END-WRITE
+                     PERFORM PARSE-CSV-RACE
+                     WRITE UNEMPLOYMENT-CLAIM END-WRITE
       *
                    NOT INVALID KEY
       *
-                     PERFORM Parse-CSV-Race
-                     REWRITE Unemployment-Claim END-REWRITE
+                     PERFORM PARSE-CSV-RACE
+                     REWRITE UNEMPLOYMENT-CLAIM END-REWRITE
                  END-READ
       *
            END-READ.
       *
       *
-       Write-Gender-Record.
-           PERFORM Clean-Record
-           READ CSV-Gender
+       WRITE-GENDER-RECORD.
+           PERFORM CLEAN-RECORD
+           READ CSV-GENDER
                AT END
       *
-                 SET CSV-Gender-EOF TO TRUE
+                 SET CSV-GENDER-EOF TO TRUE
                NOT AT END
-                 UNSTRING CSV-Gender-Line
-                       DELIMITED BY "," INTO Record-ID
+                 UNSTRING CSV-GENDER-LINE
+                       DELIMITED BY "," INTO RECORD-ID
                  END-UNSTRING
       *
-                 READ Unemployment-Claims-File
+                 READ UNEMPLOYMENT-CLAIMS-FILE
                    INVALID KEY
       *
-                     PERFORM Parse-CSV-Gender
-                     WRITE Unemployment-Claim END-WRITE
+                     PERFORM PARSE-CSV-GENDER
+                     WRITE UNEMPLOYMENT-CLAIM END-WRITE
       *
                    NOT INVALID KEY
       *
-                     PERFORM Parse-CSV-Gender
-                     REWRITE Unemployment-Claim END-REWRITE
+                     PERFORM PARSE-CSV-GENDER
+                     REWRITE UNEMPLOYMENT-CLAIM END-REWRITE
                  END-READ
       *
            END-READ.
       **
       **
       *****************************************************************
-      *                    Unstrings Section
+      *                    UNSTRINGS SECTION
       *****************************************************************
-       Unstrings SECTION.
+       UNSTRINGS SECTION.
       *
       *
-       Parse-CSV-Age.
-           MOVE 'T/T'   TO Exist OF Record-Age
+       PARSE-CSV-AGE.
+           MOVE 'T/T'   TO EXIST OF RECORD-AGE
       *
-           UNSTRING CSV-Age-Line
+           UNSTRING CSV-AGE-LINE
              DELIMITED BY "," OR "/" OR SPACE INTO
-               Record-ID, DD, MM, YY, INA OF Record-Age,
-               Under-22, F-22-24, F-25-34, F-35-44, F-45-54,
-               F-55-59, F-60-64, Over-65
+               RECORD-ID, DD, MM, YY, INA OF RECORD-AGE,
+               UNDER-22, F-22-24, F-25-34, F-35-44, F-45-54,
+               F-55-59, F-60-64, OVER-65
            END-UNSTRING.
       *
       *
-       Parse-CSV-Ethnicity.
-           MOVE 'T/T'   TO Exist OF Record-Ethnicity
+       PARSE-CSV-ETHNICITY.
+           MOVE 'T/T'   TO EXIST OF RECORD-ETHNICITY
       *
-           UNSTRING CSV-Ethnicity-Line
+           UNSTRING CSV-ETHNICITY-LINE
              DELIMITED BY "," OR "/" OR SPACE INTO
-                Record-ID, DD, MM, YY, INA OF Record-Ethnicity,
-                Latino-Hispanic, Not-Latino-Hispanic
+                RECORD-ID, DD, MM, YY, INA OF RECORD-ETHNICITY,
+                LATINO-HISPANIC, NOT-LATINO-HISPANIC
            END-UNSTRING.
       *
       *
-       Parse-CSV-Industry.
-           MOVE 'T/T' TO Exist OF Record-Industry
+       PARSE-CSV-INDUSTRY.
+           MOVE 'T/T' TO EXIST OF RECORD-INDUSTRY
       *
-           UNSTRING CSV-Industry-Line
+           UNSTRING CSV-INDUSTRY-LINE
              DELIMITED BY "," OR "/" OR SPACE INTO
-              Record-ID, DD, MM, YY, INA OF Record-Industry,
-              Wholesale-Trade,
-              Transportation-Warehouse,
-              Construction,
-              Finance-Insurance,
-              Manufacturing,
-              Agri-For-Fish-Hunt,
-              Public-Admin,
-              Utilities,
-              Accom-Food-Services,
-              Information,
-              Prof-Scientif-Tech,
-              Real-Estate,
-              Other-Services,
-              Management-Comp,
-              Educational-Services,
-              Mining,
-              Health-Care-Social-Assis,
-              Arts-Entertainment,
-              Admin-Support-Waste-Mgmt,
-              Retail-Trade
+              RECORD-ID, DD, MM, YY, INA OF RECORD-INDUSTRY,
+              WHOLESALE-TRADE,
+              TRANSPORTATION-WAREHOUSE,
+              CONSTRUCTION,
+              FINANCE-INSURANCE,
+              MANUFACTURING,
+              AGRI-FOR-FISH-HUNT,
+              PUBLIC-ADMIN,
+              UTILITIES,
+              ACCOM-FOOD-SERVICES,
+              INFORMATION,
+              PROF-SCIENTIF-TECH,
+              REAL-ESTATE,
+              OTHER-SERVICES,
+              MANAGEMENT-COMP,
+              EDUCATIONAL-SERVICES,
+              MINING,
+              HEALTH-CARE-SOCIAL-ASSIS,
+              ARTS-ENTERTAINMENT,
+              ADMIN-SUPPORT-WASTE-MGMT,
+              RETAIL-TRADE
            END-UNSTRING.
       *
       *
-       Parse-CSV-Race.
-           MOVE 'T/T'   TO Exist OF Record-Race
+       PARSE-CSV-RACE.
+           MOVE 'T/T'   TO EXIST OF RECORD-RACE
       *
-           UNSTRING CSV-Race-Line
+           UNSTRING CSV-RACE-LINE
              DELIMITED BY "," OR "/" OR SPACE INTO
-               Record-ID, DD, MM, YY, INA OF Record-Race,
-               White, Asian, African-American
-               Native-American-Alaskan,
-               Native-Hawaian-Pacific
+               RECORD-ID, DD, MM, YY, INA OF RECORD-RACE,
+               WHITE, ASIAN, AFRICAN-AMERICAN
+               NATIVE-AMERICAN-ALASKAN,
+               NATIVE-HAWAIAN-PACIFIC
            END-UNSTRING.
       *
       *
       *
-       Parse-CSV-Gender.
-           MOVE 'T/T'   TO Exist OF Record-Gender
+       PARSE-CSV-GENDER.
+           MOVE 'T/T'   TO EXIST OF RECORD-GENDER
       *
-           UNSTRING CSV-Gender-Line
+           UNSTRING CSV-GENDER-LINE
              DELIMITED BY "," OR "/" OR SPACE INTO
-              Record-ID, DD, MM, YY, INA OF Record-Gender,
-              Male, Female
+              RECORD-ID, DD, MM, YY, INA OF RECORD-GENDER,
+              MALE, FEMALE
            END-UNSTRING.
       *
