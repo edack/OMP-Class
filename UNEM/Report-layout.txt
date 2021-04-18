@@ -3,7 +3,6 @@ UNEMPLOYMENT DATA - ID: 08012011       DATE: 08 01 2011
                                   A G E 
 N/A        INA            Under 22      [22 - 24]     [25 - 34]     [35 - 44]
 T/T         56               1,665       993,558       915,074       913,835
-----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
      [45 - 54]     [55 - 59]     [60 - 64]     Over 65           
       z15,232       zz5,859       zz3,879       zz2,906
 ------------------------------------------------------------------------------        
@@ -12,16 +11,15 @@ N/A        WHITE          LAT-HIS        NON-LAT-HIS
 T/T         29,811            942         31,311          
 ------------------------------------------------------------------------------        
                             I N D U S T R Y
-    INA            WHOLST         TRANSWR        CONSTR         FIN-INS
-  2,206             2,371           4,281         5,696           1,981
-   MANUFAC        AG-FIS-HUN     PUBLIC-AD        UTILS        ACOM-FOOD
-     5,736            291            622           49            6,737
-      INFORM         PR-SC-T        RE-STATE       OTHER-S         MANAG-C
-       1,380          2,632          1,145          2,172             278
-         EDUC-S         MINING         HEALTH         ARTS-EN
-          2,360            143          7,484             997
-            WASTE-MAG      RETAIL           
-               7,110         6,393          
+----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+    INA        WHOLST       TRANSWR        CONSTR       FIN-INS       MANUFAC
+  2,206       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9
+    AG-FIS-HUN     PUBLIC-AD        UTILS      ACOM-FOOD        INFORM
+       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9    
+PR-SC-T      RE-STATE       OTHER-S       MANAG-C        EDUC-S       MINING
+ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9
+        HEALTH       ARTS-EN      WASTE-MAG      RETAIL
+       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9       ZZZ,ZZ9 
 ------------------------------------------------------------------------------        
                            E T H N I C I T Y 
    INA            WHITE          ASIAN          AF-AM          NAT-AL

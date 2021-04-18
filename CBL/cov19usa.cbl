@@ -5,7 +5,7 @@
        DATE-WRITTEN.  11/28/2020.
        DATE-COMPILED.
        ENVIRONMENT DIVISION.
-       CONFIGURATION SECTION. 
+       CONFIGURATION SECTION.
        SOURCE-COMPUTER.  IBM-3096.
        OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
@@ -236,7 +236,7 @@
            MOVE WS-MONTH                   TO DL1-MONTH.
            MOVE WS-YEAR                    TO DL1-YEAR.
            IF  ALL-STATE-REPORT
-               CONTINUE 
+               CONTINUE
            ELSE
                PERFORM 2210-SETUP-STATE.
            MOVE WS-CASES                   TO DL1-CASE-POSITIVE.
@@ -248,7 +248,7 @@
                DIVIDE WS-DEATH  BY WS-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-DEATH-PERCENT
-               COMPUTE WS-CASE-NEW-2 = WS-CASE-NEW + WS-CASE-PEND 
+               COMPUTE WS-CASE-NEW-2 = WS-CASE-NEW + WS-CASE-PEND
                DIVIDE WS-CASE-NEW-2   BY WS-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
@@ -302,7 +302,7 @@
                        UHR-DEATH-PROB
                        UHR-DEATH-NEW
                        UHR-DEATH-NEW-PROB
-                       UHR-CREATED-AT 
+                       UHR-CREATED-AT
                ELSE
                    UNSTRING USA-HIST-RECORD DELIMITED BY ','
                    INTO UHR-DATE

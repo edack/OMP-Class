@@ -33,7 +33,8 @@
        FD  UNEMPLOYMENT-CLAIMS-FILE
             DATA RECORD IS UNEMPLOYMENT-CLAIM.
             COPY UNEMC.
-      *---------------------------------------------------------------*
+      **
+      **
        WORKING-STORAGE SECTION.
        01  UNEMPLOYMENT-FILE-STATUS              PIC 99.
            88 UNEMPLOYMENT-FILE-OK               VALUE 00.
@@ -47,40 +48,25 @@
       *===============================================================*
        PROCEDURE DIVISION USING RECORD-TABLE-SIZE, RECORD-TABLE-INDEX,
            PROGRAM-ACTION, RECORD-TABLE.
-      *---------------------------------------------------------------*
-       0000-MAIN-PROCESS.
-      *---------------------------------------------------------------*
-           PERFORM 1000-OPEN-FILES.
-           PERFORM 2000-PROCESS-REQUEST.
-           PERFORM 3000-CLOSE-FILES.
-           GOBACK.
-      *---------------------------------------------------------------*
-       1000-OPEN-FILES.      
-      *---------------------------------------------------------------*
-           OPEN I-O UNEMPLOYMENT-CLAIMS-FILE.
-      *---------------------------------------------------------------*
-       2000-PROCESS-REQUEST.
-      *---------------------------------------------------------------*
+           OPEN I-O UNEMPLOYMENT-CLAIMS-FILE
            IF UNEMPLOYMENT-FILE-OK
               EVALUATE PROGRAM-ACTION
                   WHEN 'ALL'
-                      PERFORM 2100-WRITE-ALL-RECORD UNTIL EOF
+                      PERFORM WRITE-ALL-RECORD UNTIL EOF
                   WHEN OTHER
                       MOVE RECORD-ID OF
                             TBL-UNEMPLOYMENT-CLAIM (RECORD-TABLE-SIZE)
                             TO RECORD-ID OF UNEMPLOYMENT-CLAIM
-                      PERFORM 2200-WRITE-RECORD
+                      PERFORM WRITE-RECORD
               END-EVALUATE
            ELSE
               MOVE 0 TO RECORD-TABLE-SIZE
               DISPLAY 'FILE ERROR: ', UNEMPLOYMENT-FILE-STATUS
-           END-IF.
+           END-IF
+           CLOSE UNEMPLOYMENT-CLAIMS-FILE
+           GOBACK.
       *---------------------------------------------------------------*
-       3000-CLOSE-FILES.
-      *---------------------------------------------------------------*
-           CLOSE UNEMPLOYMENT-CLAIMS-FILE.
-      *---------------------------------------------------------------*
-       2100-WRITE-ALL-RECORD.
+       WRITE-ALL-RECORD.
       *---------------------------------------------------------------*
            READ UNEMPLOYMENT-CLAIMS-FILE NEXT RECORD
                AT END
@@ -91,7 +77,7 @@
                        TBL-UNEMPLOYMENT-CLAIM (RECORD-TABLE-SIZE)
            END-READ.
       *---------------------------------------------------------------*
-       2200-WRITE-RECORD.
+       WRITE-RECORD.
       *---------------------------------------------------------------*
            READ UNEMPLOYMENT-CLAIMS-FILE
                 INVALID KEY
