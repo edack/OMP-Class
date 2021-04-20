@@ -17,15 +17,16 @@
                10  FILLER PIC X(40) VALUE SPACE.
            05  UL-REPORT-4.
                10  FILLER PIC X(14) VALUE 'N/A           '.
-               10  FILLER PIC X(14) VALUE 'INA           '.
+               10  FILLER PIC X(14) VALUE '    INA       '.
                10  FILLER PIC X(14) VALUE ' UNDER 22     '.
                10  FILLER PIC X(14) VALUE '[22 - 24]     '.
                10  FILLER PIC X(14) VALUE '[25 - 34]     '.
                10  FILLER PIC X(14) VALUE '[35 - 44]     '.
            05  UL-REPORT-5.
-               10  FILLER PIC X(10) VALUE 'T/T       '.
+               10  FILLER PIC X(07) VALUE 'T/T    '.
+               10  FILLER PIC X(07) VALUE SPACE.
                10  UL5-INA           PIC ZZZ,ZZ9.
-               10  FILLER PIC X(13) VALUE SPACE.
+               10  FILLER PIC X(07) VALUE SPACE.
                10  UL5-UNDER-22      PIC ZZZ,ZZ9.
                10  FILLER PIC X(07) VALUE SPACE.
                10  UL5-F-22-24       PIC ZZZ,ZZ9.
