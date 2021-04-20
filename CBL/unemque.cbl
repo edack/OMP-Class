@@ -80,6 +80,7 @@
            MOVE WS-CURRENT-YEAR  TO UL1-YY.
            MOVE WS-CURRENT-MONTH TO UL1-MM.
            MOVE WS-CURRENT-DAY   TO UL1-DD.
+           MOVE 30 TO LINES-ON-PAGE.
       *---------------------------------------------------------------*
        2000-PROCESS-UNEMP-FILE.
       *---------------------------------------------------------------*
@@ -214,95 +215,95 @@
            MOVE NOT-LATINO-HISPANIC    IN  RECORD-ETHNICITY
                                        IN  FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL11-NOT-LAT-HIS.
-           MOVE INA                IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE INA                IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-INA.
-           MOVE WHOLESALE-TRADE    IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE WHOLESALE-TRADE    IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-WHOLST.
-           MOVE TRANSPORTATION-WAREHOUSE     IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE TRANSPORTATION-WAREHOUSE     IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-TRANSWR.
-           MOVE CONSTRUCTION       IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE CONSTRUCTION       IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-CONSTR.
-           MOVE FINANCE-INSURANCE  IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE FINANCE-INSURANCE  IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-FIN-INS.
-           MOVE MANUFACTURING      IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE MANUFACTURING      IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-MANUFAC.
-           MOVE AGRI-FOR-FISH-HUNT IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE AGRI-FOR-FISH-HUNT IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-AG-FIS-HUN.
-           MOVE PUBLIC-ADMIN       IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE PUBLIC-ADMIN       IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-PUBLIC-AD.
-           MOVE UTILITIES          IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE UTILITIES          IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-UTILS.
-           MOVE ACCOM-FOOD-SERVICES IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE ACCOM-FOOD-SERVICES IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-ACOM-FOOD.
-           MOVE INFORMATION        IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE INFORMATION        IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL15-INFORM.
-           MOVE PROF-SCIENTIF-TECH IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE PROF-SCIENTIF-TECH IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL19-PR-SC-T.
-           MOVE REAL-ESTATE        IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE REAL-ESTATE        IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL19-RE-STATE.
-           MOVE OTHER-SERVICES     IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE OTHER-SERVICES     IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL19-OTHER-S.
-           MOVE MANAGEMENT-COMP    IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE MANAGEMENT-COMP    IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL19-MANAG-C.
-           MOVE EDUCATIONAL-SERVICES IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE EDUCATIONAL-SERVICES IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL19-EDUC-S.
-           MOVE MINING             IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE MINING             IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL19-MINING.
-           MOVE HEALTH-CARE-SOCIAL-ASSIS IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE HEALTH-CARE-SOCIAL-ASSIS IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL21-HEALTH.
-           MOVE ARTS-ENTERTAINMENT IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE ARTS-ENTERTAINMENT IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL21-ARTS-EN.
-           MOVE ADMIN-SUPPORT-WASTE-MGMT IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE ADMIN-SUPPORT-WASTE-MGMT IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL21-WASTE-MAG.
-           MOVE RETAIL-TRADE       IN RECORD-INDUSTRY 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE RETAIL-TRADE       IN RECORD-INDUSTRY
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL21-RETAIL.
-           MOVE INA                IN RECORD-RACE 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE INA                IN RECORD-RACE
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL25-INA.
-           MOVE WHITE              IN RECORD-RACE 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE WHITE              IN RECORD-RACE
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL25-WHITE.
-           MOVE ASIAN              IN RECORD-RACE 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE ASIAN              IN RECORD-RACE
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL25-ASIAN.
-           MOVE AFRICAN-AMERICAN   IN RECORD-RACE 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE AFRICAN-AMERICAN   IN RECORD-RACE
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL25-AF-AM.
-           MOVE NATIVE-AMERICAN-ALASKAN IN RECORD-RACE 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE NATIVE-AMERICAN-ALASKAN IN RECORD-RACE
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL25-NAT-AL.
-           MOVE NATIVE-HAWAIAN-PACIFIC IN RECORD-RACE 
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+           MOVE NATIVE-HAWAIAN-PACIFIC IN RECORD-RACE
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL25-NAT-HAW-P.
            MOVE INA                IN RECORD-GENDER
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL29-INA.
            MOVE MALE               IN RECORD-GENDER
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL29-MALE.
            MOVE FEMALE             IN RECORD-GENDER
-                                   IN FORMAT-UNEMPLOYMENT-CLAIM 
+                                   IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL29-FEMALE.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.

@@ -3,7 +3,7 @@
        AUTHOR.        EDWIN ACKERMAN.
        INSTALLATION.  MORONS LOSERS AND BIMBOS.
        DATE-WRITTEN.  05/05/20.
-       DATE-COMPILED. 
+       DATE-COMPILED.
       *===============================================================*
        ENVIRONMENT DIVISION.
       *---------------------------------------------------------------*
@@ -92,7 +92,7 @@
            READ UNEMPLOYMENT-CLAIMS-FILE
                INVALID KEY
                    MOVE 'READ'             TO DL-ERROR-REASON
-                   PERFORM 9900-INVALID-VSAM-STATUS 
+                   PERFORM 9900-INVALID-VSAM-STATUS
                    MOVE 0                  TO RECORD-TABLE-SIZE
                NOT INVALID KEY
                    MOVE UNEMPLOYMENT-CLAIM TO
@@ -106,3 +106,4 @@
       *---------------------------------------------------------------*
            MOVE UNEMPLOYMENT-FILE-STATUS   TO DL-FILE-STATUS.
            DISPLAY ERROR-DISPLAY-LINE.
+

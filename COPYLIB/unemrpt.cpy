@@ -16,24 +16,24 @@
                10  FILLER PIC X(05) VALUE 'A G E'.
                10  FILLER PIC X(40) VALUE SPACE.
            05  UL-REPORT-4.
-               10  FILLER PIC X(14) VALUE 'N/A           '.
-               10  FILLER PIC X(14) VALUE '    INA       '.
-               10  FILLER PIC X(14) VALUE ' UNDER 22     '.
-               10  FILLER PIC X(14) VALUE '[22 - 24]     '.
-               10  FILLER PIC X(14) VALUE '[25 - 34]     '.
-               10  FILLER PIC X(14) VALUE '[35 - 44]     '.
+               10  FILLER PIC X(14) VALUE '  EXIST      '.
+               10  FILLER PIC X(14) VALUE '    INA      '.
+               10  FILLER PIC X(14) VALUE ' UNDER 22    '.
+               10  FILLER PIC X(14) VALUE '[22 - 24]    '.
+               10  FILLER PIC X(14) VALUE '[25 - 34]    '.
+               10  FILLER PIC X(14) VALUE '[35 - 44]    '.
            05  UL-REPORT-5.
-               10  FILLER PIC X(07) VALUE 'T/T    '.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL5-INA           PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL5-UNDER-22      PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL5-F-22-24       PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL5-F-25-34       PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL5-F-35-44       PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE '    T/T'.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL5-INA                 PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL5-UNDER-22            PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL5-F-22-24             PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL5-F-25-34             PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL5-F-35-44             PIC ZZZ,ZZ9.
            05  UL-REPORT-6.
                10  FILLER PIC X(14) VALUE '     [45 - 55]'.
                10  FILLER PIC X(14) VALUE '     [55 - 59]'.
@@ -41,14 +41,14 @@
                10  FILLER PIC X(14) VALUE '       OVER 65'.
                10  FILLER PIC X(14) VALUE SPACE.
            05  UL-REPORT-7.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL7-F-45-54       PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL7-F-55-59       PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL7-F-60-64       PIC ZZZ,ZZ9.
-               10  FILLER PIC X(07) VALUE SPACE.
-               10  UL7-F-OVER-65     PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL7-F-45-54             PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL7-F-55-59             PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL7-F-60-64             PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL7-F-OVER-65           PIC ZZZ,ZZ9.
            05  UL-REPORT-8.
                10  FILLER PIC X(80) VALUE ALL '-'.
            05  UL-REPORT-9.
@@ -56,22 +56,22 @@
                10  FILLER PIC X(15) VALUE 'H I S P A N I C'.
                10  FILLER PIC X(33) VALUE SPACE.
            05  UL-REPORT-10.
-               10  FILLER PIC X(14) VALUE 'EXIST         '.
-               10  FILLER PIC X(14) VALUE '   INA        '.
+               10  FILLER PIC X(14) VALUE '  EXIST       '.
+               10  FILLER PIC X(14) VALUE '    INA       '.
                10  FILLER PIC X(14) VALUE 'LAT-HIS       '.
                10  FILLER PIC X(14) VALUE 'NOT-LAT-HIS   '.
                10  FILLER PIC X(28) VALUE SPACE.
            05  UL-REPORT-11.
-               10  UL11-EXIST        PIC X(07) VALUE 'T/T    '.
-               10  FILLER PIC X(06) VALUE SPACE.
-               10  UL11-INA          PIC ZZZ,ZZ9.
-               10  FILLER PIC X(08) VALUE SPACE.
-               10  UL11-LAT-HIS      PIC ZZZ,ZZ9.
-               10  FILLER PIC X(11) VALUE SPACE.
-               10  UL11-NOT-LAT-HIS  PIC ZZZ,ZZ9.
-               10  FILLER           PIC X(10) VALUE SPACE.
+               10  UL11-EXIST              PIC X(07) VALUE '    T/T'.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL11-INA                PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL11-LAT-HIS            PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(07) VALUE SPACE.
+               10  UL11-NOT-LAT-HIS        PIC ZZZ,ZZ9.
+               10  FILLER                  PIC X(10) VALUE SPACE.
            05  UL-REPORT-12.
-               10  FILLER PIC X(80) VALUE ALL '-'.
+               10  FILLER                  PIC X(80) VALUE ALL '-'.
            05  UL-REPORT-13.
                10  FILLER PIC X(32) VALUE SPACE.
                10  FILLER PIC X(15) VALUE 'I N D U S T R Y'.
@@ -180,14 +180,14 @@
                10  FILLER PIC X(05) VALUE 'S E X'.
                10  FILLER                  PIC X(38) VALUE SPACE.
            05  UL-REPORT-28.
-               10  FILLER PIC X(14) VALUE 'N/A           '.
+               10  FILLER PIC X(14) VALUE '    N/A       '.
                10  FILLER PIC X(14) VALUE '    INA       '.
                10  FILLER PIC X(14) VALUE '   MALE       '.
                10  FILLER PIC X(14) VALUE ' FEMALE       '.
                10  FILLER PIC X(14) VALUE '              '.
                10  FILLER PIC X(12) VALUE '            '.
            05  UL-REPORT-29.
-               10  UL29-FILLER             PIC X(07) VALUE 'T/T    '.
+               10  UL29-FILLER             PIC X(07) VALUE '    T/T'.
                10  FILLER                  PIC X(07) VALUE SPACE.
                10  UL29-INA                PIC ZZZ,ZZ9.
                10  FILLER                  PIC X(07) VALUE SPACE.
