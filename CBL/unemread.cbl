@@ -106,4 +106,3 @@
       *---------------------------------------------------------------*
            MOVE UNEMPLOYMENT-FILE-STATUS   TO DL-FILE-STATUS.
            DISPLAY ERROR-DISPLAY-LINE.
-
