@@ -24,13 +24,11 @@
                RECORDING MODE IS F.
        01  PRINT-RECORD.
       *     05  CC                          PIC X(01).
-           05  PRINT-LINE                  PIC X(130).
+           05  PRINT-LINE                  PIC X(132).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
        01   REPORT-LINES.
-      *---------------------------------------------------------------*
-           05  NEXT-REPORT-LINE            PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
            05  UHR-PRINT-RECORD.
       *---------------------------------------------------------------*
@@ -43,8 +41,10 @@
                10  FILLER                  PIC X(02)  VALUE SPACE.
                10  FILLER                  PIC X(02)  VALUE ' |'.
                10  UHR-GRAPH.
-                   15  UHR-GRAPH-DATA      PIC X(01) OCCURS 110 TIMES.
+                   15  UHR-GRAPH-DATA      PIC X(01) OCCURS 130 TIMES.
                10  FILLER                  PIC X(05)  VALUE SPACE.
+      *---------------------------------------------------------------*
+           05  NEXT-REPORT-LINE            PIC X(132)  VALUE SPACE.
       *---------------------------------------------------------------*
        01  HEADING-LINES.
       *---------------------------------------------------------------*
@@ -127,7 +127,7 @@
            05  WS-C-GRAPH-PNT              PIC 999V9(10).
            05  WS-D-GRAPH-PNT              PIC 999V9(10).
            05  WS-GRAPH-PNT-X              PIC ZZ9.99999.
-           05  WS-GRAPH-DATA               PIC 999.
+           05  WS-GRAPH-INDEX               PIC 999.
            05  WS-PNT1                     PIC 99.
            05  WS-PNT2                     PIC 99.
            05  WS-PREV-DATE.
@@ -254,12 +254,12 @@
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
                                               WS-D-GRAPH-PNT.
-           IF  WS-D-GRAPH-PNT GREATER THAN 11 OR
-               WS-C-GRAPH-PNT GREATER THAN 11
+           IF  WS-C-GRAPH-PNT GREATER THAN 10 OR
+               WS-D-GRAPH-PNT GREATER THAN 10
                MOVE UHR-DAY                TO EL-DAY
                MOVE UHR-MONTH              TO EL-MONTH
                MOVE UHR-YEAR               TO EL-YEAR
-               IF  WS-D-GRAPH-PNT GREATER THAN 11
+               IF  WS-D-GRAPH-PNT GREATER THAN 10
                    MOVE WS-D-GRAPH-PNT     TO EL-GRAPH-POINT
                    MOVE 'DEATH'            TO EL-CAUSE
                ELSE
@@ -268,10 +268,10 @@
                END-IF
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
-               COMPUTE WS-GRAPH-DATA = (WS-D-GRAPH-PNT * 10) + 6
-               MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
-               COMPUTE WS-GRAPH-DATA = (WS-C-GRAPH-PNT * 10) + 6
-               MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-DATA)
+               COMPUTE WS-GRAPH-INDEX = (WS-D-GRAPH-PNT * 10) + 6
+               MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
+               COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 100) + 6
+               MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                MOVE 1                TO WS-PNT1
                PERFORM  2220-FORMAT-PERCENT
                    VARYING WS-PNT2 FROM 3 BY 1
@@ -369,7 +369,7 @@
       *---------------------------------------------------------------*
            WRITE PRINT-RECORD
                AFTER ADVANCING PAGE.
-           MOVE SPACE                      TO PRINT-LINE.
+           MOVE SPACE                      TO PRINT-RECORD.
       *---------------------------------------------------------------*
        9120-WRITE-PRINT-LINE.
       *---------------------------------------------------------------*
@@ -377,7 +377,7 @@
                AFTER ADVANCING LINE-SPACEING.
            ADD LINE-SPACEING               TO LINE-COUNT.
            MOVE 1                          TO LINE-SPACEING.
-           MOVE SPACE                      TO PRINT-LINE.
+           MOVE SPACE                      TO PRINT-RECORD.
       *---------------------------------------------------------------*
        9900-TABLE-ERROR.
       *---------------------------------------------------------------*
