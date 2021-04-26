@@ -7,23 +7,23 @@
        CONFIGURATION SECTION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT PRINT-FILE
-               ASSIGN TO PRTLINE.
            SELECT INPUT-FILE
                ASSIGN TO ACCTREC.
+           SELECT PRINT-FILE
+               ASSIGN TO PRTLINE.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
        FILE SECTION.
       *---------------------------------------------------------------*
+       FD  INPUT-FILE RECORDING MODE F.
+       01  INPUT-RECORD.
+           05 FILLER                       PIC X(132).
+      *
        FD  PRINT-FILE RECORDING MODE F.
        01  PRINT-RECORD.
       *    05 CC                           PIC X(01).
            05 PRINT-LINE                   PIC X(132).
-      *
-       FD  INPUT-FILE RECORDING MODE F.
-       01  INPUT-RECORD.
-           05 FILLER                       PIC X(132).
       *---------------------------------------------------------------*
        WORKING-STORAGE SECTION.
       *---------------------------------------------------------------*
@@ -75,10 +75,10 @@
       *---------------------------------------------------------------*
            OPEN    INPUT  INPUT-FILE
                    OUTPUT PRINT-FILE.
-           MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
-           MOVE WS-CURRENT-YEAR  TO HL1-YEAR-OUT.
-           MOVE WS-CURRENT-MONTH TO HL1-MONTH-OUT.
-           MOVE WS-CURRENT-DAY   TO HL1-DAY-OUT.
+           MOVE FUNCTION CURRENT-DATE      TO WS-CURRENT-DATE-DATA.
+           MOVE WS-CURRENT-YEAR            TO HL1-YEAR-OUT.
+           MOVE WS-CURRENT-MONTH           TO HL1-MONTH-OUT.
+           MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
       *---------------------------------------------------------------*
        2000-PROCESS-ACCT-FILE.
       *---------------------------------------------------------------*
