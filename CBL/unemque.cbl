@@ -58,6 +58,7 @@
       *---------------------------------------------------------------*
            05  END-OF-FILE-SW              PIC X VALUE 'N'.
                88  END-OF-FILE                   VALUE 'Y'.
+           05  INDEX-1                     PIC 999 VALUE 0.
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -75,7 +76,6 @@
       *---------------------------------------------------------------*
            OPEN INPUT INPUT-FILE.
            OPEN OUTPUT PRINT-FILE.
-
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-DATA.
            MOVE WS-CURRENT-YEAR  TO UL1-YY.
            MOVE WS-CURRENT-MONTH TO UL1-MM.
@@ -119,70 +119,9 @@
                TBL-UNEMPLOYMENT-CLAIM (RECORD-TABLE-INDEX)
                TO FORMAT-UNEMPLOYMENT-CLAIM.
            PERFORM  2210-MOVE-UNEMPLOYMENT-FIELDS.
-
-           MOVE UL-REPORT-2                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-      * -- PRINT AGE SECTION
-           MOVE UL-REPORT-3                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-4                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-5                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-6                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-7                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-8                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-      * -- PRINT HISPANIC SECTION
-           MOVE UL-REPORT-9                TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-10               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-11               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-12               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-      * -- PRINT INDUSTRY SECTION
-           MOVE UL-REPORT-13               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-14               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-15               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-16               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-17               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-18               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-19               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-20               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-21               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-      * -- START OF ETHNICITY SECTION
-           MOVE UL-REPORT-22               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-23               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-24               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-25               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-      * -- START OF SEX SECTION
-           MOVE UL-REPORT-26               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-27               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-28               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-29               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE UL-REPORT-30               TO NEXT-REPORT-LINE.
-           PERFORM 9000-PRINT-REPORT-LINE.
+           PERFORM  2220-PRINT-UNEMPLOYMENT-RPT VARYING INDEX-1
+                  FROM 2 BY 1
+                  UNTIL INDEX-1 > 30.
       *---------------------------------------------------------------*
        2210-MOVE-UNEMPLOYMENT-FIELDS.
       *---------------------------------------------------------------*
@@ -305,6 +244,11 @@
            MOVE FEMALE             IN RECORD-GENDER
                                    IN FORMAT-UNEMPLOYMENT-CLAIM
                                    TO UL29-FEMALE.
+      *---------------------------------------------------------------*
+       2220-PRINT-UNEMPLOYMENT-RPT.
+      *---------------------------------------------------------------*
+           MOVE TABLE-LINE(INDEX-1)        TO NEXT-REPORT-LINE.
+           PERFORM 9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*

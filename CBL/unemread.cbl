@@ -48,8 +48,10 @@
        LINKAGE SECTION.
        COPY UNEMT.
       *===============================================================*
-       PROCEDURE DIVISION USING RECORD-TABLE-SIZE, RECORD-TABLE-INDEX,
-           PROGRAM-ACTION, RECORD-TABLE.
+       PROCEDURE DIVISION USING RECORD-TABLE-SIZE,
+                                RECORD-TABLE-INDEX,
+                                PROGRAM-ACTION,
+                                RECORD-TABLE.
       *---------------------------------------------------------------*
        0000-MAIN-ROUTINE.
       *---------------------------------------------------------------*
