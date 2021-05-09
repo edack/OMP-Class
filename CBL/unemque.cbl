@@ -57,7 +57,8 @@
       *---------------------------------------------------------------*
            05  END-OF-FILE-SW              PIC X VALUE 'N'.
                88  END-OF-FILE                   VALUE 'Y'.
-           05  INDEX-1                     PIC 999 VALUE 0.
+           05  INDEX-1                     PIC 9(03) VALUE 0.
+           05  NUMBER-OF-RPT-LINES         PIC 9(02) VALUE 30.
        COPY PRINTCTL.
       *===============================================================*
        PROCEDURE DIVISION.
@@ -120,7 +121,7 @@
            PERFORM  2210-MOVE-UNEMPLOYMENT-FIELDS.
            PERFORM  2220-PRINT-UNEMPLOYMENT-RPT VARYING INDEX-1
                   FROM 2 BY 1
-                  UNTIL INDEX-1 > 30.
+                  UNTIL INDEX-1 > NUMBER-OF-RPT-LINES.
       *---------------------------------------------------------------*
        2210-MOVE-UNEMPLOYMENT-FIELDS.
       *---------------------------------------------------------------*
