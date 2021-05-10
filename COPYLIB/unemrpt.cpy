@@ -187,7 +187,7 @@
                10  FILLER                  PIC X(05) VALUE 'S E X'.
                10  FILLER                  PIC X(38) VALUE SPACE.
            05  UL-REPORT-28.
-               10  FILLER PIC X(14) VALUE '    N/A       '.
+               10  FILLER PIC X(14) VALUE '  EXIST       '.
                10  FILLER PIC X(14) VALUE '    INA       '.
                10  FILLER PIC X(14) VALUE '   MALE       '.
                10  FILLER PIC X(14) VALUE ' FEMALE       '.
