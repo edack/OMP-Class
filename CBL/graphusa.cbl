@@ -269,8 +269,8 @@
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
                COMPUTE WS-GRAPH-INDEX = (WS-D-GRAPH-PNT * 10) + 6
-               MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
-               COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 10) + 6
+               MOVE ' '              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
+               COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 100) + 6
                MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                MOVE 1                TO WS-PNT1
                PERFORM  2220-FORMAT-PERCENT
