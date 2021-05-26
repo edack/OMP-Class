@@ -298,8 +298,8 @@
                        UHR-CASE-NEW
                        UHR-CASE-NEW-PROB
                        UHR-DEATH
-                       UHR-DEATH-CONF
-                       UHR-DEATH-PROB
+      *                 UHR-DEATH-CONF
+      *                 UHR-DEATH-PROB
                        UHR-DEATH-NEW
                        UHR-DEATH-NEW-PROB
                        UHR-CREATED-AT

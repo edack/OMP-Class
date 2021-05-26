@@ -335,10 +335,10 @@
                        UHR-STATE
                        UHR-CASE
                        UHR-CASE-NEW
-      *                 UHR-CASE-NEW-PROB
+                       UHR-CASE-NEW-PROB
                        UHR-DEATH
                        UHR-DEATH-NEW
-      *                 UHR-DEATH-NEW-PROB
+                       UHR-DEATH-NEW-PROB
                        UHR-CREATED-AT.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
