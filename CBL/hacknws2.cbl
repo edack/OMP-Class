@@ -1,6 +1,6 @@
       *===============================================================*
        IDENTIFICATION DIVISION.
-       PROGRAM-ID.    HACKNEWS.
+       PROGRAM-ID.    HACKNWS2.
       * AUTHOR.        EDWIN ACKERMAN.
       * INSTALLATION.  IBM CLASS.
       *REMARKS. THERE ARE THREE INSPECT STMTS TO HANDLE IMBEDED
