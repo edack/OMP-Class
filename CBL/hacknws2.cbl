@@ -57,7 +57,7 @@
            05  DL-VOTES                    PIC X(03).
            05  FILLER                      PIC X(02) VALUE SPACE.
            05  DL-COMMENT-CNT              PIC X(03).
-           05  FILLER                      PIC X(02).
+           05  FILLER                      PIC X(02) VALUE SPACE.
            05  DL-AUTHOR                   PIC X(13).
            05  FILLER                      PIC X(02) VALUE SPACE.
            05  DL-CREATED-HH               PIC X(02).
