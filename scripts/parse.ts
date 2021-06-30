@@ -26,7 +26,7 @@ https.get('https://api.covid19api.com/summary', (res: any) => {
     const convertedCSV = csv.join('\r\n');
     // console.log(csv)
 
-    fs.writeFileSync("./build/cov19glb.txt", convertedCSV);
+    fs.writeFileSync("./build/glbfile.txt", convertedCSV);
 
   });
 
