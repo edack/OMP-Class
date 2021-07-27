@@ -159,7 +159,7 @@
                MOVE WS-HNR-TIME            TO SR-CREATED-TIME
                MOVE DL-RANKING             TO SR-RANKING
                MOVE SPACE                  TO SR-FILLER
-               PERFORM 9200-WRITE-SORT-RECORD.
+               PERFORM 9200-RELEASE-SORT-RECORD.
            PERFORM 8000-READ-HACKER-NEWS-FILE.
       *---------------------------------------------------------------*
        2110-CALCULATE-RANKING.
@@ -259,7 +259,7 @@
            ADD  1                    TO LINE-COUNT.
            MOVE 1                    TO LINE-SPACEING.
       *---------------------------------------------------------------*
-       9200-WRITE-SORT-RECORD.
+       9200-RELEASE-SORT-RECORD.
       *---------------------------------------------------------------*
            RELEASE SORT-RECORD.
            MOVE SPACE                TO SORT-RECORD.
