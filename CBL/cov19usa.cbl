@@ -235,9 +235,7 @@
            MOVE WS-DAY                     TO DL1-DAY.
            MOVE WS-MONTH                   TO DL1-MONTH.
            MOVE WS-YEAR                    TO DL1-YEAR.
-           IF  ALL-STATE-REPORT
-               CONTINUE
-           ELSE
+           IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE.
            MOVE WS-CASES                   TO DL1-CASE-POSITIVE.
            MOVE WS-CASE-NEW                TO DL1-CASE-NEW.
@@ -298,8 +296,8 @@
                        UHR-CASE-NEW
                        UHR-CASE-NEW-PROB
                        UHR-DEATH
-      *                 UHR-DEATH-CONF
-      *                 UHR-DEATH-PROB
+                       UHR-DEATH-CONF
+                       UHR-DEATH-PROB
                        UHR-DEATH-NEW
                        UHR-DEATH-NEW-PROB
                        UHR-CREATED-AT
