@@ -242,15 +242,15 @@
            IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE.
            IF  WS-CASES > ZERO
+               COMPUTE WS-CASE-NEW = WS-CASE-NEW + WS-CASE-PEND
+               DIVIDE WS-CASE-NEW  BY WS-CASES
+                   GIVING WS-PERCENT
+               MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
       *         COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
       *         MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
                DIVIDE WS-DEATH     BY WS-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
-               COMPUTE WS-CASE-NEW = WS-CASE-NEW + WS-CASE-PEND
-               DIVIDE WS-CASE-NEW  BY WS-CASES
-                   GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
                                               WS-D-GRAPH-PNT.
@@ -314,18 +314,18 @@
                MOVE ZERO                   TO WS-COUNTER
                INSPECT FUNCTION UPPER-CASE(UHR-RECORD)
                    TALLYING WS-COUNTER FOR ALL "XX:XX:XX"
-               IF WS-COUNTER NOT = 0
+               IF WS-COUNTER > 0
                    UNSTRING UHR-RECORD DELIMITED BY ','
                    INTO UHR-DATE
                        UHR-STATE
                        UHR-CASE
-      *                 UHR-CASE-CONF
-      *                 UHR-CASE-PROB
+                       UHR-CASE-CONF
+                       UHR-CASE-PROB
                        UHR-CASE-NEW
                        UHR-CASE-NEW-PROB
                        UHR-DEATH
-      *                 UHR-DEATH-CONF
-      *                 UHR-DEATH-PROB
+                       UHR-DEATH-CONF
+                       UHR-DEATH-PROB
                        UHR-DEATH-NEW
                        UHR-DEATH-NEW-PROB
                        UHR-CREATED-AT
@@ -334,6 +334,8 @@
                    INTO UHR-DATE
                        UHR-STATE
                        UHR-CASE
+                       UHR-CASE-CONF
+                       UHR-CASE-PROB
                        UHR-CASE-NEW
                        UHR-CASE-NEW-PROB
                        UHR-DEATH

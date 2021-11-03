@@ -286,7 +286,7 @@
                MOVE ZERO                   TO WS-COUNTER
                INSPECT FUNCTION UPPER-CASE(USA-HIST-RECORD)
                    TALLYING WS-COUNTER FOR ALL "XX:XX:XX"
-               IF  WS-COUNTER NOT = 0
+               IF  WS-COUNTER > 0
                    UNSTRING USA-HIST-RECORD DELIMITED BY ','
                    INTO UHR-DATE
                        UHR-STATE
