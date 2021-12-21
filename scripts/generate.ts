@@ -39,13 +39,13 @@ fs.writeFileSync("./build/compiler.jcl", rendered_compiler);
 console.log("Generated custom JCL to ./build/compiler.jcl");
 
 /* Render Run JCL including BAT file*/
-const runjob1 = fs.readFileSync("./src/templates/runjob_template.txt").toString();
+const runjob1 = fs.readFileSync("./src/templates/jobrun_template.txt").toString();
 const rendered_runjob1 = mustache.render(runjob1, config);
-fs.writeFileSync("./build/runjob.jcl", rendered_runjob1);
+fs.writeFileSync("./build/runjob.bat", rendered_runjob1);
 
-/* const runjob2 = fs.readFileSync("./build/runjob.jcl").toString();
-const rendered_runjob2 = mustache.render(runjob1, config);
-fs.writeFileSync("./build/runjob.jcl", rendered_runjob2); */
+const runjob2 = fs.readFileSync("./src/templates/runjob_template.txt").toString();
+const rendered_runjob2 = mustache.render(runjob2, config);
+fs.writeFileSync("./build/runjob.jcl", rendered_runjob2);
 
 console.log("Generated custom JCL to ./build/runjob.jcl");
 
