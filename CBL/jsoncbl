@@ -172,7 +172,7 @@
       * epoch). COBOL provides a number of intrinsic functions (built-in
       * functions/BIF) to do common tasks like this in few lines of code
            Compute todays-date-int =
-              function WHATGOESHERE(todays-date)
+              function INTEGER-OF-DATE (todays-date)
 
       * Open flyer before moving anything to file descriptor flyer-file
            Open output flyer
@@ -228,8 +228,8 @@
            Initialize flyer-file
            If flyerformat not = 'TEXT' then
               Move htmlflyerfooter to flyer-file
-              Write flyer-file
-           End-if
+           end-if
+           Write flyer-file
 
       * Date formatting options: https://ibm.biz/cobol-format-date-time
            String
