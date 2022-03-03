@@ -110,13 +110,14 @@
       *---------------------------------------------------------------*
        0000-MAIN-PROCESSING.
       *---------------------------------------------------------------*
-           PERFORM 1000-OPEN-FILES-INITIALIZE.
+           PERFORM 1000-OPEN-FILES-INITIALIZE
            SORT SORT-FILE
                 ON DESCENDING KEY SR-RANKING
                 INPUT PROCEDURE IS 2000-PROCESS-HACKER-NEWS-FILE
-                OUTPUT PROCEDURE IS 3000-PRINT-SORT-FILE.
-           PERFORM 4000-CLOSE-FILES.
-           GOBACK.
+                OUTPUT PROCEDURE IS 3000-PRINT-SORT-FILE
+           PERFORM 4000-CLOSE-FILES
+           GOBACK
+           .
       *---------------------------------------------------------------*
        1000-OPEN-FILES-INITIALIZE.
       *---------------------------------------------------------------*
