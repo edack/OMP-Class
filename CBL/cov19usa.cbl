@@ -306,6 +306,8 @@
                    INTO UHR-DATE
                        UHR-STATE
                        UHR-CASE
+                       UHR-CASE-CONF
+                       UHR-CASE-PROB
                        UHR-CASE-NEW
                        UHR-CASE-NEW-PROB
                        UHR-DEATH
