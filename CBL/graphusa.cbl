@@ -104,7 +104,7 @@
                10  FILLER      PIC X(20) VALUE 'ST BE LESS THAN 11% '.
                10  FILLER      PIC X(20) VALUE ' ***                '.
                10  FILLER      PIC X(13) VALUE '             '.
-       COPY USAFILE.
+       COPY USAFILE2.
       *---------------------------------------------------------------*
        01  SWITCHES-INDEX-COUNTER-FIELDS.
       *---------------------------------------------------------------*
@@ -157,7 +157,7 @@
       *---------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-USA-HIST-FILE.
-           MOVE  UHR-DATE                  TO  WS-PREV-DATE.
+           MOVE  UHR-END-DATE              TO  WS-PREV-DATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 2200-PRINT-DATE-TOTALS.
@@ -180,7 +180,7 @@
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           IF  UHR-DATE NOT = WS-PREV-DATE
+           IF  UHR-END-DATE NOT = WS-PREV-DATE
                PERFORM 2200-PRINT-DATE-TOTALS
                MOVE  ZERO                  TO  WS-CASES
                MOVE  ZERO                  TO  WS-CASE-NEW
@@ -191,24 +191,24 @@
                INITIALIZE STATE-ACCUMULATION-FIELDS
                    REPLACING NUMERIC DATA BY 0
                              ALPHANUMERIC DATA BY SPACE
-               MOVE  UHR-DATE              TO  WS-PREV-DATE.
+               MOVE  UHR-END-DATE          TO  WS-PREV-DATE.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
        2100-ACCUMULATE-DATE-TOTALS.
       *---------------------------------------------------------------*
-           ADD  UHR-CASE                   TO  WS-CASES.
-           IF  UHR-CASE-NEW GREATER THAN SPACE
+           ADD  UHR-TOTAL-CASES            TO  WS-CASES.
+           IF  UHR-NEW-CASES  GREATER THAN SPACE
                COMPUTE WS-CASE-NEW-2
-                   = FUNCTION NUMVAL-C(UHR-CASE-NEW)
+                   = FUNCTION NUMVAL-C(UHR-NEW-CASES)
                ADD  WS-CASE-NEW-2          TO  WS-CASE-NEW.
-           ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
-           ADD  UHR-DEATH                  TO  WS-DEATH.
-           IF  UHR-DEATH-NEW GREATER THAN SPACE
+      *     ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
+           ADD  UHR-TOTAL-DEATHS           TO  WS-DEATH.
+           IF  UHR-NEW-DEATHS  GREATER THAN SPACE
                COMPUTE WS-DEATH-NEW-2
-                   = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
+                   = FUNCTION NUMVAL-C(UHR-NEW-DEATHS)
                ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
-           ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
+      *     ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
            PERFORM  2110-ACCUMULATE-STATE-TOTALS.
       *---------------------------------------------------------------*
        2110-ACCUMULATE-STATE-TOTALS.
@@ -256,9 +256,9 @@
                                               WS-D-GRAPH-PNT.
            IF  WS-C-GRAPH-PNT GREATER THAN 10 OR
                WS-D-GRAPH-PNT GREATER THAN 10
-               MOVE UHR-DAY                TO EL-DAY
-               MOVE UHR-MONTH              TO EL-MONTH
-               MOVE UHR-YEAR               TO EL-YEAR
+               MOVE UHR-DAY   OF UHR-END-DATE   TO EL-DAY
+               MOVE UHR-MONTH OF UHR-END-DATE   TO EL-MONTH
+               MOVE UHR-YEAR  OF UHR-END-DATE   TO EL-YEAR
                IF  WS-D-GRAPH-PNT GREATER THAN 10
                    MOVE WS-D-GRAPH-PNT     TO EL-GRAPH-POINT
                    MOVE 'DEATH'            TO EL-CAUSE
@@ -316,22 +316,19 @@
                    TALLYING WS-COUNTER FOR ALL "XX:XX:XX"
                IF WS-COUNTER > 0
                    UNSTRING UHR-RECORD DELIMITED BY ','
-                   INTO UHR-DATE
+                   INTO UHR-UPDATE-DATE
                        UHR-STATE
-                       UHR-CASE
-                       UHR-CASE-CONF
-                       UHR-CASE-PROB
-                       UHR-CASE-NEW
-                       UHR-CASE-NEW-PROB
-                       UHR-DEATH
-                       UHR-DEATH-CONF
-                       UHR-DEATH-PROB
+                       UHR-START-DATE 
+                       UHR-END-DATE 
+                       UHR-NEW-CASES
+                       UHR-TOTAL-CASES
+                       UHR-TOTAL-DEATHS
                        UHR-DEATH-NEW
                        UHR-DEATH-NEW-PROB
                        UHR-CREATED-AT
                ELSE
                    UNSTRING UHR-RECORD DELIMITED BY ','
-                   INTO UHR-DATE
+                   INTO UHR-UPDATE-DATE
                        UHR-STATE
                        UHR-CASE
                        UHR-CASE-CONF

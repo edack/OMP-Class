@@ -5,8 +5,8 @@ const https = require('https');
 let data = '';
 
 // https.get('https://api.covidtracking.com/v1/us/daily.json', (res: any) => {
-https.get('https://data.cdc.gov/resource/9mfq-cb36.json?$limit=65000', (res: any) => {
-
+//https.get('https://data.cdc.gov/resource/9mfq-cb36.json?$limit=65000', (res: any) => {
+https.get('https://data.cdc.gov/resource/pwn4-m3yp.json?$limit=65000', (res: any) => {
   res.on('data', (chunk: any) => {
     data += chunk;
 //    console.log('data', data);
