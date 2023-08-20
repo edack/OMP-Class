@@ -1,0 +1,29 @@
+---
+name: sam
+description: Wazi's code samples with COBOL, PL/I, HLASM, and REXX applications
+version: 3.0.0
+author:
+  name: IBM CORPORATION
+propertyGroups:
+  - name: cobol-copybooks
+    language: cobol
+    libraries:
+      - name: syslib
+        type: local
+        locations:
+#          - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
+          - "./COPYLIB"
+          - "**/COPYLIB"
+#          - "**/COPYBOOK"
+      - name: MYLIB
+        type: mvs
+        locations:
+          - Z80843.COPYLIB
+      - name: MYLIB
+        type: local
+        locations:
+#          - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
+          - "./COPYLIB"
+          - "**/COPYLIB"
+#          - "**/COPYBOOK"
+#          - "./OMP Class/COPYLIB"
