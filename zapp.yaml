@@ -11,7 +11,8 @@ propertyGroups:
       - name: syslib
         type: local
         locations:
-#          - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
+          - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
+          - "G:\My Drive\git\OMPClass\copylib"
           - "./COPYLIB"
           - "**/COPYLIB"
 #          - "**/COPYBOOK"
@@ -22,7 +23,8 @@ propertyGroups:
       - name: MYLIB
         type: local
         locations:
-#          - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
+          - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
+          - "G:\My Drive\git\OMPClass\copylib"
           - "./COPYLIB"
           - "**/COPYLIB"
 #          - "**/COPYBOOK"
