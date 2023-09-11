@@ -153,7 +153,7 @@
       *---------------------------------------------------------------*
            PERFORM 1000-OPEN-FILES.
            PERFORM 8000-READ-USA-HIST-FILE.
-           MOVE UHR-DATE                   TO  WS-PREV-DATE.
+           MOVE UHR-END-DATE               TO  WS-PREV-DATE.
            PERFORM 2000-PROCESS-USA-HIST-FILE
                UNTIL END-OF-FILE.
            PERFORM 2200-PRINT-DATE-TOTALS.
@@ -177,7 +177,7 @@
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
-           IF  UHR-DATE NOT = WS-PREV-DATE
+           IF  UHR-END-DATE NOT = WS-PREV-DATE
                PERFORM 2200-PRINT-DATE-TOTALS
                MOVE  ZERO                  TO  WS-CASES
                MOVE  ZERO                  TO  WS-CASE-NEW
@@ -188,24 +188,24 @@
                INITIALIZE STATE-ACCUMULATION-FIELDS
                    REPLACING NUMERIC DATA BY 0
                              ALPHANUMERIC DATA BY SPACE
-               MOVE  UHR-DATE              TO  WS-PREV-DATE.
+               MOVE  UHR-END-DATE          TO  WS-PREV-DATE.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
        2100-ACCUMULATE-DATE-TOTALS.
       *---------------------------------------------------------------*
-           ADD  UHR-CASE                   TO  WS-CASES.
-           IF  UHR-CASE-NEW GREATER THAN SPACE
+           ADD  UHR-NEW-CASES              TO  WS-CASES.
+           IF  UHR-NEW-CASES  GREATER THAN SPACE
                COMPUTE WS-CASE-NEW-2
-                   = FUNCTION NUMVAL-C(UHR-CASE-NEW)
+                   = FUNCTION NUMVAL-C(UHR-NEW-CASES)
                ADD  WS-CASE-NEW-2          TO  WS-CASE-NEW.
-           ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
-           ADD  UHR-DEATH                  TO  WS-DEATH.
-           IF  UHR-DEATH-NEW GREATER THAN SPACE
+      *     ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
+           ADD  UHR-NEW-DEATH              TO  WS-DEATH.
+           IF  UHR-NEW-DEATH GREATER THAN SPACE
                COMPUTE WS-DEATH-NEW-2
-                   = FUNCTION NUMVAL-C(UHR-DEATH-NEW)
+                   = FUNCTION NUMVAL-C(UHR-NEW-DEATH)
                ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
-           ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
+      *     ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
            PERFORM  2110-ACCUMULATE-STATE-TOTALS.
       *---------------------------------------------------------------*
        2110-ACCUMULATE-STATE-TOTALS.
@@ -217,10 +217,10 @@
                WHEN ST-STATE(STATE-INDEX) = UHR-STATE
                    ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
                    ADD WS-CASE-NEW-2      TO ST-CASE-NEW(STATE-INDEX)
-                   ADD UHR-CASE-NEW-PROB  TO ST-CASE-PEND(STATE-INDEX)
+      *             ADD UHR-CASE-NEW-PROB  TO ST-CASE-PEND(STATE-INDEX)
                    ADD UHR-DEATH          TO ST-DEATH(STATE-INDEX)
                    ADD WS-DEATH-NEW-2     TO ST-DEATH-NEW(STATE-INDEX)
-                   ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX)
+      *             ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX)
                WHEN ST-STATE(STATE-INDEX) = SPACE
                    MOVE UHR-STATE         TO ST-STATE(STATE-INDEX)
                    ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
@@ -303,7 +303,7 @@
                        UHR-CREATED-AT
                ELSE
                    UNSTRING USA-HIST-RECORD DELIMITED BY ','
-                   INTO UHR-DATE
+                   INTO UHR-DATE-UPDATED 
                        UHR-STATE
                        UHR-CASE
                        UHR-CASE-CONF
