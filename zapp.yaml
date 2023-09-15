@@ -12,7 +12,7 @@ propertyGroups:
         type: local
         locations:
           - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
-          - "G:\\My Drive\\git\OMP Class\\copylib"
+          - "G:/My Drive/git/OMP Class/copylib"
           - "./COPYLIB"
           - "**/COPYLIB"
 #          - "**/COPYBOOK"
@@ -24,7 +24,7 @@ propertyGroups:
         type: local
         locations:
           - "/mnt/chromeos/GoogleDrive/MyDrive/git/OMP Class/COPYLIB"
-          - "G:\\My Drive\\git\\OMP Class\\copylib"
+          - "G:/My Drive/git/OMP Class/copylib"
           - "./COPYLIB"
           - "**/COPYLIB"
 #          - "**/COPYBOOK"
