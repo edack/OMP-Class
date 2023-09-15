@@ -19,7 +19,7 @@ propertyGroups:
       - name: MYLIB
         type: mvs
         locations:
-          - Z80843.COPYLIB
+          - "Z80843.COPYLIB"
       - name: MYLIB
         type: local
         locations:
