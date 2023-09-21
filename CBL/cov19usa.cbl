@@ -20,7 +20,8 @@
        FILE SECTION.
        FD  USA-HIST-FILE
                RECORDING MODE F.
-       01  USA-HIST-RECORD            PIC X(130).
+       01  UHR-RECORD.
+           05  USA-HIST-RECORD        PIC X(130).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -112,8 +113,8 @@
                88  END-OF-FILE                         VALUE 'Y'.
            05  VALID-RECORD-SW             PIC X(01)   VALUE 'Y'.
                88  VALID-RECORD                        VALUE 'Y'.
-           05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
-               88  ALL-STATE-REPORT                   VALUE 'ALL'.
+           05  REPORT-STATE-SW             PIC X(03)   VALUE 'ALL'.
+               88  ALL-STATE-REPORT                    VALUE 'ALL'.
            05  TOTAL-ACCUMULATORS.
                10  TA-CASE-TOT             PIC 9(08).
                10  TA-DEATH-TOT            PIC 9(08).
@@ -176,7 +177,8 @@
            INITIALIZE STATE-ACCUMULATION-FIELDS
                REPLACING   NUMERIC DATA BY 0
                            ALPHANUMERIC DATA BY SPACE.
-           ACCEPT REPORT-STATE-SW.
+           ACCEPT WS-REPORT-STATE.
+           MOVE FUNCTION UPPER-CASE(WS-REPORT-STATE) TO REPORT-STATE-SW.
            DISPLAY  REPORT-STATE-SW.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
@@ -227,7 +229,6 @@
                    ADD WS-NEW-CASES      TO ST-NEW-CASES(STATE-INDEX)
                    ADD WS-TOTAL-DEATHS   TO ST-TOTAL-DEATHS(STATE-INDEX)
                    ADD WS-NEW-DEATHS     TO ST-NEW-DEATHS(STATE-INDEX)
-      *             ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX)
                WHEN ST-STATE(STATE-INDEX) = SPACE
                    MOVE UHR-STATE        TO ST-STATE(STATE-INDEX)
                    ADD WS-TOTAL-CASES    TO ST-TOTAL-CASES(STATE-INDEX)
@@ -263,13 +264,11 @@
       *---------------------------------------------------------------*
        2210-SETUP-STATE.
       *---------------------------------------------------------------*
-      *     DISPLAY REPORT-STATE-SW.
            SET STATE-INDEX  TO 1.
            SEARCH STATE-TABLE
                AT END
                    PERFORM 9902-SEARCH-TABLE-ERROR
                WHEN ST-STATE(STATE-INDEX) = REPORT-STATE-SW
-      *             DISPLAY REPORT-STATE-SW
                    MOVE ST-TOTAL-CASES(STATE-INDEX)  TO WS-TOTAL-CASES
                    MOVE ST-NEW-CASES(STATE-INDEX)    TO WS-NEW-CASES
                    MOVE ST-TOTAL-DEATHS(STATE-INDEX) TO WS-TOTAL-DEATHS
@@ -296,7 +295,6 @@
                   UHR-TOTAL-DEATHS
                   UHR-NEW-DEATHS
            .
-      *     DISPLAY UHR-RECORD-IN.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*

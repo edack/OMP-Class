@@ -10,7 +10,7 @@
        OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT USA-HIST-FILE ASSIGN TO USAFILE.
+           SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'.
            SELECT PRINT-FILE    ASSIGN TO PRTFILE.
       *===============================================================*
        DATA DIVISION.
@@ -18,7 +18,8 @@
        FILE SECTION.
        FD  USA-HIST-FILE
                RECORDING MODE IS F.
-       01  UHR-RECORD                      PIC X(130).
+       01  UHF-RECORD.
+           05 USA-HIST-RECORD              PIC X(130).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -41,7 +42,7 @@
                10  FILLER                  PIC X(02)  VALUE SPACE.
                10  FILLER                  PIC X(02)  VALUE ' |'.
                10  UHR-GRAPH.
-                   15  UHR-GRAPH-DATA      PIC X(01) OCCURS 130 TIMES.
+                   15  UHR-GRAPH-DATA      PIC X(01) OCCURS 160 TIMES.
                10  FILLER                  PIC X(05)  VALUE SPACE.
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE            PIC X(132)  VALUE SPACE.
@@ -115,13 +116,15 @@
            05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
                88  ALL-STATE-REPORT                   VALUE 'ALL'.
            05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
-           05  WS-CASES                    PIC 9(09).
-           05  WS-CASE-NEW                 PIC 9(09).
-           05  WS-CASE-NEW-2               PIC 9(09).
+           05  WS-TOTAL-CASES              PIC 9(09).
+           05  WS-TOTAL-CASES-2            PIC 9(09).
+           05  WS-NEW-CASES                PIC 9(09).
+           05  WS-NEW-CASES-2              PIC 9(09).
            05  WS-CASE-PEND                PIC 9(09).
-           05  WS-DEATH                    PIC 9(09).
-           05  WS-DEATH-NEW                PIC 9(09).
-           05  WS-DEATH-NEW-2              PIC 9(09).
+           05  WS-TOTAL-DEATHS             PIC 9(09).
+           05  WS-TOTAL-DEATHS-2           PIC 9(09).
+           05  WS-NEW-DEATHS               PIC 9(09).
+           05  WS-NEW-DEATHS-2             PIC 9(09).
            05  WS-DEATH-PEND               PIC 9(09).
            05  WS-PERCENT                  PIC 999V9(10).
            05  WS-C-GRAPH-PNT              PIC 999V9(10).
@@ -143,11 +146,11 @@
            05  STATE-TABLE OCCURS 60 TIMES
                            INDEXED BY STATE-INDEX.
                10  ST-STATE                PIC X(03).
-               10  ST-CASES                PIC 9(09).
-               10  ST-CASE-NEW             PIC 9(09).
+               10  ST-TOTAL-CASES          PIC 9(09).
+               10  ST-NEW-CASES            PIC 9(09).
                10  ST-CASE-PEND            PIC 9(09).
-               10  ST-DEATH                PIC 9(09).
-               10  ST-DEATH-NEW            PIC 9(09).
+               10  ST-TOTAL-DEATHS         PIC 9(09).
+               10  ST-NEW-DEATHS           PIC 9(09).
                10  ST-DEATH-PEND           PIC 9(09).
        COPY PRINTCTL.
       *===============================================================*
@@ -182,11 +185,11 @@
       *---------------------------------------------------------------*
            IF  UHR-END-DATE NOT = WS-PREV-DATE
                PERFORM 2200-PRINT-DATE-TOTALS
-               MOVE  ZERO                  TO  WS-CASES
-               MOVE  ZERO                  TO  WS-CASE-NEW
+               MOVE  ZERO                  TO  WS-TOTAL-CASES
+               MOVE  ZERO                  TO  WS-NEW-CASES
                MOVE  ZERO                  TO  WS-CASE-PEND
-               MOVE  ZERO                  TO  WS-DEATH
-               MOVE  ZERO                  TO  WS-DEATH-NEW
+               MOVE  ZERO                  TO  WS-TOTAL-DEATHS
+               MOVE  ZERO                  TO  WS-NEW-DEATHS
                MOVE  ZERO                  TO  WS-DEATH-PEND
                INITIALIZE STATE-ACCUMULATION-FIELDS
                    REPLACING NUMERIC DATA BY 0
@@ -197,18 +200,22 @@
       *---------------------------------------------------------------*
        2100-ACCUMULATE-DATE-TOTALS.
       *---------------------------------------------------------------*
-           ADD  UHR-TOTAL-CASES            TO  WS-CASES.
+           IF  UHR-TOTAL-CASES  GREATER THAN SPACE
+               COMPUTE WS-TOTAL-CASES-2
+                   = FUNCTION NUMVAL-C(UHR-TOTAL-CASES)
+               ADD  WS-TOTAL-CASES-2         TO  WS-TOTAL-CASES.
            IF  UHR-NEW-CASES  GREATER THAN SPACE
-               COMPUTE WS-CASE-NEW-2
+               COMPUTE WS-NEW-CASES-2
                    = FUNCTION NUMVAL-C(UHR-NEW-CASES)
-               ADD  WS-CASE-NEW-2          TO  WS-CASE-NEW.
-      *     ADD  UHR-CASE-NEW-PROB          TO  WS-CASE-PEND.
-           ADD  UHR-TOTAL-DEATHS           TO  WS-DEATH.
+               ADD  WS-NEW-CASES-2           TO  WS-NEW-CASES.
+           IF  UHR-TOTAL-DEATHS  GREATER THAN SPACE
+               COMPUTE WS-TOTAL-DEATHS-2
+                   = FUNCTION NUMVAL-C(UHR-TOTAL-DEATHS)
+               ADD  WS-TOTAL-DEATHS-2        TO  WS-TOTAL-DEATHS.
            IF  UHR-NEW-DEATHS  GREATER THAN SPACE
-               COMPUTE WS-DEATH-NEW-2
+               COMPUTE WS-NEW-DEATHS-2
                    = FUNCTION NUMVAL-C(UHR-NEW-DEATHS)
-               ADD  WS-DEATH-NEW-2         TO  WS-DEATH-NEW.
-      *     ADD  UHR-DEATH-NEW-PROB         TO  WS-DEATH-PEND.
+               ADD  WS-NEW-DEATHS-2          TO  WS-NEW-DEATHS.
            PERFORM  2110-ACCUMULATE-STATE-TOTALS.
       *---------------------------------------------------------------*
        2110-ACCUMULATE-STATE-TOTALS.
@@ -216,22 +223,19 @@
            SET STATE-INDEX TO 1.
            SEARCH STATE-TABLE
                AT END
-                   PERFORM 9900-TABLE-ERROR
+                   PERFORM 9901-LOAD-TABLE-ERROR
                WHEN ST-STATE(STATE-INDEX) = UHR-STATE
-                   ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
-                   ADD WS-CASE-NEW-2      TO ST-CASE-NEW(STATE-INDEX)
-                   ADD UHR-CASE-NEW-PROB  TO ST-CASE-PEND(STATE-INDEX)
-                   ADD UHR-DEATH          TO ST-DEATH(STATE-INDEX)
-                   ADD WS-DEATH-NEW-2     TO ST-DEATH-NEW(STATE-INDEX)
-                   ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX)
+                   ADD WS-TOTAL-CASES    TO ST-TOTAL-CASES(STATE-INDEX)
+                   ADD WS-NEW-CASES      TO ST-NEW-CASES(STATE-INDEX)
+                   ADD WS-TOTAL-DEATHS   TO ST-TOTAL-DEATHS(STATE-INDEX)
+                   ADD WS-NEW-DEATHS     TO ST-NEW-DEATHS(STATE-INDEX)
                WHEN ST-STATE(STATE-INDEX) = SPACE
-                   MOVE UHR-STATE         TO ST-STATE(STATE-INDEX)
-                   ADD UHR-CASE           TO ST-CASES(STATE-INDEX)
-                   ADD WS-CASE-NEW-2      TO ST-CASE-NEW(STATE-INDEX)
-                   ADD UHR-CASE-NEW-PROB  TO ST-CASE-PEND(STATE-INDEX)
-                   ADD UHR-DEATH          TO ST-DEATH(STATE-INDEX)
-                   ADD WS-DEATH-NEW-2     TO ST-DEATH-NEW(STATE-INDEX)
-                   ADD UHR-DEATH-NEW-PROB TO ST-DEATH-PEND(STATE-INDEX).
+                   MOVE UHR-STATE        TO ST-STATE(STATE-INDEX)
+                   ADD WS-TOTAL-CASES    TO ST-TOTAL-CASES(STATE-INDEX)
+                   ADD WS-NEW-CASES      TO ST-NEW-CASES(STATE-INDEX)
+                   ADD WS-TOTAL-DEATHS   TO ST-TOTAL-DEATHS(STATE-INDEX)
+                   ADD WS-NEW-DEATHS     TO ST-NEW-DEATHS(STATE-INDEX)
+           .
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
       *---------------------------------------------------------------*
@@ -241,16 +245,19 @@
            MOVE ALL SPACES                 TO UHR-GRAPH.
            IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE.
-           IF  WS-CASES > ZERO
-               COMPUTE WS-CASE-NEW = WS-CASE-NEW + WS-CASE-PEND
-               DIVIDE WS-CASE-NEW  BY WS-CASES
+           IF  WS-NEW-CASES > ZERO
+      *         COMPUTE WS-NEW-CASES = WS-NEW-CASES  + WS-CASE-PEND
+               DIVIDE WS-NEW-CASES  BY WS-TOTAL-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
       *         COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
       *         MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
-               DIVIDE WS-DEATH     BY WS-CASES
+               DIVIDE WS-TOTAL-DEATHS     BY WS-TOTAL-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
+               DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
+                       "D PNT= ", WS-D-GRAPH-PNT
+
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
                                               WS-D-GRAPH-PNT.
@@ -285,13 +292,13 @@
       *     DISPLAY REPORT-STATE-SW.
            SET STATE-INDEX  TO 1.
            SEARCH STATE-TABLE
+               AT END
+                   PERFORM 9902-SEARCH-TABLE-ERROR
                WHEN ST-STATE(STATE-INDEX) = REPORT-STATE-SW
-                   MOVE ST-CASES(STATE-INDEX)      TO WS-CASES
-                   MOVE ST-CASE-NEW(STATE-INDEX)   TO WS-CASE-NEW
-                   MOVE ST-CASE-PEND(STATE-INDEX)  TO WS-CASE-PEND
-                   MOVE ST-DEATH(STATE-INDEX)      TO WS-DEATH
-                   MOVE ST-DEATH-NEW(STATE-INDEX)  TO WS-DEATH-NEW
-                   MOVE ST-DEATH-PEND(STATE-INDEX) TO WS-DEATH-PEND.
+                   MOVE ST-TOTAL-CASES(STATE-INDEX)  TO WS-TOTAL-CASES
+                   MOVE ST-NEW-CASES(STATE-INDEX)    TO WS-NEW-CASES
+                   MOVE ST-TOTAL-DEATHS(STATE-INDEX) TO WS-TOTAL-DEATHS
+                   MOVE ST-NEW-DEATHS(STATE-INDEX)   TO WS-NEW-DEATHS.
       *---------------------------------------------------------------*
        2220-FORMAT-PERCENT.
       *---------------------------------------------------------------*
@@ -311,34 +318,16 @@
                AT END MOVE 'Y'             TO END-OF-FILE-SW
                       MOVE 'N'             TO VALID-RECORD-SW.
            IF VALID-RECORD
-               MOVE ZERO                   TO WS-COUNTER
-               INSPECT FUNCTION UPPER-CASE(UHR-RECORD)
-                   TALLYING WS-COUNTER FOR ALL "XX:XX:XX"
-               IF WS-COUNTER > 0
-                   UNSTRING UHR-RECORD DELIMITED BY ','
-                   INTO UHR-UPDATE-DATE
-                       UHR-STATE
-                       UHR-START-DATE 
-                       UHR-END-DATE 
-                       UHR-NEW-CASES
-                       UHR-TOTAL-CASES
-                       UHR-TOTAL-DEATHS
-                       UHR-DEATH-NEW
-                       UHR-DEATH-NEW-PROB
-                       UHR-CREATED-AT
-               ELSE
-                   UNSTRING UHR-RECORD DELIMITED BY ','
-                   INTO UHR-UPDATE-DATE
-                       UHR-STATE
-                       UHR-CASE
-                       UHR-CASE-CONF
-                       UHR-CASE-PROB
-                       UHR-CASE-NEW
-                       UHR-CASE-NEW-PROB
-                       UHR-DEATH
-                       UHR-DEATH-NEW
-                       UHR-DEATH-NEW-PROB
-                       UHR-CREATED-AT.
+              UNSTRING USA-HIST-RECORD DELIMITED BY ','
+              INTO UHR-UPDATE-DATE
+                  UHR-STATE
+                  UHR-START-DATE
+                  UHR-END-DATE
+                  UHR-TOTAL-CASES
+                  UHR-NEW-CASES
+                  UHR-TOTAL-DEATHS
+                  UHR-NEW-DEATHS
+           .
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
@@ -378,5 +367,16 @@
            MOVE 1                          TO LINE-SPACEING.
            MOVE SPACE                      TO PRINT-RECORD.
       *---------------------------------------------------------------*
-       9900-TABLE-ERROR.
+      * 9900-TABLE-ERROR.
       *---------------------------------------------------------------*
+       9901-LOAD-TABLE-ERROR.
+      *---------------------------------------------------------------*
+           DISPLAY "*** LOAD STATE TABLE ERROR ***".
+           DISPLAY REPORT-STATE-SW.
+           DISPLAY UHR-STATE.
+      *---------------------------------------------------------------*
+       9902-SEARCH-TABLE-ERROR.
+      *---------------------------------------------------------------*
+           DISPLAY "*** SEARCH STATE TABLE ERROR ***".
+           DISPLAY REPORT-STATE-SW.
+           DISPLAY UHR-STATE.
