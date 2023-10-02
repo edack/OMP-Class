@@ -10,7 +10,8 @@
        OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'.
+           SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'
+             ORGANIZATION IS LINE SEQUENTIAL.
            SELECT PRINT-FILE    ASSIGN TO PRTFILE.
       *===============================================================*
        DATA DIVISION.
@@ -19,7 +20,7 @@
        FD  USA-HIST-FILE
                RECORDING MODE IS F.
        01  UHF-RECORD.
-           05 USA-HIST-RECORD              PIC X(130).
+           05 USA-HIST-RECORD              PIC X(150).
       *---------------------------------------------------------------*
        FD  PRINT-FILE
                RECORDING MODE IS F.
@@ -255,8 +256,8 @@
                DIVIDE WS-TOTAL-DEATHS     BY WS-TOTAL-CASES
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
-               DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
-                       "D PNT= ", WS-D-GRAPH-PNT
+      *         DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
+      *                 "D PNT= ", WS-D-GRAPH-PNT
 
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
@@ -277,7 +278,7 @@
            ELSE
                COMPUTE WS-GRAPH-INDEX = (WS-D-GRAPH-PNT * 10) + 6
                MOVE ' '              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
-               COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 100) + 6
+               COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 10) + 6
                MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                MOVE 1                TO WS-PNT1
                PERFORM  2220-FORMAT-PERCENT
@@ -377,6 +378,6 @@
       *---------------------------------------------------------------*
        9902-SEARCH-TABLE-ERROR.
       *---------------------------------------------------------------*
-           DISPLAY "*** SEARCH STATE TABLE ERROR ***".
-           DISPLAY REPORT-STATE-SW.
-           DISPLAY UHR-STATE.
+      *     DISPLAY "*** SEARCH STATE TABLE ERROR ***".
+      *     DISPLAY REPORT-STATE-SW.
+           DISPLAY UHR-record-in.

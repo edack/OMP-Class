@@ -23,7 +23,7 @@
                10 FILLER                   PIC X(01).
                10 UHR-DAY                  PIC X(02).
                10 FILLER                   PIC X(13).
-           05  UHR-TOTAL-CASES             PIC X(09).
-           05  UHR-NEW-CASES               PIC X(09).
-           05  UHR-TOTAL-DEATHS            PIC X(09).
-           05  UHR-NEW-DEATHS              PIC X(09).
+           05  UHR-TOTAL-CASES             PIC X(11).
+           05  UHR-NEW-CASES               PIC X(11).
+           05  UHR-TOTAL-DEATHS            PIC X(11).
+           05  UHR-NEW-DEATHS              PIC X(11).
