@@ -9,7 +9,7 @@
     "upload:cbl": "c:/Users/edack/git/\"OMP Class\"/build/uploadcbl.bat",
     "compile:cbl": "c:/Users/edack/git/\"OMP Class\"/build/compiler.bat",
     "run:cbl": "c:/Users/edack/git/\"OMP Class\"/build/runjob.bat",
-    "upload:data": "c:/Users/edack/git/\"OMP Class\"/build/uploaddat.bat",
+    "upload:data": "g:/\"My Drive\"/git/\"OMP Class\"/build/uploaddat.bat",
     "parse:usa": "node ./scripts/lib/parseus",
     "parse:wrld": "node ./scripts/lib/parse",
     "allocate:data": "c:/Users/edack/git/\"OMP Class\"/build/allocdata.bat",
