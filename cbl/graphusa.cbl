@@ -264,9 +264,9 @@
                                               WS-D-GRAPH-PNT.
            IF  WS-C-GRAPH-PNT GREATER THAN 10 OR
                WS-D-GRAPH-PNT GREATER THAN 10
-               MOVE UHR-DAY   OF UHR-END-DATE   TO EL-DAY
-               MOVE UHR-MONTH OF UHR-END-DATE   TO EL-MONTH
-               MOVE UHR-YEAR  OF UHR-END-DATE   TO EL-YEAR
+               MOVE UHR-END-DAY            TO EL-DAY
+               MOVE UHR-END-MONTH          TO EL-MONTH
+               MOVE UHR-END-YEAR           TO EL-YEAR
                IF  WS-D-GRAPH-PNT GREATER THAN 10
                    MOVE WS-D-GRAPH-PNT     TO EL-GRAPH-POINT
                    MOVE 'DEATH'            TO EL-CAUSE
