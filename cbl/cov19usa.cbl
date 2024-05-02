@@ -12,7 +12,7 @@
        FILE-CONTROL.
            SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'
            ORGANIZATION IS LINE SEQUENTIAL.
-           SELECT PRINT-FILE    ASSIGN TO UT-S-PRTFILE
+           SELECT PRINT-FILE    ASSIGN TO PRTFILE
            ORGANIZATION IS LINE SEQUENTIAL.
       *===============================================================*
        DATA DIVISION.
@@ -116,19 +116,19 @@
            05  REPORT-STATE-SW             PIC X(03)   VALUE 'ALL'.
                88  ALL-STATE-REPORT                    VALUE 'ALL'.
            05  TOTAL-ACCUMULATORS.
-               10  TA-CASE-TOT             PIC 9(08).
-               10  TA-DEATH-TOT            PIC 9(08).
-           05  WS-COUNTER                  PIC 9(02).
-           05  WS-TOTAL-CASES              PIC 9(09).
-           05  WS-TOTAL-CASES-2            PIC 9(09).
-           05  WS-NEW-CASES                PIC 9(09).
-           05  WS-NEW-CASES-2              PIC 9(09).
-           05  WS-CASE-PEND                PIC 9(09).
-           05  WS-TOTAL-DEATHS             PIC 9(09).
-           05  WS-TOTAL-DEATHS-2           PIC 9(09).
-           05  WS-NEW-DEATHS               PIC 9(09).
-           05  WS-NEW-DEATHS-2             PIC 9(09).
-           05  WS-DEATH-PEND               PIC 9(09).
+               10  TA-CASE-TOT             PIC 9(08)  VALUE ZERO.
+               10  TA-DEATH-TOT            PIC 9(08)  VALUE ZERO.
+           05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
+           05  WS-TOTAL-CASES              PIC 9(09)  VALUE ZERO.
+           05  WS-TOTAL-CASES-2            PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-CASES                PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-CASES-2              PIC 9(09)  VALUE ZERO.
+           05  WS-CASE-PEND                PIC 9(09)  VALUE ZERO.
+           05  WS-TOTAL-DEATHS             PIC 9(09)  VALUE ZERO.
+           05  WS-TOTAL-DEATHS-2           PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-DEATHS               PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-DEATHS-2             PIC 9(09)  VALUE ZERO.
+           05  WS-DEATH-PEND               PIC 9(09)  VALUE ZERO.
            05  WS-PERCENT                  PIC 99V999999.
            05  WS-REPORT-STATE             PIC X(03).
            05  WS-PREV-DATE.

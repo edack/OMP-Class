@@ -11,7 +11,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'
-             ORGANIZATION IS LINE SEQUENTIAL.
+               ORGANIZATION IS LINE SEQUENTIAL.
            SELECT PRINT-FILE    ASSIGN TO PRTFILE.
       *===============================================================*
        DATA DIVISION.
@@ -117,23 +117,23 @@
            05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
                88  ALL-STATE-REPORT                   VALUE 'ALL'.
            05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
-           05  WS-TOTAL-CASES              PIC 9(09).
-           05  WS-TOTAL-CASES-2            PIC 9(09).
-           05  WS-NEW-CASES                PIC 9(09).
-           05  WS-NEW-CASES-2              PIC 9(09).
-           05  WS-CASE-PEND                PIC 9(09).
-           05  WS-TOTAL-DEATHS             PIC 9(09).
-           05  WS-TOTAL-DEATHS-2           PIC 9(09).
-           05  WS-NEW-DEATHS               PIC 9(09).
-           05  WS-NEW-DEATHS-2             PIC 9(09).
-           05  WS-DEATH-PEND               PIC 9(09).
-           05  WS-PERCENT                  PIC 999V9(10).
-           05  WS-C-GRAPH-PNT              PIC 999V9(10).
-           05  WS-D-GRAPH-PNT              PIC 999V9(10).
-           05  WS-GRAPH-PNT-X              PIC ZZ9.99999.
-           05  WS-GRAPH-INDEX               PIC 999.
-           05  WS-PNT1                     PIC 99.
-           05  WS-PNT2                     PIC 99.
+           05  WS-TOTAL-CASES              PIC 9(09)  VALUE ZERO.
+           05  WS-TOTAL-CASES-2            PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-CASES                PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-CASES-2              PIC 9(09)  VALUE ZERO.
+           05  WS-CASE-PEND                PIC 9(09)  VALUE ZERO.
+           05  WS-TOTAL-DEATHS             PIC 9(09)  VALUE ZERO.
+           05  WS-TOTAL-DEATHS-2           PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-DEATHS               PIC 9(09)  VALUE ZERO.
+           05  WS-NEW-DEATHS-2             PIC 9(09)  VALUE ZERO.
+           05  WS-DEATH-PEND               PIC 9(09)  VALUE ZERO.
+           05  WS-PERCENT                  PIC 999V9(10)  VALUE ZERO.
+           05  WS-C-GRAPH-PNT              PIC 999V9(10)  VALUE ZERO.
+           05  WS-D-GRAPH-PNT              PIC 999V9(10)  VALUE ZERO.
+           05  WS-GRAPH-PNT-X              PIC ZZ9.99999  VALUE ZERO.
+           05  WS-GRAPH-INDEX              PIC 999     VALUE ZERO.
+           05  WS-PNT1                     PIC 99      VALUE ZERO.
+           05  WS-PNT2                     PIC 99      VALUE ZERO.
            05  WS-PREV-DATE.
                10 WS-YEAR                  PIC X(04).
                10 FILLER                   PIC X(01).
@@ -178,6 +178,7 @@
            MOVE WS-CURRENT-DAY             TO HL1-DAY-OUT.
            MOVE SPACE                      TO WS-PREV-DATE.
            INITIALIZE STATE-ACCUMULATION-FIELDS
+                      UHR-RECORD-IN
                REPLACING   NUMERIC DATA BY 0
                            ALPHANUMERIC DATA BY SPACE.
            ACCEPT REPORT-STATE-SW.
@@ -329,6 +330,7 @@
                   UHR-TOTAL-DEATHS
                   UHR-NEW-DEATHS
            .
+      *     DISPLAY UHR-UPDATE-DATE, UHR-TOTAL-CASES.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
