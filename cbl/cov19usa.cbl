@@ -61,13 +61,13 @@
            05  HEADING-LINE-1.
                10 HL1-DATE.
                    15  FILLER         PIC X(01) VALUE SPACE.
-                   15  FILLER         PIC X(12) VALUE 'TODAYS DATE:'.
+                   15  FILLER         PIC X(13) VALUE 'TODAYS DATE: '.
                    15  HL1-MONTH-OUT  PIC XX.
                    15  FILLER         PIC X     VALUE '/'.
                    15  HL1-DAY-OUT    PIC XX.
                    15  FILLER         PIC X     VALUE '/'.
-                   15  HL1-YEAR-OUT   PIC XX.
-               10  FILLER             PIC X(15) VALUE SPACE.
+                   15  HL1-YEAR-OUT   PIC X(04).
+               10  FILLER             PIC X(12) VALUE SPACE.
                10  FILLER             PIC X(11) VALUE 'FOR STATE: '.
                10  HL1-STATE          PIC X(03).
                10  FILLER             PIC X(13) VALUE SPACE.
@@ -109,12 +109,13 @@
        01  SWITCHES-MISC-FIELDS.
       *---------------------------------------------------------------*
            05  FILE-STATUS                 PIC X(02).
-           05  END-OF-FILE-SW              PIC X(01)   VALUE 'N'.
-               88  END-OF-FILE                         VALUE 'Y'.
-           05  VALID-RECORD-SW             PIC X(01)   VALUE 'Y'.
-               88  VALID-RECORD                        VALUE 'Y'.
-           05  REPORT-STATE-SW             PIC X(03)   VALUE 'ALL'.
-               88  ALL-STATE-REPORT                    VALUE 'ALL'.
+           05  END-OF-FILE-SW              PIC X(01)  VALUE 'N'.
+               88  END-OF-FILE                        VALUE 'Y'.
+           05  VALID-RECORD-SW             PIC X(01)  VALUE 'Y'.
+               88  VALID-RECORD                       VALUE 'Y'.
+           05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
+               88  ALL-STATE-REPORT                   VALUE 'ALL'.
+           05  USA-POPULATION              PIC 9(09)  VALUE 360000000.
            05  TOTAL-ACCUMULATORS.
                10  TA-CASE-TOT             PIC 9(08)  VALUE ZERO.
                10  TA-DEATH-TOT            PIC 9(08)  VALUE ZERO.
@@ -203,20 +204,25 @@
            IF  UHR-TOTAL-CASES  GREATER THAN SPACE
                COMPUTE WS-TOTAL-CASES-2
                    = FUNCTION NUMVAL-C(UHR-TOTAL-CASES)
-               ADD  WS-TOTAL-CASES-2         TO  WS-TOTAL-CASES.
+               ADD  WS-TOTAL-CASES-2         TO  WS-TOTAL-CASES
+           END-IF 
            IF  UHR-NEW-CASES  GREATER THAN SPACE
                COMPUTE WS-NEW-CASES-2
                    = FUNCTION NUMVAL-C(UHR-NEW-CASES)
-               ADD  WS-NEW-CASES-2           TO  WS-NEW-CASES.
+               ADD  WS-NEW-CASES-2           TO  WS-NEW-CASES
+           END-IF 
            IF  UHR-TOTAL-DEATHS  GREATER THAN SPACE
                COMPUTE WS-TOTAL-DEATHS-2
                    = FUNCTION NUMVAL-C(UHR-TOTAL-DEATHS)
-               ADD  WS-TOTAL-DEATHS-2        TO  WS-TOTAL-DEATHS.
+               ADD  WS-TOTAL-DEATHS-2        TO  WS-TOTAL-DEATHS
+           END-IF 
            IF  UHR-NEW-DEATHS  GREATER THAN SPACE
                COMPUTE WS-NEW-DEATHS-2
                    = FUNCTION NUMVAL-C(UHR-NEW-DEATHS)
-               ADD  WS-NEW-DEATHS-2          TO  WS-NEW-DEATHS.
-           PERFORM  2110-ACCUMULATE-STATE-TOTALS.
+               ADD  WS-NEW-DEATHS-2          TO  WS-NEW-DEATHS
+           END-IF 
+           PERFORM  2110-ACCUMULATE-STATE-TOTALS
+           .
       *---------------------------------------------------------------*
        2110-ACCUMULATE-STATE-TOTALS.
       *---------------------------------------------------------------*
@@ -243,7 +249,8 @@
            MOVE WS-MONTH                   TO DL1-MONTH.
            MOVE WS-YEAR                    TO DL1-YEAR.
            IF  NOT ALL-STATE-REPORT
-               PERFORM 2210-SETUP-STATE.
+               PERFORM 2210-SETUP-STATE
+           END-IF 
            MOVE WS-TOTAL-CASES             TO DL1-CASE-POSITIVE.
            MOVE WS-NEW-CASES               TO DL1-CASE-NEW.
            MOVE ZERO                       TO DL1-CASE-PENDING.
@@ -258,7 +265,8 @@
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
                MOVE ZERO                   TO DL1-DEATH-PERCENT
-                                              DL1-CASE-PERCENT.
+                                              DL1-CASE-PERCENT
+           END-IF 
            MOVE DETAIL-LINE-1              TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
