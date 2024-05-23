@@ -116,6 +116,7 @@
                88  VALID-RECORD                       VALUE 'Y'.
            05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
                88  ALL-STATE-REPORT                   VALUE 'ALL'.
+           05  USA-POPULATION              PIC 9(09) VALUE 340000000.
            05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
            05  WS-TOTAL-CASES              PIC 9(09)  VALUE ZERO.
            05  WS-TOTAL-CASES-2            PIC 9(09)  VALUE ZERO.
@@ -248,17 +249,14 @@
            IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE.
            IF  WS-NEW-CASES > ZERO
-      *         COMPUTE WS-NEW-CASES = WS-NEW-CASES  + WS-CASE-PEND
-               DIVIDE WS-NEW-CASES  BY WS-TOTAL-CASES
+               DIVIDE WS-NEW-CASES  BY USA-POPULATION
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT     BY 100 GIVING WS-C-GRAPH-PNT
-      *         COMPUTE WS-PERCENT = (UHR-DEATH / 331000000)
-      *         MULTIPLY WS-PERCENT     BY 100000 GIVING WS-D-GRAPH-PNT
-               DIVIDE WS-TOTAL-DEATHS     BY WS-TOTAL-CASES
+               MULTIPLY WS-PERCENT     BY 1000 GIVING WS-C-GRAPH-PNT
+               DIVIDE WS-TOTAL-DEATHS     BY USA-POPULATION
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT     BY 100 GIVING WS-D-GRAPH-PNT
-      *         DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
-      *                 "D PNT= ", WS-D-GRAPH-PNT
+               MULTIPLY WS-PERCENT     BY 1000 GIVING WS-D-GRAPH-PNT
+               DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
+                       "D PNT= ", WS-D-GRAPH-PNT
 
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
@@ -278,7 +276,7 @@
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
                COMPUTE WS-GRAPH-INDEX = (WS-D-GRAPH-PNT * 10) + 6
-               MOVE ' '              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
+               MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 10) + 6
                MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                MOVE 1                TO WS-PNT1

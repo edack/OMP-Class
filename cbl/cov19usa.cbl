@@ -115,7 +115,7 @@
                88  VALID-RECORD                       VALUE 'Y'.
            05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
                88  ALL-STATE-REPORT                   VALUE 'ALL'.
-           05  USA-POPULATION              PIC 9(09)  VALUE 360000000.
+           05  USA-POPULATION              PIC 9(09)  VALUE 334000000.
            05  TOTAL-ACCUMULATORS.
                10  TA-CASE-TOT             PIC 9(08)  VALUE ZERO.
                10  TA-DEATH-TOT            PIC 9(08)  VALUE ZERO.
@@ -257,10 +257,10 @@
            MOVE WS-TOTAL-DEATHS            TO DL1-DEATH.
            MOVE WS-NEW-DEATHS              TO DL1-DEATH-NEW.
            IF  WS-NEW-CASES > ZERO
-               DIVIDE WS-NEW-DEATHS  BY WS-NEW-CASES
+               DIVIDE WS-NEW-DEATHS  BY USA-POPULATION 
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-DEATH-PERCENT
-               DIVIDE WS-NEW-CASES   BY WS-TOTAL-CASES
+               DIVIDE WS-NEW-CASES   BY USA-POPULATION 
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
