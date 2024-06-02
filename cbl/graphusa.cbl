@@ -116,7 +116,7 @@
                88  VALID-RECORD                       VALUE 'Y'.
            05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
                88  ALL-STATE-REPORT                   VALUE 'ALL'.
-           05  USA-POPULATION              PIC 9(09) VALUE 340000000.
+           05  USA-POPULATION              PIC 9(09)  VALUE 340000000.
            05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
            05  WS-TOTAL-CASES              PIC 9(09)  VALUE ZERO.
            05  WS-TOTAL-CASES-2            PIC 9(09)  VALUE ZERO.
@@ -197,28 +197,33 @@
                INITIALIZE STATE-ACCUMULATION-FIELDS
                    REPLACING NUMERIC DATA BY 0
                              ALPHANUMERIC DATA BY SPACE
-               MOVE  UHR-END-DATE          TO  WS-PREV-DATE.
+               MOVE  UHR-END-DATE          TO  WS-PREV-DATE
+           END-IF.
            PERFORM 2100-ACCUMULATE-DATE-TOTALS.
            PERFORM 8000-READ-USA-HIST-FILE.
       *---------------------------------------------------------------*
        2100-ACCUMULATE-DATE-TOTALS.
       *---------------------------------------------------------------*
-           IF  UHR-TOTAL-CASES  GREATER THAN SPACE
+           IF  UHR-TOTAL-CASES GREATER THAN SPACE
                COMPUTE WS-TOTAL-CASES-2
-                   = FUNCTION NUMVAL-C(UHR-TOTAL-CASES)
-               ADD  WS-TOTAL-CASES-2         TO  WS-TOTAL-CASES.
-           IF  UHR-NEW-CASES  GREATER THAN SPACE
+                  = FUNCTION NUMVAL-C(UHR-TOTAL-CASES)
+               ADD WS-TOTAL-CASES-2 TO WS-TOTAL-CASES
+           END-IF.
+           IF  UHR-NEW-CASES GREATER THAN SPACE
                COMPUTE WS-NEW-CASES-2
-                   = FUNCTION NUMVAL-C(UHR-NEW-CASES)
-               ADD  WS-NEW-CASES-2           TO  WS-NEW-CASES.
-           IF  UHR-TOTAL-DEATHS  GREATER THAN SPACE
+                  = FUNCTION NUMVAL-C(UHR-NEW-CASES)
+               ADD WS-NEW-CASES-2 TO WS-NEW-CASES
+           END-IF.
+           IF  UHR-TOTAL-DEATHS GREATER THAN SPACE
                COMPUTE WS-TOTAL-DEATHS-2
-                   = FUNCTION NUMVAL-C(UHR-TOTAL-DEATHS)
-               ADD  WS-TOTAL-DEATHS-2        TO  WS-TOTAL-DEATHS.
-           IF  UHR-NEW-DEATHS  GREATER THAN SPACE
+                  = FUNCTION NUMVAL-C(UHR-TOTAL-DEATHS)
+               ADD WS-TOTAL-DEATHS-2 TO WS-TOTAL-DEATHS
+           END-IF.
+           IF  UHR-NEW-DEATHS GREATER THAN SPACE
                COMPUTE WS-NEW-DEATHS-2
-                   = FUNCTION NUMVAL-C(UHR-NEW-DEATHS)
-               ADD  WS-NEW-DEATHS-2          TO  WS-NEW-DEATHS.
+                  = FUNCTION NUMVAL-C(UHR-NEW-DEATHS)
+               ADD WS-NEW-DEATHS-2 TO WS-NEW-DEATHS
+           END-IF.
            PERFORM  2110-ACCUMULATE-STATE-TOTALS.
       *---------------------------------------------------------------*
        2110-ACCUMULATE-STATE-TOTALS.
@@ -237,8 +242,7 @@
                    ADD WS-TOTAL-CASES    TO ST-TOTAL-CASES(STATE-INDEX)
                    ADD WS-NEW-CASES      TO ST-NEW-CASES(STATE-INDEX)
                    ADD WS-TOTAL-DEATHS   TO ST-TOTAL-DEATHS(STATE-INDEX)
-                   ADD WS-NEW-DEATHS     TO ST-NEW-DEATHS(STATE-INDEX)
-           .
+                   ADD WS-NEW-DEATHS     TO ST-NEW-DEATHS(STATE-INDEX).
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
       *---------------------------------------------------------------*
@@ -249,18 +253,20 @@
            IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE.
            IF  WS-NEW-CASES > ZERO
-               DIVIDE WS-NEW-CASES  BY USA-POPULATION
+               DIVIDE WS-NEW-CASES     BY USA-POPULATION
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT     BY 1000 GIVING WS-C-GRAPH-PNT
-               DIVIDE WS-TOTAL-DEATHS     BY USA-POPULATION
+               MULTIPLY WS-PERCENT     BY 1000
+                   GIVING WS-C-GRAPH-PNT
+               DIVIDE WS-TOTAL-DEATHS  BY USA-POPULATION
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT     BY 1000 GIVING WS-D-GRAPH-PNT
-               DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
-                       "D PNT= ", WS-D-GRAPH-PNT
-
+               MULTIPLY WS-PERCENT     BY 1000
+                   GIVING WS-D-GRAPH-PNT
+      *         DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
+      *                 "D PNT= ", WS-D-GRAPH-PNT
            ELSE
                MOVE ZERO                   TO WS-C-GRAPH-PNT
-                                              WS-D-GRAPH-PNT.
+                                              WS-D-GRAPH-PNT
+           END-IF.
            IF  WS-C-GRAPH-PNT GREATER THAN 10 OR
                WS-D-GRAPH-PNT GREATER THAN 10
                MOVE UHR-END-DAY            TO EL-DAY
@@ -276,14 +282,15 @@
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
                COMPUTE WS-GRAPH-INDEX = (WS-D-GRAPH-PNT * 10) + 6
-               MOVE '+'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
+               MOVE ' '              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 10) + 6
                MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
                MOVE 1                TO WS-PNT1
                PERFORM  2220-FORMAT-PERCENT
                    VARYING WS-PNT2 FROM 3 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
-                   MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE.
+                   MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE
+           END-IF.
            PERFORM 9000-PRINT-REPORT-LINE.
            MOVE ALL SPACES                 TO  UHR-GRAPH.
       *---------------------------------------------------------------*
@@ -327,13 +334,14 @@
                   UHR-NEW-CASES
                   UHR-TOTAL-DEATHS
                   UHR-NEW-DEATHS
-           .
+           END-IF.
       *     DISPLAY UHR-UPDATE-DATE, UHR-TOTAL-CASES.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
            IF LINE-COUNT GREATER THAN LINES-ON-PAGE
-              PERFORM 9100-PRINT-HEADING-LINES.
+              PERFORM 9100-PRINT-HEADING-LINES
+           END-IF.
            MOVE NEXT-REPORT-LINE           TO PRINT-LINE.
            PERFORM 9120-WRITE-PRINT-LINE.
            MOVE SPACE                      TO NEXT-REPORT-LINE.
@@ -378,6 +386,6 @@
       *---------------------------------------------------------------*
        9902-SEARCH-TABLE-ERROR.
       *---------------------------------------------------------------*
-      *     DISPLAY "*** SEARCH STATE TABLE ERROR ***".
-      *     DISPLAY REPORT-STATE-SW.
-           DISPLAY UHR-record-in.
+           DISPLAY "*** SEARCH STATE TABLE ERROR ***".
+           DISPLAY REPORT-STATE-SW.
+           DISPLAY UHR-RECORD-IN.
