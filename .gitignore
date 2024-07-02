@@ -1,4 +1,5 @@
 cbl/bin/
+bin
 data/
 test/
 node_modules/

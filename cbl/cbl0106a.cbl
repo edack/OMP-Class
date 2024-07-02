@@ -4,15 +4,16 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT ACCT-FILE  ASSIGN TO ACCTFILE.
-           SELECT PRINT-FILE ASSIGN TO UT-S-PRTFILE.
+           SELECT ACCT-FILE  ASSIGN TO '../../data/convdat.dat'
+               ORGANIZATION IS LINE SEQUENTIAL.
+           SELECT PRINT-FILE ASSIGN TO 'UT-S-PRTFILE'.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
        FILE SECTION.
       *---------------------------------------------------------------*
        FD  ACCT-FILE.
-       COPY ACCTFILE.
+       COPY ACCTFL2.
       *---------------------------------------------------------------*
        FD  PRINT-FILE RECORDING MODE F.
        01  PRINT-RECORD.
@@ -293,6 +294,7 @@
       *---------------------------------------------------------------*
            READ ACCT-FILE
                AT END MOVE 'Y'             TO END-OF-FILE-SW.
+      *     DISPLAY ACCT-RECORD.
       *---------------------------------------------------------------*
        9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*
