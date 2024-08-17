@@ -12,7 +12,7 @@
        FILE-CONTROL.
            SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'
                ORGANIZATION IS LINE SEQUENTIAL.
-           SELECT PRINT-FILE    ASSIGN TO PRTFILE.
+           SELECT PRINT-FILE    ASSIGN TO GRAPHFL.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
@@ -257,9 +257,9 @@
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT     BY 1000
                    GIVING WS-C-GRAPH-PNT
-               DIVIDE WS-TOTAL-DEATHS  BY USA-POPULATION
+               DIVIDE WS-NEW-DEATHS  BY USA-POPULATION
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT     BY 1000
+               MULTIPLY WS-PERCENT     BY 100000
                    GIVING WS-D-GRAPH-PNT
       *         DISPLAY "C PNT= ", WS-C-GRAPH-PNT, ',  ',
       *                 "D PNT= ", WS-D-GRAPH-PNT
@@ -388,4 +388,4 @@
       *---------------------------------------------------------------*
            DISPLAY "*** SEARCH STATE TABLE ERROR ***".
            DISPLAY REPORT-STATE-SW.
-           DISPLAY UHR-RECORD-IN.
+           DISPLAY UHR-STATE.

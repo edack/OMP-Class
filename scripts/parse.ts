@@ -4,7 +4,8 @@ import * as fs from "fs";
 const https = require('https');
 let data = '';
 
-https.get('https://api.covid19api.com/summary', (res: any) => {
+// https.get('https://api.covid19api.com/summary', (res: any) => {
+https.get('https://web.archive.org/web/20230422195409/https://api.covid19api.com/summary', (res: any) => {
 
   res.on('data', (chunk: any) => {
     data += chunk;

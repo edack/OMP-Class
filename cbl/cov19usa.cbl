@@ -205,22 +205,22 @@
                COMPUTE WS-TOTAL-CASES-2
                    = FUNCTION NUMVAL-C(UHR-TOTAL-CASES)
                ADD  WS-TOTAL-CASES-2         TO  WS-TOTAL-CASES
-           END-IF 
+           END-IF
            IF  UHR-NEW-CASES  GREATER THAN SPACE
                COMPUTE WS-NEW-CASES-2
                    = FUNCTION NUMVAL-C(UHR-NEW-CASES)
                ADD  WS-NEW-CASES-2           TO  WS-NEW-CASES
-           END-IF 
+           END-IF
            IF  UHR-TOTAL-DEATHS  GREATER THAN SPACE
                COMPUTE WS-TOTAL-DEATHS-2
                    = FUNCTION NUMVAL-C(UHR-TOTAL-DEATHS)
                ADD  WS-TOTAL-DEATHS-2        TO  WS-TOTAL-DEATHS
-           END-IF 
+           END-IF
            IF  UHR-NEW-DEATHS  GREATER THAN SPACE
                COMPUTE WS-NEW-DEATHS-2
                    = FUNCTION NUMVAL-C(UHR-NEW-DEATHS)
                ADD  WS-NEW-DEATHS-2          TO  WS-NEW-DEATHS
-           END-IF 
+           END-IF
            PERFORM  2110-ACCUMULATE-STATE-TOTALS
            .
       *---------------------------------------------------------------*
@@ -250,23 +250,23 @@
            MOVE WS-YEAR                    TO DL1-YEAR.
            IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE
-           END-IF 
+           END-IF
            MOVE WS-TOTAL-CASES             TO DL1-CASE-POSITIVE.
            MOVE WS-NEW-CASES               TO DL1-CASE-NEW.
            MOVE ZERO                       TO DL1-CASE-PENDING.
            MOVE WS-TOTAL-DEATHS            TO DL1-DEATH.
            MOVE WS-NEW-DEATHS              TO DL1-DEATH-NEW.
            IF  WS-NEW-CASES > ZERO
-               DIVIDE WS-NEW-DEATHS  BY USA-POPULATION 
+               DIVIDE WS-NEW-DEATHS  BY USA-POPULATION
                    GIVING WS-PERCENT
-               MULTIPLY WS-PERCENT BY 100 GIVING DL1-DEATH-PERCENT
-               DIVIDE WS-NEW-CASES   BY USA-POPULATION 
+               MULTIPLY WS-PERCENT BY 1000 GIVING DL1-DEATH-PERCENT
+               DIVIDE WS-NEW-CASES   BY USA-POPULATION
                    GIVING WS-PERCENT
                MULTIPLY WS-PERCENT BY 100 GIVING DL1-CASE-PERCENT
            ELSE
                MOVE ZERO                   TO DL1-DEATH-PERCENT
                                               DL1-CASE-PERCENT
-           END-IF 
+           END-IF
            MOVE DETAIL-LINE-1              TO NEXT-REPORT-LINE.
            PERFORM 9000-PRINT-REPORT-LINE.
       *---------------------------------------------------------------*

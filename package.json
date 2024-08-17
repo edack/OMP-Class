@@ -16,11 +16,11 @@
     "BreakLine": "echo",
     "postinstall": "npm run compile:scripts",
     "append": "node ./scripts/lib/append",
-    "allocate:input": "zowe files cre ps \"Z00737.NCOV19.GLBFILE\" --rl 130 --bs 27950 --zosmf-p xXplorer",
-    "allocate:usinput": "zowe files cre ps \"Z00737.NCOV19.USAFILE\" --rl 225 --bs 27900 --zosmf-p xXplorer",
-    "allocate:stinput": "zowe files cre ps \"Z00737.NCOV19.STATEFL\" --rl 310 --bs 27930 --zosmf-p xXplorer",
-    "run:jobts": "zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p xXplorer",
-    "compile:cobolts": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p xXplorer"
+    "allocate:input": "zowe files cre ps \"Z00737.NCOV19.GLBFILE\" --rl 130 --bs 27950 --zosmf-p zXplorer",
+    "allocate:usinput": "zowe files cre ps \"Z00737.NCOV19.USAFILE\" --rl 225 --bs 27900 --user z00737 --pass zcobol1 --host 204.90.115.200 --port 10443 --ru false",
+    "allocate:stinput": "zowe files cre ps \"Z00737.NCOV19.STATEFL\" --rl 310 --bs 27930 --user z00737 --pass zcobol1 --host 204.90.115.200 --port 10443 --ru false",
+    "run:jobts": "zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p zXplorer",
+    "compile:cobolts": "zowe jobs submit lf \"./build/compiler.jcl\" --directory \"./output\" --zosmf-p zXplorer"
   },
   "author": "",
   "license": "ISC",

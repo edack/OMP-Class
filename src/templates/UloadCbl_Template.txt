@@ -1,1 +1,1 @@
-zowe zos-files upload file-to-data-set \"./cbl/{{process.program_name}}.cbl\" \"{{process.hlq1}}.{{compiler.source_library}}({{process.program_name}}) --zosmf-p zXplorer\"
+zowe zos-files upload file-to-data-set \"./cbl/{{process.program_name}}.cbl\" \"{{process.hlq1}}.{{compiler.source_library}}({{process.program_name}})\" --user z00737 --pass zcobol1 --host 204.90.115.200 --port 10443 --ru false

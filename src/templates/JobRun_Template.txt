@@ -1,1 +1,1 @@
-zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --zosmf-p {{process.profile}}
+zowe jobs submit lf \"./build/runjob.jcl\" --directory \"./output\" --user z00737 --pass zcobol1 --host 204.90.115.200 --port 10443 --ru false
