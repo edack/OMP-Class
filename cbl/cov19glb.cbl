@@ -3,7 +3,8 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT GLOBAL-FILE  ASSIGN TO GLBFILE.
+           SELECT GLOBAL-FILE  ASSIGN TO "..\..\data\GLBFILE"
+               ORGANIZATION IS LINE SEQUENTIAL.
            SELECT PRINT-FILE   ASSIGN TO PRTFILE.
       *===============================================================*
        DATA DIVISION.
@@ -27,113 +28,75 @@
       *---------------------------------------------------------------*
           05 HEADING-LINE-1.
              10 HL1-DATE.
-                15 FILLER            PIC X(01)         VALUE SPACE.
-                15 FILLER            PIC X(12)         VALUE 
-                                                         'TODAYS DATE:'.
+                15 FILLER            PIC X(01)    VALUE SPACE.
+                15 FILLER            PIC X(12)    VALUE 'TODAYS DATE:'.
                 15 HL1-MONTH-OUT     PIC XX.
-                15 FILLER            PIC X             VALUE '/'.
+                15 FILLER            PIC X        VALUE '/'.
                 15 HL1-DAY-OUT       PIC XX.
-                15 FILLER            PIC X             VALUE '/'.
+                15 FILLER            PIC X        VALUE '/'.
                 15 HL1-YEAR-OUT      PIC XX.
-             10 FILLER               PIC X(10)         VALUE SPACE.
+             10 FILLER               PIC X(10)    VALUE SPACE.
              10 HL1-AS-OF-DATE.
-                15 FILLER            PIC X(11)         VALUE 
-                                                          'RPT AS OF: '.
+                15 FILLER            PIC X(11)    VALUE 'RPT AS OF: '.
                 15 HL1-AOD-MM-OUT    PIC X(02).
-                15 FILLER            PIC X(01)         VALUE '/'.
+                15 FILLER            PIC X(01)    VALUE '/'.
                 15 HL1-AOD-DD-OUT    PIC X(02).
-                15 FILLER            PIC X(01)         VALUE '/'.
+                15 FILLER            PIC X(01)    VALUE '/'.
                 15 HL1-AOD-YY-OUT    PIC X(04).
-             10 FILLER               PIC X(10)         VALUE SPACE.
+             10 FILLER               PIC X(10)    VALUE SPACE.
              10 HL1-PAGE-COUNT-AREA.
-                15 FILLER            PIC X(04)         VALUE SPACE.
-                15 FILLER            PIC X(05)         VALUE 'PAGE:'.
+                15 FILLER            PIC X(04)    VALUE SPACE.
+                15 FILLER            PIC X(05)    VALUE 'PAGE:'.
                 15 HL1-PAGE-NUM      PIC ZZZZ9.
-                15 FILLER            PIC X(05)         VALUE SPACE.
+                15 FILLER            PIC X(05)    VALUE SPACE.
       *---------------------------------------------------------------*
           05 HEADING-LINE-2.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '      NEW       TOTA'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'L       NEW       TO'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'TAL        FATAL    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '   CASE             '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
+             10 FILLER          PIC X(20) VALUE '      NEW       TOTA'.
+             10 FILLER          PIC X(20) VALUE 'L       NEW       TO'.
+             10 FILLER          PIC X(20) VALUE 'TAL        FATAL    '.
+             10 FILLER          PIC X(20) VALUE '   CASE             '.
+             10 FILLER          PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
           05 HEADING-LINE-3.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 ' COUNTRY            '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '     CASES      CASE'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'S     DEATHS     DEA'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'THS       PERCENT   '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '  PERCENT           '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
+             10 FILLER          PIC X(20) VALUE ' COUNTRY            '.
+             10 FILLER          PIC X(20) VALUE '     CASES      CASE'.
+             10 FILLER          PIC X(20) VALUE 'S     DEATHS     DEA'.
+             10 FILLER          PIC X(20) VALUE 'THS       PERCENT   '.
+             10 FILLER          PIC X(20) VALUE '  PERCENT           '.
+             10 FILLER          PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
           05 HEADING-LINE-4.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 ' -------            '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '     -----      ----'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '-     ------     ---'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '---       -------   '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '  -------           '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
+             10 FILLER          PIC X(20) VALUE ' -------            '.
+             10 FILLER          PIC X(20) VALUE '     -----      ----'.
+             10 FILLER          PIC X(20) VALUE '-     ------     ---'.
+             10 FILLER          PIC X(20) VALUE '---       -------   '.
+             10 FILLER          PIC X(20) VALUE '  -------           '.
+             10 FILLER          PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
           05 TOTAL-HEADING-LINE-1.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'WORLD           TOTA'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'L                TOT'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'AL         FATAL    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
+             10 FILLER          PIC X(20) VALUE 'WORLD           TOTA'.
+             10 FILLER          PIC X(20) VALUE 'L                TOT'.
+             10 FILLER          PIC X(20) VALUE 'AL         FATAL    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
           05 TOTAL-HEADING-LINE-2.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'TOTALS          CASE'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'S                DEA'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 'THS       PERCENT   '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
+             10 FILLER          PIC X(20) VALUE 'TOTALS          CASE'.
+             10 FILLER          PIC X(20) VALUE 'S                DEA'.
+             10 FILLER          PIC X(20) VALUE 'THS       PERCENT   '.
+             10 FILLER          PIC X(20) VALUE '                    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
           05 TOTAL-HEADING-LINE-3.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '------          ----'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '-                ---'.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '---       -------   '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '  -------           '.
-             10 FILLER               PIC X(20)         VALUE 
-                                                 '                    '.
+             10 FILLER          PIC X(20) VALUE '                    '.
+             10 FILLER          PIC X(20) VALUE '------          ----'.
+             10 FILLER          PIC X(20) VALUE '-                ---'.
+             10 FILLER          PIC X(20) VALUE '---       -------   '.
+             10 FILLER          PIC X(20) VALUE '  -------           '.
+             10 FILLER          PIC X(20) VALUE '                    '.
       *---------------------------------------------------------------*
           05 DETAIL-LINE.
              10 DL-COUNTRY           PIC X(20).

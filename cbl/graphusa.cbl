@@ -117,6 +117,7 @@
            05  REPORT-STATE-SW             PIC X(03)  VALUE 'ALL'.
                88  ALL-STATE-REPORT                   VALUE 'ALL'.
            05  USA-POPULATION              PIC 9(09)  VALUE 340000000.
+           05  WS-REPORT-STATE             PIC X(03)  VALUE 'ALL'.
            05  WS-COUNTER                  PIC 9(02)  VALUE ZERO.
            05  WS-TOTAL-CASES              PIC 9(09)  VALUE ZERO.
            05  WS-TOTAL-CASES-2            PIC 9(09)  VALUE ZERO.
@@ -182,7 +183,9 @@
                       UHR-RECORD-IN
                REPLACING   NUMERIC DATA BY 0
                            ALPHANUMERIC DATA BY SPACE.
-           ACCEPT REPORT-STATE-SW.
+           ACCEPT WS-REPORT-STATE.
+           MOVE FUNCTION UPPER-CASE(WS-REPORT-STATE) TO REPORT-STATE-SW.
+           DISPLAY  REPORT-STATE-SW.
       *---------------------------------------------------------------*
        2000-PROCESS-USA-HIST-FILE.
       *---------------------------------------------------------------*
