@@ -60,9 +60,9 @@
                    15  HL1-DAY-OUT         PIC XX.
                    15  FILLER              PIC X     VALUE '/'.
                    15  HL1-YEAR-OUT        PIC XXXX.
-               10  FILLER      PIC X(20) VALUE '   REPORTING STATE: '.
-               10  HL1-REPORTING-STATE     PIC X(03) VALUE SPACE.
-               10  FILLER                  PIC X(05) VALUE SPACE.
+               10  FILLER      PIC X(08) VALUE ' STATE: '.
+               10  HL1-REPORTING-STATE     PIC X(20) VALUE SPACE.
+               10  FILLER                  PIC X(02) VALUE SPACE.
                10  FILLER      PIC X(20) VALUE '* = NEW, + = MORTALI'.
                10  FILLER      PIC X(20) VALUE 'TY                  '.
                10  FILLER                  PIC X(10) VALUE SPACE.
@@ -73,7 +73,7 @@
       *---------------------------------------------------------------*
            05  HEADING-LINE-2.
       *---------------------------------------------------------------*
-               10  FILLER      PIC X(51) VALUE SPACE.
+               10  FILLER      PIC X(55) VALUE SPACE.
                10  FILLER      PIC X(20) VALUE '  CASE %     % /100K'.
                10  FILLER      PIC X(47) VALUE SPACE.
       *---------------------------------------------------------------*
@@ -143,6 +143,7 @@
                10 FILLER                   PIC X(01).
                10 WS-DAY                   PIC X(02).
                10 FILLER                   PIC X(13).
+       COPY STATETBL.
       *---------------------------------------------------------------*
        01  STATE-ACCUMULATION-FIELDS.
       *---------------------------------------------------------------*
@@ -292,7 +293,7 @@
                PERFORM  2220-FORMAT-PERCENT
                    VARYING WS-PNT2 FROM 3 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
-                   MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE
+               MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE
            END-IF.
            PERFORM 9000-PRINT-REPORT-LINE.
            MOVE ALL SPACES                 TO  UHR-GRAPH.
@@ -309,6 +310,8 @@
                    MOVE ST-NEW-CASES(STATE-INDEX)    TO WS-NEW-CASES
                    MOVE ST-TOTAL-DEATHS(STATE-INDEX) TO WS-TOTAL-DEATHS
                    MOVE ST-NEW-DEATHS(STATE-INDEX)   TO WS-NEW-DEATHS.
+           DISPLAY ST-STATE(STATE-INDEX)
+                   REPORT-STATE-SW.
       *---------------------------------------------------------------*
        2220-FORMAT-PERCENT.
       *---------------------------------------------------------------*
@@ -352,7 +355,14 @@
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
            MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
-           MOVE REPORT-STATE-SW            TO HL1-REPORTING-STATE.
+      *     MOVE REPORT-STATE-SW            TO HL1-REPORTING-STATE.
+           SET NAME-INDEX  TO 1.
+           SEARCH STATE-NAME-TABLE
+               AT END
+                   PERFORM 9902-SEARCH-TABLE-ERROR
+                   display 'HEADING LINE SEARCH'
+               WHEN STATE-CODE(NAME-INDEX) = REPORT-STATE-SW
+                   MOVE STATE-NAME(NAME-INDEX)  TO HL1-REPORTING-STATE.
            MOVE HEADING-LINE-1             TO PRINT-LINE.
            PERFORM 9110-WRITE-TOP-OF-PAGE.
            MOVE 1                          TO LINE-SPACEING.
