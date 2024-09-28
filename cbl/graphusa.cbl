@@ -10,7 +10,7 @@
        OBJECT-COMPUTER.  IBM-3096.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT USA-HIST-FILE ASSIGN TO '../../data/USAFILE'
+           SELECT USA-HIST-FILE ASSIGN TO USAFILE
                ORGANIZATION IS LINE SEQUENTIAL.
            SELECT PRINT-FILE    ASSIGN TO GRAPHFL.
       *===============================================================*
@@ -28,22 +28,22 @@
       *     05  CC                          PIC X(01).
            05  PRINT-LINE                  PIC X(132).
       *---------------------------------------------------------------*
-       WORKING-STORAGE SECTION.
+       WORKING-STORAGE SECTION. 
       *---------------------------------------------------------------*
        01   REPORT-LINES.
       *---------------------------------------------------------------*
-           05  UHR-PRINT-RECORD.
+           05   DETAIL-LINE-1.
       *---------------------------------------------------------------*
-               10  UHR-TIMESTAMP.
-                   15  PR-MONTH            PIC X(02).
+               10  DL1-TIMESTAMP.
+                   15  DL1-MONTH            PIC X(02).
                    15  FILLER              PIC X(01)  VALUE '/'.
-                   15  PR-DAY              PIC X(02).
+                   15  DL1-DAY              PIC X(02).
                    15  FILLER              PIC X(01)  VALUE '/'.
-                   15  PR-YEAR             PIC X(04).
+                   15  DL1-YEAR             PIC X(04).
                10  FILLER                  PIC X(02)  VALUE SPACE.
                10  FILLER                  PIC X(02)  VALUE ' |'.
-               10  UHR-GRAPH.
-                   15  UHR-GRAPH-DATA      PIC X(01) OCCURS 160 TIMES.
+               10  DL1-GRAPH.
+                   15  DL1-GRAPH-DATA      PIC X(01) OCCURS 160 TIMES.
                10  FILLER                  PIC X(05)  VALUE SPACE.
       *---------------------------------------------------------------*
            05  NEXT-REPORT-LINE            PIC X(132)  VALUE SPACE.
@@ -250,10 +250,10 @@
       *---------------------------------------------------------------*
        2200-PRINT-DATE-TOTALS.
       *---------------------------------------------------------------*
-           MOVE WS-DAY                     TO PR-DAY.
-           MOVE WS-MONTH                   TO PR-MONTH.
-           MOVE WS-YEAR                    TO PR-YEAR.
-           MOVE ALL SPACES                 TO UHR-GRAPH.
+           MOVE WS-DAY                     TO DL1-DAY.
+           MOVE WS-MONTH                   TO DL1-MONTH.
+           MOVE WS-YEAR                    TO DL1-YEAR.
+           MOVE ALL SPACES                 TO DL1-GRAPH.
            IF  NOT ALL-STATE-REPORT
                PERFORM 2210-SETUP-STATE.
            IF  WS-NEW-CASES > ZERO
@@ -286,17 +286,17 @@
                MOVE ERROR-LINE-1           TO NEXT-REPORT-LINE
            ELSE
                COMPUTE WS-GRAPH-INDEX = (WS-D-GRAPH-PNT * 10) + 6
-               MOVE ' '              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
+               MOVE ' '              TO DL1-GRAPH-DATA(WS-GRAPH-INDEX)
                COMPUTE WS-GRAPH-INDEX = (WS-C-GRAPH-PNT * 10) + 6
-               MOVE '*'              TO UHR-GRAPH-DATA(WS-GRAPH-INDEX)
+               MOVE '*'              TO DL1-GRAPH-DATA(WS-GRAPH-INDEX)
                MOVE 1                TO WS-PNT1
                PERFORM  2220-FORMAT-PERCENT
                    VARYING WS-PNT2 FROM 3 BY 1
                        UNTIL WS-PNT2 GREATER THAN 7
-               MOVE UHR-PRINT-RECORD   TO NEXT-REPORT-LINE
+               MOVE DETAIL-LINE-1   TO NEXT-REPORT-LINE
            END-IF.
            PERFORM 9000-PRINT-REPORT-LINE.
-           MOVE ALL SPACES                 TO  UHR-GRAPH.
+           MOVE ALL SPACES                 TO  DL1-GRAPH.
       *---------------------------------------------------------------*
        2210-SETUP-STATE.
       *---------------------------------------------------------------*
@@ -316,9 +316,9 @@
        2220-FORMAT-PERCENT.
       *---------------------------------------------------------------*
            MOVE WS-C-GRAPH-PNT             TO WS-GRAPH-PNT-X.
-           MOVE WS-GRAPH-PNT-X(WS-PNT2:1)  TO UHR-GRAPH-DATA(WS-PNT1).
+           MOVE WS-GRAPH-PNT-X(WS-PNT2:1)  TO DL1-GRAPH-DATA(WS-PNT1).
            ADD  1                          TO WS-PNT1.
-           MOVE ' '                        TO UHR-GRAPH-DATA(WS-PNT1).
+           MOVE ' '                        TO DL1-GRAPH-DATA(WS-PNT1).
       *---------------------------------------------------------------*
        3000-CLOSE-FILES.
       *---------------------------------------------------------------*
@@ -355,12 +355,13 @@
        9100-PRINT-HEADING-LINES.
       *---------------------------------------------------------------*
            MOVE PAGE-COUNT                 TO HL1-PAGE-NUM.
-      *     MOVE REPORT-STATE-SW            TO HL1-REPORTING-STATE.
+           MOVE 'ALL STATES           '    TO HL1-REPORTING-STATE.
            SET NAME-INDEX  TO 1.
            SEARCH STATE-NAME-TABLE
                AT END
-                   PERFORM 9902-SEARCH-TABLE-ERROR
-                   display 'HEADING LINE SEARCH'
+      D             PERFORM 9902-SEARCH-TABLE-ERROR
+      D             display 'HEADING LINE SEARCH'
+                   MOVE 'STATE NOT FOUND'   TO HL1-REPORTING-STATE 
                WHEN STATE-CODE(NAME-INDEX) = REPORT-STATE-SW
                    MOVE STATE-NAME(NAME-INDEX)  TO HL1-REPORTING-STATE.
            MOVE HEADING-LINE-1             TO PRINT-LINE.
