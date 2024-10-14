@@ -149,7 +149,7 @@
       *---------------------------------------------------------------*
       * SQL DECLARATION FOR VIEW ACCOUNTS
       *---------------------------------------------------------------*
-           EXEC SQL DECLARE Z80843T TABLE
+           EXEC SQL DECLARE Z00737T TABLE
                     (ACCTNO     CHAR(8) NOT NULL,
                     LIMIT      DECIMAL(9,2)     ,
                     BALANCE    DECIMAL(9,2)     ,
@@ -165,7 +165,7 @@
       * SQL CURSORS
       *---------------------------------------------------------------*
            EXEC SQL DECLARE CUR1  CURSOR FOR
-                        SELECT * FROM Z80843T
+                        SELECT * FROM Z00737T
            END-EXEC.
       *---------------------------------------------------------------*
        COPY ACCTFILE.
