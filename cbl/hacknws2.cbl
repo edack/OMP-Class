@@ -1,8 +1,8 @@
       *===============================================================*
        IDENTIFICATION DIVISION.
        PROGRAM-ID.    HACKNWS2.
-      * AUTHOR.        EDWIN ACKERMAN.
-      * INSTALLATION.  IBM CLASS.
+       AUTHOR.        EDWIN ACKERMAN.
+       INSTALLATION.  IBM CLASS.
       *REMARKS. THERE ARE THREE INSPECT STMTS TO HANDLE IMBEDED
       *         COMMAS IN THE TITLE. THE TIME IS RIGHT JUSTIFIED
       *         TO ALLOW FOR THE MINUTES CONVERSION TO DECIMAL.
@@ -15,7 +15,8 @@
                ASSIGN TO HACKNWS
                FILE STATUS IS HNR-STATUS.
            SELECT SORT-FILE
-               ASSIGN TO SORTFL.
+               ASSIGN TO SORTFL
+               FILE STATUS IS SR-STATUS.
       *===============================================================*
        DATA DIVISION.
       *---------------------------------------------------------------*
