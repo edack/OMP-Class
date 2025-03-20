@@ -5,7 +5,7 @@
 //SYSPRINT DD  SYSOUT=H
 //SYSUT1   DD  *
 $include   ../cbl/cbl0106a.cbl
-//SYSUT2	DD	DSN=EDACK.CMDPROC(CBL0106A),
+//SYSUT2	DD	DSN=EDACK.CBL(CBL0106A),
 //             DISP=SHR,
 //             UNIT=SYSDA,
 //             VOL=SER=TSO003
