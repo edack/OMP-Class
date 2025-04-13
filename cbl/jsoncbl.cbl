@@ -55,6 +55,7 @@
        1 inv-data.
         2 inv-record occurs 7 times.
            3 prod-name     pic x(20).
+           3 prod-img      pic x(99).
            3 expiry        pic 9(8).
            3 quantity      pic 9(3).
            3 salesperday   pic 9(3).
@@ -67,14 +68,14 @@
        1 todays-date       pic 9(8) value 20210918.
        1 todays-date-int   pic 9(10).
        1 sale-end-date-int pic 9(10).
-       1 prod-img-broken   pic x(99) value "https://ibmzxplore-static.s3
-      -    ".eu-gb.cloud-object-storage.appdomain.cloud/unknown.png".
+      * 1 prod-img-broken   pic x(99) value "https://ibmzxplore-static.s3
+      *-    ".eu-gb.cloud-object-storage.appdomain.cloud/unknown.png".
       * 3 data items for currencies in $USD
-       1 pricefrmt         pic 9.99.
-       1 saleprice         pic 9.99.
-       1 discount          pic 9.99.
+       1 pricefrmt         pic $.99.
+       1 saleprice         pic $.99.
+       1 discount          pic $.99.
        1 productname       pic x(20).
-
+       1 productimg        pic x(99).
        1 daystoexpiry      pic ZZ9.
        1 daystosellall     pic ZZ9.
        1 expiry-date-int   pic 9(10).
@@ -162,7 +163,7 @@
       * "With detail" (commented out) enables diagnostic messages 
       * Turn this on if the JSON data is not parsed correctly.
            Json parse json-doc-1208 into inv-data
-      *        with detail
+              with detail
            end-json
 
       * Our date is currently stored as "20210918" (YYYYMMDD)
@@ -203,6 +204,8 @@
 
                  Move function trim(prod-name(inv-rec-cnt))
                     to productname
+                 Move function trim(prod-img(inv-rec-cnt))
+                    to productimg 
 
                  Initialize flyer-file
                  If flyerformat = 'TEXT' then
@@ -212,7 +215,7 @@
                     into flyer-file
                  Else
                     String
-                      htmltablestart prod-img-broken htmlprice saleprice
+                      htmltablestart productimg htmlprice saleprice
                       htmldiscount discount htmlproduct productname
                       htmloldprice pricefrmt htmltableend
                       delimited by size
